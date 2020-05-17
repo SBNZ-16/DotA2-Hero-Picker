@@ -12,6 +12,8 @@ import com.heropicker.facts.EnemyHeroPickedFact;
 import com.heropicker.facts.Fact;
 import com.heropicker.facts.HeroBannedFact;
 import com.heropicker.facts.HeroPreferredFact;
+import com.heropicker.facts.LanePreferredFact;
+import com.heropicker.facts.RolePreferredFact;
 import com.heropicker.io.HeroLoader;
 import com.heropicker.model.HeroDatabase;
 import com.heropicker.model.HeroRecommendationList;
@@ -27,6 +29,8 @@ public class DroolsTest {
 		facts.add(new EnemyHeroPickedFact("invoker", true));
 		facts.add(new HeroBannedFact("riki"));
 		facts.add(new HeroPreferredFact("lycan"));
+		facts.add(new RolePreferredFact("Pusher"));
+		facts.add(new LanePreferredFact("Jungle"));
 		test(facts);
 	}
 

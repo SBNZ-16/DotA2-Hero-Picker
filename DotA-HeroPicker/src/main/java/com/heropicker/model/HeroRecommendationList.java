@@ -15,8 +15,7 @@ public class HeroRecommendationList {
 		this.heroDatabase = heroDatabase;
 		this.heroRecommendationsMap = new HashMap<String, HeroRecommendation>();
 		for (Hero hero : heroDatabase.getHeroes()) {
-			HeroRecommendation heroRecommendation = new HeroRecommendation(hero.getHeroId(), hero.getHeroName(),
-					hero.getOverallWinrate());
+			HeroRecommendation heroRecommendation = new HeroRecommendation(hero, hero.getOverallWinrate());
 			this.heroRecommendationsMap.put(hero.getHeroId(), heroRecommendation);
 		}
 	}
@@ -33,7 +32,7 @@ public class HeroRecommendationList {
 		Hero enemy = this.heroDatabase.getById(enemyId);
 		for (Map.Entry<String, Double> entry : enemy.getDisadvantages().entrySet()) {
 			HeroRecommendation heroRecommendation = this.findHeroRecommendationByHeroId(entry.getKey());
-			if(heroRecommendation != null)
+			if (heroRecommendation != null)
 				heroRecommendation.setScore(heroRecommendation.getScore() + entry.getValue() * scalingFactor);
 		}
 	}
@@ -49,7 +48,7 @@ public class HeroRecommendationList {
 		for (int i = 0; i < countToDisplay; i++) {
 			HeroRecommendation heroRecommendation = heroReccomendations.get(i);
 			System.out.println(
-					i + 1 + ". " + heroRecommendation.getHeroName() + ", score: " + heroRecommendation.getScore());
+					i + 1 + ". " + heroRecommendation.getHero().getHeroName() + ", score: " + heroRecommendation.getScore());
 		}
 	}
 

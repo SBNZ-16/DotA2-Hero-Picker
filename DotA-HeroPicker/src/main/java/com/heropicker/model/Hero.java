@@ -5,29 +5,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Hero {
-	
-	
+
 	private String heroId;
 	private String heroName;
 	private String attackType;
 	private ArrayList<String> roles;
 	private double overallWinrate;
-	private String primaryAttribute;	
+	private String primaryAttribute;
 	private Map<String, Double> winPercentages;
 	private Map<String, Double> disadvantages;
-	
+	private ArrayList<LaneStats> lanes;
+
 	public Hero() {
 		this.winPercentages = new HashMap<String, Double>();
 		this.disadvantages = new HashMap<String, Double>();
 		this.roles = new ArrayList<String>();
+		this.lanes = new ArrayList<LaneStats>();
 	}
-	
+
 	public Hero(String heroId, String heroName) {
 		this.winPercentages = new HashMap<String, Double>();
 		this.disadvantages = new HashMap<String, Double>();
 		this.roles = new ArrayList<String>();
 		this.heroId = heroId;
 		this.heroName = heroName;
+		this.lanes = new ArrayList<LaneStats>();
 	}
 
 	public String getHeroId() {
@@ -81,6 +83,9 @@ public class Hero {
 	public Map<String, Double> getDisadvantages() {
 		return disadvantages;
 	}
-	
-	
+
+	public ArrayList<LaneStats> getLanes() {
+		return lanes;
+	}
+
 }

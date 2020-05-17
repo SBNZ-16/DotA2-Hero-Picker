@@ -5,7 +5,10 @@ import com.heropicker.facts.AllyHeroPickedFact;
 import com.heropicker.facts.EnemyHeroPickedFact;
 import com.heropicker.facts.UpdateScoresFact;
 import com.heropicker.facts.HeroPreferredFact;
+import com.heropicker.facts.RolePreferredFact;
+import com.heropicker.facts.LanePreferredFact;
 import com.heropicker.model.HeroRecommendation;
+import com.heropicker.model.LaneStats;
 
 
 global com.heropicker.model.HeroDatabase heroDatabase;
@@ -49,15 +52,49 @@ end
 rule "Hero preferred"
 	agenda-group "preferences"
 	when
-		$preferred : HeroPreferredFact()
+		HeroPreferredFact($heroId : heroId)
 	then
-		insert(new UpdateScoresFact($preferred.heroId, 1.3, 0, null, null));
+		insert(new UpdateScoresFact(1.3, 0, $heroId, null, null));
+end
+
+rule "Role preferred"
+	agenda-group "preferences"
+	when
+		RolePreferredFact($role : role)
+	then
+		insert(new UpdateScoresFact(1.3, 0, null, $role, null));
+end
+
+rule "Lane preferred"
+	agenda-group "preferences"
+	when
+		LanePreferredFact($lane : lane)
+	then
+		insert(new UpdateScoresFact(1, 0, null, null, $lane));
 end
 
 rule "Update score by heroId"
 	when
-		$updateScore : UpdateScoresFact(heroId != null, $heroId : heroId)
-		$heroRecommendation : HeroRecommendation(heroId==$heroId) from heroRecommendationList.getHeroRecommendations()
+		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
+		$heroRecommendation : HeroRecommendation(hero.heroId==$heroId) from heroRecommendationList.getHeroRecommendations()
 	then
 		$heroRecommendation.updateScore($updateScore.getMultiplyScale(), $updateScore.getAddValue());
+end
+
+rule "Update score by role"
+	when
+		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
+		$heroRecommendation : HeroRecommendation(hero.roles contains $role) from heroRecommendationList.getHeroRecommendations()
+	then
+		$heroRecommendation.updateScore($updateScore.getMultiplyScale(), $updateScore.getAddValue());
+end
+
+rule "Update score by lane"
+	when
+		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
+		$heroRecommendation : HeroRecommendation($hero : hero) from heroRecommendationList.getHeroRecommendations()
+		$laneStats: LaneStats(name == $lane) from $hero.lanes
+	then
+		$heroRecommendation.updateScore(($laneStats.getWinrate() * $laneStats.getPresence())*$updateScore.getMultiplyScale(),
+		 $updateScore.getAddValue());
 end

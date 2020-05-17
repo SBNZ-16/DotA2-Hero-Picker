@@ -10,7 +10,7 @@ public class UpdateScoresFact extends Fact {
 		super();
 	}
 
-	public UpdateScoresFact(String heroId, double multiplyScale, double addValue, String role, String lane) {
+	public UpdateScoresFact(double multiplyScale, double addValue, String heroId, String role, String lane) {
 		super(heroId);
 		this.multiplyScale = multiplyScale;
 		this.addValue = addValue;

@@ -14,14 +14,17 @@ public class Hero {
 	private double overallWinrate;
 	private String primaryAttribute;	
 	private Map<String, Double> winPercentages;
+	private Map<String, Double> disadvantages;
 	
 	public Hero() {
 		this.winPercentages = new HashMap<String, Double>();
+		this.disadvantages = new HashMap<String, Double>();
 		this.roles = new ArrayList<String>();
 	}
 	
 	public Hero(String heroId, String heroName) {
 		this.winPercentages = new HashMap<String, Double>();
+		this.disadvantages = new HashMap<String, Double>();
 		this.roles = new ArrayList<String>();
 		this.heroId = heroId;
 		this.heroName = heroName;
@@ -73,6 +76,10 @@ public class Hero {
 
 	public ArrayList<String> getRoles() {
 		return roles;
+	}
+
+	public Map<String, Double> getDisadvantages() {
+		return disadvantages;
 	}
 	
 	

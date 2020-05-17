@@ -58,6 +58,13 @@ public class HeroLoader {
 			String enemyId = nameToId.get(entry.getKey());
 			hero.getWinPercentages().put(enemyId, winPercentage);
 		}
+		
+		Map<String, String> disadvantagesMap = (Map<String, String>) heroMap.get("disadvantages");
+		for (Map.Entry<String, String> entry: disadvantagesMap.entrySet()) {
+			double disadvantage = percentageStringToDouble(entry.getValue());
+			String enemyId = nameToId.get(entry.getKey());
+			hero.getDisadvantages().put(enemyId, disadvantage);
+		}
 	}
 	
 	private static double percentageStringToDouble(String dirtyString) {

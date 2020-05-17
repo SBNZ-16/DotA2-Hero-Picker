@@ -63,13 +63,17 @@ def scrape_winrates(url_fragment, header, hero):
     winrate_tbody = winrate_table.find_all('tbody')[0]
 
     win_rates = {}
+    disadvantages = {}
     for row in winrate_tbody:
         cells = row.find_all('td')
         hero_name = cells[1].text
         winrate = cells[3].text
+        disadvantage = cells[2].text
         win_rates[hero_name] = winrate
+        disadvantages[hero_name] = disadvantage
 
     hero['win_rates'] = win_rates
+    hero['disadvantages'] = disadvantages
 
     
 def save_img(image_src, url_fragment):

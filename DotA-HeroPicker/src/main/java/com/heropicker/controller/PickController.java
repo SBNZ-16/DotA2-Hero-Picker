@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.heropicker.dto.MessageDto;
-import com.heropicker.facts.HeroPickedFact;
+import com.heropicker.facts.AllyHeroPickedFact;
+import com.heropicker.facts.EnemyHeroPickedFact;
+import com.heropicker.facts.Fact;
 import com.sun.javafx.collections.MappingChange.Map;
 
-import com.heropicker.model.HeroReccomendationList;
+import com.heropicker.model.HeroRecommendationList;
 import com.heropicker.model.HeroRecommendation;
 
 import com.sample.DroolsTest;
@@ -27,12 +29,10 @@ public class PickController {
 	
 	@GetMapping()
 	public ResponseEntity<ArrayList<HeroRecommendation>> test() {
-		List<HeroPickedFact> facts = new ArrayList<HeroPickedFact>();
-    	facts.add(new HeroPickedFact("alchemist",
-    			HeroPickedFact.ALLY_PICK));
-    	facts.add(new HeroPickedFact("axe",
-    			HeroPickedFact.ENEMY_PICK));
-    	ArrayList<HeroRecommendation> retVal = DroolsTest.test(facts).getHeroReccomendations();
+		List<Fact> facts = new ArrayList<Fact>();
+		facts.add(new AllyHeroPickedFact("tinker"));
+		facts.add(new EnemyHeroPickedFact("zeus", false));
+    	ArrayList<HeroRecommendation> retVal = DroolsTest.test(facts).getHeroRecommendations();
         return new ResponseEntity<ArrayList<HeroRecommendation>>(retVal, HttpStatus.OK);
     }
 }

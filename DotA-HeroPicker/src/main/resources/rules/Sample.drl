@@ -1,22 +1,63 @@
 package com.sample
  
-import com.sample.DroolsTest.Message;
-import com.heropicker.dto.MessageDto;
-import com.heropicker.facts.HeroPickedFact;
+import com.heropicker.facts.HeroBannedFact;
+import com.heropicker.facts.AllyHeroPickedFact;
+import com.heropicker.facts.EnemyHeroPickedFact;
+import com.heropicker.facts.UpdateScoresFact;
+import com.heropicker.facts.HeroPreferredFact;
+import com.heropicker.model.HeroRecommendation;
+
 
 global com.heropicker.model.HeroDatabase heroDatabase;
-global com.heropicker.model.HeroReccomendationList heroReccomendationList;
+global com.heropicker.model.HeroRecommendationList heroRecommendationList;
+
  
-rule "Hero taken"
+rule "Ally hero picked"
+	agenda-group "hero-statistics"
 	when
-		$picked : HeroPickedFact();
+		$picked : AllyHeroPickedFact()
 	then
-		heroReccomendationList.markHeroAsTaken($picked.getHeroId());
+		heroRecommendationList.removeHeroRecommendationByHeroId($picked.getHeroId());
 end
 
 rule "Enemy hero picked"
+	agenda-group "hero-statistics"
 	when
-		$picked: HeroPickedFact(team == HeroPickedFact.ENEMY_PICK);
+		$picked : EnemyHeroPickedFact()
 	then
-		heroReccomendationList.changeScoresOnEnemyPicked($picked.getHeroId());
+		heroRecommendationList.removeHeroRecommendationByHeroId($picked.getHeroId());
+		heroRecommendationList.changeScoresByHeroDisadvantage($picked.getHeroId(), 1.5);
+end
+
+rule "Enemy hero picked is expected to show in my lane"
+	agenda-group "hero-statistics"
+	when
+		$picked : EnemyHeroPickedFact(goingToFaceInLane == true)
+	then
+		heroRecommendationList.changeScoresByHeroDisadvantage($picked.getHeroId(), 3);
+end
+
+
+rule "Hero banned"
+	agenda-group "hero-statistics"
+	when
+		$banned : HeroBannedFact()
+	then
+		heroRecommendationList.removeHeroRecommendationByHeroId($banned.getHeroId());
+end
+
+rule "Hero preferred"
+	agenda-group "preferences"
+	when
+		$preferred : HeroPreferredFact()
+	then
+		insert(new UpdateScoresFact($preferred.heroId, 1.3, 0, null, null));
+end
+
+rule "Update score by heroId"
+	when
+		$updateScore : UpdateScoresFact(heroId != null, $heroId : heroId)
+		$heroRecommendation : HeroRecommendation(heroId==$heroId) from heroRecommendationList.getHeroRecommendations()
+	then
+		$heroRecommendation.updateScore($updateScore.getMultiplyScale(), $updateScore.getAddValue());
 end

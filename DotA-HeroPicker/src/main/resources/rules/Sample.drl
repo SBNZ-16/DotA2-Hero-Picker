@@ -7,12 +7,15 @@ import com.heropicker.facts.UpdateScoresFact;
 import com.heropicker.facts.HeroPreferredFact;
 import com.heropicker.facts.RolePreferredFact;
 import com.heropicker.facts.LanePreferredFact;
+import com.heropicker.model.PickedAllyHeroes;
 import com.heropicker.model.HeroRecommendation;
 import com.heropicker.model.LaneStats;
+import com.heropicker.model.Hero;
 
 
 global com.heropicker.model.HeroDatabase heroDatabase;
 global com.heropicker.model.HeroRecommendationList heroRecommendationList;
+global PickedAllyHeroes pickedAllyHeroes;
 
  
 rule "Ally hero picked"
@@ -21,6 +24,7 @@ rule "Ally hero picked"
 		$picked : AllyHeroPickedFact()
 	then
 		heroRecommendationList.removeHeroRecommendationByHeroId($picked.getHeroId());
+		pickedAllyHeroes.addHero($picked.getHeroId());
 end
 
 rule "Enemy hero picked"
@@ -40,7 +44,6 @@ rule "Enemy hero picked is expected to show in my lane"
 		heroRecommendationList.changeScoresByHeroDisadvantage($picked.getHeroId(), 3);
 end
 
-
 rule "Hero banned"
 	agenda-group "hero-statistics"
 	when
@@ -48,6 +51,109 @@ rule "Hero banned"
 	then
 		heroRecommendationList.removeHeroRecommendationByHeroId($banned.getHeroId());
 end
+
+
+
+rule "Nuker role"
+	agenda-group "team-composition"
+	salience -1
+	when
+		AllyHeroPickedFact()
+		$count : Long() from accumulate ($hero : Hero(roles contains "Nuker") from pickedAllyHeroes.heroes, count($hero))
+	then
+		double penalty = (1 - (double)$count) * 0.1;
+		insert(new UpdateScoresFact(penalty + 1, 0, null, "Nuker", null));
+end
+
+rule "Escape role"
+	agenda-group "team-composition"
+	salience -1
+	when
+		AllyHeroPickedFact()
+		$count : Long() from accumulate ($hero : Hero(roles contains "Escape") from pickedAllyHeroes.heroes, count($hero))
+	then
+		double penalty = (1 - (double)$count) * 0.05;
+		insert(new UpdateScoresFact(penalty + 1, 0, null, "Escape", null));
+end
+
+rule "Support role"
+	agenda-group "team-composition"
+	salience -1
+	when
+		AllyHeroPickedFact()
+		$count : Long() from accumulate ($hero : Hero(roles contains "Support") from pickedAllyHeroes.heroes, count($hero))
+	then
+		double penalty = (2 - (double)$count) * 0.1;
+		insert(new UpdateScoresFact(penalty + 1, 0, null, "Support", null));
+end
+
+rule "Initiator role"
+	agenda-group "team-composition"
+	salience -1
+	when
+		AllyHeroPickedFact()
+		$count : Long() from accumulate ($hero : Hero(roles contains "Initiator") from pickedAllyHeroes.heroes, count($hero))
+	then
+		double penalty = (1.5 - (double)$count) * 0.1;
+		insert(new UpdateScoresFact(penalty + 1, 0, null, "Initiator", null));
+end
+
+rule "Carry role"
+	agenda-group "team-composition"
+	salience -1
+	when
+		AllyHeroPickedFact()
+		$count : Long() from accumulate ($hero : Hero(roles contains "Carry") from pickedAllyHeroes.heroes, count($hero))
+	then
+		double penalty = (2 - (double)$count) * 0.1;
+		insert(new UpdateScoresFact(penalty + 1, 0, null, "Carry", null));
+end
+
+rule "Jungler role"
+	agenda-group "team-composition"
+	salience -1
+	when
+		AllyHeroPickedFact()
+		$count : Long() from accumulate ($hero : Hero(roles contains "Jungler") from pickedAllyHeroes.heroes, count($hero))
+	then
+		double penalty = (0.5 - (double)$count) * 0.05;
+		insert(new UpdateScoresFact(penalty + 1, 0, null, "Jungler", null));
+end
+
+rule "Durable role"
+	agenda-group "team-composition"
+	salience -1
+	when
+		AllyHeroPickedFact()
+		$count : Long() from accumulate ($hero : Hero(roles contains "Durable") from pickedAllyHeroes.heroes, count($hero))
+	then
+		double penalty = (1.5 - (double)$count) * 0.1;
+		insert(new UpdateScoresFact(penalty + 1, 0, null, "Durable", null));
+end
+
+rule "Disabler role"
+	agenda-group "team-composition"
+	salience -1
+	when
+		AllyHeroPickedFact()
+		$count : Long() from accumulate ($hero : Hero(roles contains "Disabler") from pickedAllyHeroes.heroes, count($hero))
+	then
+		double penalty = (2 - (double)$count) * 0.05;
+		insert(new UpdateScoresFact(penalty + 1, 0, null, "Disabler", null));
+end
+
+rule "Pusher role"
+	agenda-group "team-composition"
+	salience -1
+	when
+		AllyHeroPickedFact()
+		$count : Long() from accumulate ($hero : Hero(roles contains "Disabler") from pickedAllyHeroes.heroes, count($hero))
+	then
+		double penalty = (1.5 - (double)$count) * 0.1;
+		insert(new UpdateScoresFact(penalty + 1, 0, null, "Pusher", null));
+end
+
+
 
 rule "Hero preferred"
 	agenda-group "preferences"
@@ -74,6 +180,7 @@ rule "Lane preferred"
 end
 
 rule "Update score by heroId"
+	agenda-group "preferences"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
 		$heroRecommendation : HeroRecommendation(hero.heroId==$heroId) from heroRecommendationList.getHeroRecommendations()
@@ -82,6 +189,7 @@ rule "Update score by heroId"
 end
 
 rule "Update score by role"
+	agenda-group "preferences"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
 		$heroRecommendation : HeroRecommendation(hero.roles contains $role) from heroRecommendationList.getHeroRecommendations()
@@ -90,11 +198,13 @@ rule "Update score by role"
 end
 
 rule "Update score by lane"
+	agenda-group "preferences"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
 		$heroRecommendation : HeroRecommendation($hero : hero) from heroRecommendationList.getHeroRecommendations()
 		$laneStats: LaneStats(name == $lane) from $hero.lanes
 	then
-		$heroRecommendation.updateScore(($laneStats.getWinrate() * $laneStats.getPresence())*$updateScore.getMultiplyScale(),
+		double laneEffectiveness = ($laneStats.getWinrate() * $laneStats.getPresence());
+		$heroRecommendation.updateScore(laneEffectiveness*$updateScore.getMultiplyScale(),
 		 $updateScore.getAddValue());
 end

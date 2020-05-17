@@ -17,6 +17,7 @@ import com.heropicker.facts.RolePreferredFact;
 import com.heropicker.io.HeroLoader;
 import com.heropicker.model.HeroDatabase;
 import com.heropicker.model.HeroRecommendationList;
+import com.heropicker.model.PickedAllyHeroes;
 
 /**
  * This is a sample class to launch a rule.
@@ -38,7 +39,8 @@ public class DroolsTest {
 		try {
 			HeroDatabase heroDatabase = HeroLoader.loadHeroDatabase();
 			HeroRecommendationList heroRecommendationList = new HeroRecommendationList(heroDatabase);
-
+			PickedAllyHeroes pickedAllyHeroes= new PickedAllyHeroes(heroDatabase);
+					
 			// load up the knowledge base
 			KieServices ks = KieServices.Factory.get();
 			KieContainer kContainer = ks.getKieClasspathContainer();
@@ -46,6 +48,7 @@ public class DroolsTest {
 
 			kSession.setGlobal("heroDatabase", heroDatabase);
 			kSession.setGlobal("heroRecommendationList", heroRecommendationList);
+			kSession.setGlobal("pickedAllyHeroes", pickedAllyHeroes);
 
 			for (Fact heroPickedFact : facts) {
 				kSession.insert(heroPickedFact);

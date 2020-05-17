@@ -1,6 +1,7 @@
 package com.heropicker.facts;
 
 public class UpdateScoresFact extends Fact {
+	public String heroId;
 	private double multiplyScale = 1;
 	private double addValue = 0;
 	private String role;
@@ -11,7 +12,7 @@ public class UpdateScoresFact extends Fact {
 	}
 
 	public UpdateScoresFact(double multiplyScale, double addValue, String heroId, String role, String lane) {
-		super(heroId);
+		this.heroId = heroId;
 		this.multiplyScale = multiplyScale;
 		this.addValue = addValue;
 		this.role = role;
@@ -48,6 +49,14 @@ public class UpdateScoresFact extends Fact {
 
 	public void setLane(String lane) {
 		this.lane = lane;
+	}
+
+	public String getHeroId() {
+		return heroId;
+	}
+
+	public void setHeroId(String heroId) {
+		this.heroId = heroId;
 	}
 
 }

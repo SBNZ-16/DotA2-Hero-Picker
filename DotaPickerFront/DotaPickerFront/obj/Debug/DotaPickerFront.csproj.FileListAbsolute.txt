@@ -1,0 +1,14 @@
+F:\Arbeit\semestar 8\SBNZ\DotaPickerFront\DotaPickerFront\bin\Debug\DotaPickerFront.exe.config
+F:\Arbeit\semestar 8\SBNZ\DotaPickerFront\DotaPickerFront\bin\Debug\DotaPickerFront.exe
+F:\Arbeit\semestar 8\SBNZ\DotaPickerFront\DotaPickerFront\bin\Debug\DotaPickerFront.pdb
+F:\Arbeit\semestar 8\SBNZ\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.csprojResolveAssemblyReference.cache
+F:\Arbeit\semestar 8\SBNZ\DotaPickerFront\DotaPickerFront\obj\Debug\MainWindow.g.cs
+F:\Arbeit\semestar 8\SBNZ\DotaPickerFront\DotaPickerFront\obj\Debug\App.g.cs
+F:\Arbeit\semestar 8\SBNZ\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront_MarkupCompile.cache
+F:\Arbeit\semestar 8\SBNZ\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront_MarkupCompile.lref
+F:\Arbeit\semestar 8\SBNZ\DotaPickerFront\DotaPickerFront\obj\Debug\MainWindow.baml
+F:\Arbeit\semestar 8\SBNZ\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.g.resources
+F:\Arbeit\semestar 8\SBNZ\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.Properties.Resources.resources
+F:\Arbeit\semestar 8\SBNZ\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.csproj.GenerateResource.Cache
+F:\Arbeit\semestar 8\SBNZ\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.exe
+F:\Arbeit\semestar 8\SBNZ\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.pdb

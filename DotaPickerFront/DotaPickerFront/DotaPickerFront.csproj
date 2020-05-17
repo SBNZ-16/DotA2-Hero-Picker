@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2D2197A4-4D8E-4E73-A5B4-0DFC194BBE97}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>DotaPickerFront</RootNamespace>
+    <AssemblyName>DotaPickerFront</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="ultility\BitmapConverter.cs" />
+    <Compile Include="ultility\FileLoader.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="resources\hero_data\abaddon.json" />
+    <None Include="resources\hero_data\alchemist.json" />
+    <None Include="resources\hero_data\ancient-apparition.json" />
+    <None Include="resources\hero_data\anti-mage.json" />
+    <None Include="resources\hero_data\arc-warden.json" />
+    <None Include="resources\hero_data\axe.json" />
+    <None Include="resources\hero_data\bane.json" />
+    <None Include="resources\hero_data\batrider.json" />
+    <None Include="resources\hero_data\beastmaster.json" />
+    <None Include="resources\hero_data\bloodseeker.json" />
+    <None Include="resources\hero_data\bounty-hunter.json" />
+    <None Include="resources\hero_data\brewmaster.json" />
+    <None Include="resources\hero_data\bristleback.json" />
+    <None Include="resources\hero_data\broodmother.json" />
+    <None Include="resources\hero_data\centaur-warrunner.json" />
+    <None Include="resources\hero_data\chaos-knight.json" />
+    <None Include="resources\hero_data\chen.json" />
+    <None Include="resources\hero_data\clinkz.json" />
+    <None Include="resources\hero_data\clockwerk.json" />
+    <None Include="resources\hero_data\crystal-maiden.json" />
+    <None Include="resources\hero_data\dark-seer.json" />
+    <None Include="resources\hero_data\dark-willow.json" />
+    <None Include="resources\hero_data\dazzle.json" />
+    <None Include="resources\hero_data\death-prophet.json" />
+    <None Include="resources\hero_data\disruptor.json" />
+    <None Include="resources\hero_data\doom.json" />
+    <None Include="resources\hero_data\dragon-knight.json" />
+    <None Include="resources\hero_data\drow-ranger.json" />
+    <None Include="resources\hero_data\earth-spirit.json" />
+    <None Include="resources\hero_data\earthshaker.json" />
+    <None Include="resources\hero_data\elder-titan.json" />
+    <None Include="resources\hero_data\ember-spirit.json" />
+    <None Include="resources\hero_data\enchantress.json" />
+    <None Include="resources\hero_data\enigma.json" />
+    <None Include="resources\hero_data\faceless-void.json" />
+    <None Include="resources\hero_data\grimstroke.json" />
+    <None Include="resources\hero_data\gyrocopter.json" />
+    <None Include="resources\hero_data\huskar.json" />
+    <None Include="resources\hero_data\invoker.json" />
+    <None Include="resources\hero_data\io.json" />
+    <None Include="resources\hero_data\jakiro.json" />
+    <None Include="resources\hero_data\juggernaut.json" />
+    <None Include="resources\hero_data\keeper-of-the-light.json" />
+    <None Include="resources\hero_data\kunkka.json" />
+    <None Include="resources\hero_data\legion-commander.json" />
+    <None Include="resources\hero_data\leshrac.json" />
+    <None Include="resources\hero_data\lich.json" />
+    <None Include="resources\hero_data\lifestealer.json" />
+    <None Include="resources\hero_data\lina.json" />
+    <None Include="resources\hero_data\lion.json" />
+    <None Include="resources\hero_data\lone-druid.json" />
+    <None Include="resources\hero_data\luna.json" />
+    <None Include="resources\hero_data\lycan.json" />
+    <None Include="resources\hero_data\magnus.json" />
+    <None Include="resources\hero_data\mars.json" />
+    <None Include="resources\hero_data\medusa.json" />
+    <None Include="resources\hero_data\meepo.json" />
+    <None Include="resources\hero_data\mirana.json" />
+    <None Include="resources\hero_data\monkey-king.json" />
+    <None Include="resources\hero_data\morphling.json" />
+    <None Include="resources\hero_data\naga-siren.json" />
+    <None Include="resources\hero_data\natures-prophet.json" />
+    <None Include="resources\hero_data\necrophos.json" />
+    <None Include="resources\hero_data\night-stalker.json" />
+    <None Include="resources\hero_data\nyx-assassin.json" />
+    <None Include="resources\hero_data\ogre-magi.json" />
+    <None Include="resources\hero_data\omniknight.json" />
+    <None Include="resources\hero_data\oracle.json" />
+    <None Include="resources\hero_data\outworld-devourer.json" />
+    <None Include="resources\hero_data\pangolier.json" />
+    <None Include="resources\hero_data\phantom-assassin.json" />
+    <None Include="resources\hero_data\phantom-lancer.json" />
+    <None Include="resources\hero_data\phoenix.json" />
+    <None Include="resources\hero_data\puck.json" />
+    <None Include="resources\hero_data\pudge.json" />
+    <None Include="resources\hero_data\pugna.json" />
+    <None Include="resources\hero_data\queen-of-pain.json" />
+    <None Include="resources\hero_data\razor.json" />
+    <None Include="resources\hero_data\riki.json" />
+    <None Include="resources\hero_data\rubick.json" />
+    <None Include="resources\hero_data\sand-king.json" />
+    <None Include="resources\hero_data\shadow-demon.json" />
+    <None Include="resources\hero_data\shadow-fiend.json" />
+    <None Include="resources\hero_data\shadow-shaman.json" />
+    <None Include="resources\hero_data\silencer.json" />
+    <None Include="resources\hero_data\skywrath-mage.json" />
+    <None Include="resources\hero_data\slardar.json" />
+    <None Include="resources\hero_data\slark.json" />
+    <None Include="resources\hero_data\snapfire.json" />
+    <None Include="resources\hero_data\sniper.json" />
+    <None Include="resources\hero_data\spectre.json" />
+    <None Include="resources\hero_data\spirit-breaker.json" />
+    <None Include="resources\hero_data\storm-spirit.json" />
+    <None Include="resources\hero_data\sven.json" />
+    <None Include="resources\hero_data\techies.json" />
+    <None Include="resources\hero_data\templar-assassin.json" />
+    <None Include="resources\hero_data\terrorblade.json" />
+    <None Include="resources\hero_data\tidehunter.json" />
+    <None Include="resources\hero_data\timbersaw.json" />
+    <None Include="resources\hero_data\tinker.json" />
+    <None Include="resources\hero_data\tiny.json" />
+    <None Include="resources\hero_data\treant-protector.json" />
+    <None Include="resources\hero_data\troll-warlord.json" />
+    <None Include="resources\hero_data\tusk.json" />
+    <None Include="resources\hero_data\underlord.json" />
+    <None Include="resources\hero_data\undying.json" />
+    <None Include="resources\hero_data\ursa.json" />
+    <None Include="resources\hero_data\vengeful-spirit.json" />
+    <None Include="resources\hero_data\venomancer.json" />
+    <None Include="resources\hero_data\viper.json" />
+    <None Include="resources\hero_data\visage.json" />
+    <None Include="resources\hero_data\void-spirit.json" />
+    <None Include="resources\hero_data\warlock.json" />
+    <None Include="resources\hero_data\weaver.json" />
+    <None Include="resources\hero_data\windranger.json" />
+    <None Include="resources\hero_data\winter-wyvern.json" />
+    <None Include="resources\hero_data\witch-doctor.json" />
+    <None Include="resources\hero_data\wraith-king.json" />
+    <None Include="resources\hero_data\zeus.json" />
+    <None Include="resources\mappings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\icons\abaddon.jpg" />
+    <Resource Include="resources\icons\alchemist.jpg" />
+    <Resource Include="resources\icons\ancient-apparition.jpg" />
+    <Resource Include="resources\icons\anti-mage.jpg" />
+    <Resource Include="resources\icons\arc-warden.jpg" />
+    <Resource Include="resources\icons\axe.jpg" />
+    <Resource Include="resources\icons\bane.jpg" />
+    <Resource Include="resources\icons\batrider.jpg" />
+    <Resource Include="resources\icons\beastmaster.jpg" />
+    <Resource Include="resources\icons\bloodseeker.jpg" />
+    <Resource Include="resources\icons\bounty-hunter.jpg" />
+    <Resource Include="resources\icons\brewmaster.jpg" />
+    <Resource Include="resources\icons\bristleback.jpg" />
+    <Resource Include="resources\icons\broodmother.jpg" />
+    <Resource Include="resources\icons\centaur-warrunner.jpg" />
+    <Resource Include="resources\icons\chaos-knight.jpg" />
+    <Resource Include="resources\icons\chen.jpg" />
+    <Resource Include="resources\icons\clinkz.jpg" />
+    <Resource Include="resources\icons\clockwerk.jpg" />
+    <Resource Include="resources\icons\crystal-maiden.jpg" />
+    <Resource Include="resources\icons\dark-seer.jpg" />
+    <Resource Include="resources\icons\dark-willow.jpg" />
+    <Resource Include="resources\icons\dazzle.jpg" />
+    <Resource Include="resources\icons\death-prophet.jpg" />
+    <Resource Include="resources\icons\disruptor.jpg" />
+    <Resource Include="resources\icons\doom.jpg" />
+    <Resource Include="resources\icons\dragon-knight.jpg" />
+    <Resource Include="resources\icons\drow-ranger.jpg" />
+    <Resource Include="resources\icons\earth-spirit.jpg" />
+    <Resource Include="resources\icons\earthshaker.jpg" />
+    <Resource Include="resources\icons\elder-titan.jpg" />
+    <Resource Include="resources\icons\ember-spirit.jpg" />
+    <Resource Include="resources\icons\enchantress.jpg" />
+    <Resource Include="resources\icons\enigma.jpg" />
+    <Resource Include="resources\icons\faceless-void.jpg" />
+    <Resource Include="resources\icons\grimstroke.jpg" />
+    <Resource Include="resources\icons\gyrocopter.jpg" />
+    <Resource Include="resources\icons\huskar.jpg" />
+    <Resource Include="resources\icons\invoker.jpg" />
+    <Resource Include="resources\icons\io.jpg" />
+    <Resource Include="resources\icons\jakiro.jpg" />
+    <Resource Include="resources\icons\juggernaut.jpg" />
+    <Resource Include="resources\icons\keeper-of-the-light.jpg" />
+    <Resource Include="resources\icons\kunkka.jpg" />
+    <Resource Include="resources\icons\legion-commander.jpg" />
+    <Resource Include="resources\icons\leshrac.jpg" />
+    <Resource Include="resources\icons\lich.jpg" />
+    <Resource Include="resources\icons\lifestealer.jpg" />
+    <Resource Include="resources\icons\lina.jpg" />
+    <Resource Include="resources\icons\lion.jpg" />
+    <Resource Include="resources\icons\lone-druid.jpg" />
+    <Resource Include="resources\icons\luna.jpg" />
+    <Resource Include="resources\icons\lycan.jpg" />
+    <Resource Include="resources\icons\magnus.jpg" />
+    <Resource Include="resources\icons\mars.jpg" />
+    <Resource Include="resources\icons\medusa.jpg" />
+    <Resource Include="resources\icons\meepo.jpg" />
+    <Resource Include="resources\icons\mirana.jpg" />
+    <Resource Include="resources\icons\monkey-king.jpg" />
+    <Resource Include="resources\icons\morphling.jpg" />
+    <Resource Include="resources\icons\naga-siren.jpg" />
+    <Resource Include="resources\icons\natures-prophet.jpg" />
+    <Resource Include="resources\icons\necrophos.jpg" />
+    <Resource Include="resources\icons\night-stalker.jpg" />
+    <Resource Include="resources\icons\nyx-assassin.jpg" />
+    <Resource Include="resources\icons\ogre-magi.jpg" />
+    <Resource Include="resources\icons\omniknight.jpg" />
+    <Resource Include="resources\icons\oracle.jpg" />
+    <Resource Include="resources\icons\outworld-devourer.jpg" />
+    <Resource Include="resources\icons\pangolier.jpg" />
+    <Resource Include="resources\icons\phantom-assassin.jpg" />
+    <Resource Include="resources\icons\phantom-lancer.jpg" />
+    <Resource Include="resources\icons\phoenix.jpg" />
+    <Resource Include="resources\icons\puck.jpg" />
+    <Resource Include="resources\icons\pudge.jpg" />
+    <Resource Include="resources\icons\pugna.jpg" />
+    <Resource Include="resources\icons\queen-of-pain.jpg" />
+    <Resource Include="resources\icons\razor.jpg" />
+    <Resource Include="resources\icons\riki.jpg" />
+    <Resource Include="resources\icons\rubick.jpg" />
+    <Resource Include="resources\icons\sand-king.jpg" />
+    <Resource Include="resources\icons\shadow-demon.jpg" />
+    <Resource Include="resources\icons\shadow-fiend.jpg" />
+    <Resource Include="resources\icons\shadow-shaman.jpg" />
+    <Resource Include="resources\icons\silencer.jpg" />
+    <Resource Include="resources\icons\skywrath-mage.jpg" />
+    <Resource Include="resources\icons\slardar.jpg" />
+    <Resource Include="resources\icons\slark.jpg" />
+    <Resource Include="resources\icons\snapfire.jpg" />
+    <Resource Include="resources\icons\sniper.jpg" />
+    <Resource Include="resources\icons\spectre.jpg" />
+    <Resource Include="resources\icons\spirit-breaker.jpg" />
+    <Resource Include="resources\icons\storm-spirit.jpg" />
+    <Resource Include="resources\icons\sven.jpg" />
+    <Resource Include="resources\icons\techies.jpg" />
+    <Resource Include="resources\icons\templar-assassin.jpg" />
+    <Resource Include="resources\icons\terrorblade.jpg" />
+    <Resource Include="resources\icons\tidehunter.jpg" />
+    <Resource Include="resources\icons\timbersaw.jpg" />
+    <Resource Include="resources\icons\tinker.jpg" />
+    <Resource Include="resources\icons\tiny.jpg" />
+    <Resource Include="resources\icons\treant-protector.jpg" />
+    <Resource Include="resources\icons\troll-warlord.jpg" />
+    <Resource Include="resources\icons\tusk.jpg" />
+    <Resource Include="resources\icons\underlord.jpg" />
+    <Resource Include="resources\icons\undying.jpg" />
+    <Resource Include="resources\icons\ursa.jpg" />
+    <Resource Include="resources\icons\vengeful-spirit.jpg" />
+    <Resource Include="resources\icons\venomancer.jpg" />
+    <Resource Include="resources\icons\viper.jpg" />
+    <Resource Include="resources\icons\visage.jpg" />
+    <Resource Include="resources\icons\void-spirit.jpg" />
+    <Resource Include="resources\icons\warlock.jpg" />
+    <Resource Include="resources\icons\weaver.jpg" />
+    <Resource Include="resources\icons\windranger.jpg" />
+    <Resource Include="resources\icons\winter-wyvern.jpg" />
+    <Resource Include="resources\icons\witch-doctor.jpg" />
+    <Resource Include="resources\icons\wraith-king.jpg" />
+    <Resource Include="resources\icons\zeus.jpg" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

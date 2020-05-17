@@ -1,0 +1,22 @@
+package com.sample
+ 
+import com.sample.DroolsTest.Message;
+import com.heropicker.dto.MessageDto;
+import com.heropicker.facts.HeroPickedFact;
+
+global com.heropicker.model.HeroDatabase heroDatabase;
+global com.heropicker.model.HeroReccomendationList heroReccomendationList;
+ 
+rule "Hero taken"
+	when
+		$picked : HeroPickedFact();
+	then
+		heroReccomendationList.markHeroAsTaken($picked.getHeroId());
+end
+
+rule "Enemy hero picked"
+	when
+		$picked: HeroPickedFact(team == HeroPickedFact.ENEMY_PICK);
+	then
+		heroReccomendationList.changeScoresOnEnemyPicked($picked.getHeroId());
+end

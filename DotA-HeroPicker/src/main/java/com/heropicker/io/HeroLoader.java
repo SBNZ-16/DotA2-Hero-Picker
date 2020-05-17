@@ -30,11 +30,11 @@ public class HeroLoader {
 			retVal.getHeroesMap().put(hero.getHeroId(), hero);
 			nameToId.put(hero.getHeroName(), hero.getHeroId());
 		}
-
+		
 		for (Hero hero : retVal.getHeroes()) {
 			loadHeroInfo(hero, nameToId);
 		}
-
+		
 		return retVal;
 	}
 
@@ -47,7 +47,7 @@ public class HeroLoader {
 		hero.setAttackType((String) heroMap.get("attack_type"));
 		hero.setOverallWinrate(percentageStringToDouble((String) heroMap.get("overall_winrate")));
 		hero.setPrimaryAttribute((String)heroMap.get("primary_attribute"));
-		
+				
 		for (String role: (ArrayList<String>)heroMap.get("roles")) {
 			hero.getRoles().add(role);
 		}

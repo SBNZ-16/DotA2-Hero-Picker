@@ -8,9 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.heropicker.dto.FactsDto;
 import com.heropicker.dto.MessageDto;
 import com.heropicker.facts.AllyHeroPickedFact;
 import com.heropicker.facts.EnemyHeroPickedFact;
@@ -35,4 +38,11 @@ public class PickController {
     	ArrayList<HeroRecommendation> retVal = DroolsTest.test(facts).getHeroRecommendations();
         return new ResponseEntity<ArrayList<HeroRecommendation>>(retVal, HttpStatus.OK);
     }
+	
+	@PostMapping()
+	public ResponseEntity<ArrayList<HeroRecommendation>> recommend(@RequestBody FactsDto info) {
+		List<Fact> facts = info.toFacts();
+    	ArrayList<HeroRecommendation> retVal = DroolsTest.test(facts).getHeroRecommendations();
+        return new ResponseEntity<ArrayList<HeroRecommendation>>(retVal, HttpStatus.OK);
+	}
 }

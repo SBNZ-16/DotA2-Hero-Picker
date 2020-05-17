@@ -5,8 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DotaPickerFront"
         mc:Ignorable="d"
-        Title="PreferenceWindow" Height="400" Width="200">
+        Title="PreferenceWindow" Height="400" Width="400" Closing="Window_Closing">
     <Grid>
-        
+        <GroupBox x:Name="groupBoxLanes" Header="Lanes&#xD;&#xA;" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Height="130" Width="110">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <CheckBox x:Name="OffLaneCheckbox" Content="Off Lane" Grid.Row="0" Unchecked="Lane_Unchecked" Checked="Lane_Checked"></CheckBox>
+                <CheckBox x:Name="MidLaneCheckbox" Content="Mid Lane" Grid.Row="1" Unchecked="Lane_Unchecked" Checked="Lane_Checked"></CheckBox>
+                <CheckBox x:Name="SafeLaneCheckbox" Content="Safe Lane" Grid.Row="2" Unchecked="Lane_Unchecked" Checked="Lane_Checked"></CheckBox>
+                <CheckBox x:Name="JungleCheckbox" Content="Jungle" Grid.Row="3" Unchecked="Lane_Unchecked" Checked="Lane_Checked"></CheckBox>
+                <CheckBox x:Name="RoamingCheckbox" Content="Roaming" Grid.Row="4" Unchecked="Lane_Unchecked" Checked="Lane_Checked"></CheckBox>
+            </Grid>
+        </GroupBox>
+        <GroupBox Height="130" Width="220"  Header="Roles&#xA;" Margin="155,20,17,219">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <CheckBox x:Name="NukerCheckbox" Content="Nuker" Grid.Row="0" Grid.Column="0" Unchecked="Role_Unchecked" Checked="Role_Checked"></CheckBox>
+                <CheckBox x:Name="EscapeCheckbox" Content="Escape" Grid.Row="1" Grid.Column="0" Unchecked="Role_Unchecked" Checked="Role_Checked"></CheckBox>
+                <CheckBox x:Name="SupportCheckbox" Content="Support" Grid.Row="2" Grid.Column="0" Unchecked="Role_Unchecked" Checked="Role_Checked"></CheckBox>
+                <CheckBox x:Name="InitiatorCheckbox" Content="Initiator" Grid.Row="3" Grid.Column="0" Unchecked="Role_Unchecked" Checked="Role_Checked"></CheckBox>
+                <CheckBox x:Name="CarryCheckbox" Content="Carry" Grid.Row="4" Grid.Column="0" Unchecked="Role_Unchecked" Checked="Role_Checked"></CheckBox>
+                <CheckBox x:Name="JunglerCheckbox" Content="Jungler" Grid.Row="0" Grid.Column="1" Unchecked="Role_Unchecked" Checked="Role_Checked"></CheckBox>
+                <CheckBox x:Name="DurableCheckbox" Content="Durable" Grid.Row="1" Grid.Column="1" Unchecked="Role_Unchecked" Checked="Role_Checked"></CheckBox>
+                <CheckBox x:Name="DisablerCheckbox" Content="Disabler" Grid.Row="2" Grid.Column="1" Unchecked="Role_Unchecked" Checked="Role_Checked"></CheckBox>
+                <CheckBox x:Name="PusherCheckbox" Content="Pusher" Grid.Row="3" Grid.Column="1" Unchecked="Role_Unchecked" Checked="Role_Checked"></CheckBox>
+            </Grid>
+        </GroupBox>
+        <ListBox x:Name="HeroesListBox" HorizontalAlignment="Left" Height="150" Margin="20,165,0,0" VerticalAlignment="Top" Width="360" SelectionMode="Multiple"/>
+        <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Left" Margin="305,335,0,0" VerticalAlignment="Top" Width="75" Click="CloseButton_Click"/>
+
+
     </Grid>
 </Window>

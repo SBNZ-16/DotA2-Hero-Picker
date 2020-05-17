@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DotaPickerFront"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="1300">
-    <Grid x:Name="MainGrid">
+        Title="MainWindow" Height="600" Width="1600">
+    <Grid x:Name="MainGrid" ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
             <RowDefinition Height="6*" />
         </Grid.RowDefinitions>
-        <Grid x:Name="SelectedHeroesGrid" Grid.Column="0" Grid.Row="0">
+        <Grid x:Name="SelectedHeroesGrid" Grid.Column="0" Grid.Row="0" ShowGridLines="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
@@ -26,7 +26,7 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
         </Grid>
-        <Grid x:Name="HeroesGrid" Grid.Column="0" Grid.Row="1">
+        <Grid x:Name="HeroesGrid" Grid.Column="0" Grid.Row="1" ShowGridLines="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8*"/>
                 <ColumnDefinition Width="1*"/>
@@ -38,12 +38,16 @@
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="AgilityHeroesGrid" Grid.Row="0" Grid.Column="0">
+            <Grid x:Name="AgilityHeroesGrid" Grid.Row="0" Grid.Column="0" ShowGridLines="True">
             </Grid>
-            <Grid x:Name="StrengthHeroesGrid" Grid.Row="0" Grid.Column="2">
+            <Grid x:Name="StrengthHeroesGrid" Grid.Row="0" Grid.Column="2" ShowGridLines="True">
             </Grid>
-            <Grid x:Name="IntelligenceHeroesGrid" Grid.Row="0" Grid.Column="4">
+            <Grid x:Name="IntelligenceHeroesGrid" Grid.Row="0" Grid.Column="4" ShowGridLines="True">
             </Grid>
+            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="2">
+                <Button x:Name="ShowButton" Width="250" Height="50" Content="Show" Margin="0, 20, 0, 5" Click="ShowButton_Click"></Button>
+                <Button Width="200" Height="40" Content="Preferences" Click="Button_Click"></Button>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

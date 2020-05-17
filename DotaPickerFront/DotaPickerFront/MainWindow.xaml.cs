@@ -2,9 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Serialization;
 using Image = System.Windows.Controls.Image;
 
 namespace DotaPickerFront
@@ -25,13 +30,21 @@ namespace DotaPickerFront
     {
 
         private List<List<string>> mappings;
+        private Dictionary<string, string> nameToId;
         private Dictionary<string, BitmapImage> images;
         private Dictionary<string, FormatConvertedBitmap> grayImages;
-        private Dictionary<string, object> heroes;
+        
         private Dictionary<string, Image> controlIcons;
+
+        public Dictionary<string, object> Heroes { get; set; }
+        public List<string> HeroPreferences { get; set; }
+        public List<string> LanePreferences { get; set; }
+        public List<string> RolePreferences { get; set; }
 
         private List<string> allies;
         private List<string> enemies;
+
+        private static readonly HttpClient client = new HttpClient();
 
         public MainWindow()
         {
@@ -43,14 +56,58 @@ namespace DotaPickerFront
             allies = new List<string>();
             enemies = new List<string>();
 
+            HeroPreferences = new List<string>();
+            LanePreferences = new List<string>();
+            RolePreferences = new List<string>();
+
+            LoadPreferences();
 
             LoadFiles();
             PopulateHeroGrid();
         }
 
+        private void LoadPreferences()
+        {
+            if (File.Exists("rolePreferences.xml"))
+                RolePreferences = DeserializeList("rolePreferences.xml");
+            else
+                SerializeList(RolePreferences, "rolePreferences.xml");
+            if (File.Exists("lanePreferences.xml"))
+                LanePreferences = DeserializeList("lanePreferences.xml");
+            else
+                SerializeList(LanePreferences, "lanePreferences.xml");
+            if (File.Exists("heroPreferences.xml"))
+                HeroPreferences = DeserializeList("heroPreferences.xml");
+            else
+                SerializeList(HeroPreferences, "heroPreferences.xml");
+        }
+
+        public void SerializeList(List<string> toSerialize, string fileName)
+        {
+            var serializer = new XmlSerializer(typeof(List<string>));
+            using (var stream = File.Open(fileName, FileMode.Create))
+            {
+                serializer.Serialize(stream, toSerialize);
+            }
+        }
+
+
+        public List<string> DeserializeList(string fileName)
+        {
+            var serializer = new XmlSerializer(typeof(List<string>));
+            using (var stream = File.OpenRead(fileName))
+            {
+                return (List<string>)serializer.Deserialize(stream);
+            }
+        }
+
+
+
         private void LoadFiles()
         {
             mappings = FileLoader.LoadMapings();
+            nameToId = new Dictionary<string, string>();
+            mappings.ForEach(mapping => nameToId[mapping[1]] = mapping[0]);
 
             var images = FileLoader.LoadImages(mappings);
             foreach (KeyValuePair<string, Bitmap> entry in images)
@@ -60,7 +117,7 @@ namespace DotaPickerFront
             }
 
 
-            heroes = FileLoader.LoadHeroes(mappings);
+            Heroes = FileLoader.LoadHeroes(mappings);
         }
 
         private void PopulateHeroGrid()
@@ -72,9 +129,6 @@ namespace DotaPickerFront
             PopulateAttributeGrid(AgilityHeroesGrid, 7, 7, agility);
             PopulateAttributeGrid(StrengthHeroesGrid, 7, 7, strength);
             PopulateAttributeGrid(IntelligenceHeroesGrid, 7, 7, intelligence);
-
-
-
         }
 
         private void PopulateAttributeGrid(Grid grid, int rows, int columns, List<string> heroes)
@@ -171,7 +225,7 @@ namespace DotaPickerFront
         private List<string> FilterByPrimaryAttribute(string primaryAttribute)
         {
             List<string> retVal = new List<string>();
-            foreach (KeyValuePair<string, object> entry in heroes)
+            foreach (KeyValuePair<string, object> entry in Heroes)
             {
                 Dictionary<string, object> heroDict = (Dictionary<string, object>)entry.Value;
                 if (primaryAttribute == (string)heroDict["primary_attribute"])
@@ -180,6 +234,32 @@ namespace DotaPickerFront
                 }
             }
             return retVal;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            PreferenceWindow preferenceWindow = new PreferenceWindow(this);
+            preferenceWindow.ShowDialog();
+        }
+
+        private List<string> heroNamesToIds(List<string> heroNames)
+        {
+            return heroNames.Select(heroName => nameToId[heroName]).ToList();
+        }
+
+        private async void ShowButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            var postDict = new Dictionary<string, object>();
+            postDict["heroPreferences"] = heroNamesToIds(HeroPreferences);
+            postDict["lanePreferences"] = LanePreferences;
+            postDict["rolePreferences"] = RolePreferences;
+            postDict["allies"] = allies;
+            postDict["enemies"] = enemies;
+            var content = new JavaScriptSerializer().Serialize(postDict);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:8080/api/pick");
+            request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+            var response = await client.SendAsync(request);
         }
     }
 }

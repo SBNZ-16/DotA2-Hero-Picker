@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.heropicker.facts.AllyHeroPickedFact;
 import com.heropicker.facts.EnemyHeroPickedFact;
 import com.heropicker.facts.Fact;
+import com.heropicker.facts.HeroBannedFact;
 import com.heropicker.facts.HeroPreferredFact;
 
 public class FactsDto {
@@ -14,6 +15,7 @@ public class FactsDto {
 	private ArrayList<String> rolePreferences;
 	private ArrayList<String> allies;
 	private ArrayList<String> enemies;
+	private ArrayList<String> banned;
 	
 	public FactsDto() {
 		
@@ -59,6 +61,14 @@ public class FactsDto {
 		this.enemies = enemies;
 	}
 	
+	public ArrayList<String> getBanned() {
+		return banned;
+	}
+
+	public void setBanned(ArrayList<String> banned) {
+		this.banned = banned;
+	}
+
 	public ArrayList<Fact> toFacts() {
 		ArrayList<Fact> retVal = new ArrayList<>();
 		for (String allyId: allies) {
@@ -69,6 +79,9 @@ public class FactsDto {
 		}
 		for (String perfId: heroPreferences) {
 			retVal.add(new HeroPreferredFact(perfId));
+		}
+		for (String bannedId: banned) {
+			retVal.add(new HeroBannedFact(bannedId));
 		}
 		return retVal;
 	}

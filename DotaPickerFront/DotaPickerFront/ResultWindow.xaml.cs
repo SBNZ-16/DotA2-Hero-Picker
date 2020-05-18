@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -38,6 +39,7 @@ namespace DotaPickerFront
             {
                 ResultsGrid.RowDefinitions.Add(new RowDefinition());
             }
+            var sb = new Storyboard();
             for (int i = 0; i < toDisplay; i++)
             {
                 Image heroIcon = new Image();
@@ -50,26 +52,44 @@ namespace DotaPickerFront
                 heroIcon.Source = _mainWindow.images[heroId];
    
                 ResultsGrid.Children.Add(heroIcon);
-
-                Label heroLabel = new Label();
-                heroLabel.Content = heroName;
-                ResultsGrid.Children.Add(heroLabel);
-                Grid.SetColumn(heroLabel, 1);
-                Grid.SetRow(heroLabel, i);
-
-
                 Grid.SetColumn(heroIcon, 0);
                 Grid.SetRow(heroIcon, i);
 
-                Label heroScore = new Label();
-                heroScore.Content = _results[i]["score"];
+                Label heroLabel = new Label();
+                heroLabel.FontSize = 20;
+                heroLabel.Content = heroName;
 
-                ResultsGrid.Children.Add(heroScore);
+                StackPanel stackPanel = new StackPanel();
+                stackPanel.Children.Add(heroLabel);
+                stackPanel.VerticalAlignment = VerticalAlignment.Center;
 
-                Grid.SetColumn(heroScore, 2);
-                Grid.SetRow(heroScore, i);
+                ResultsGrid.Children.Add(stackPanel);
+                Grid.SetColumn(stackPanel, 1);
+                Grid.SetRow(stackPanel, i);
 
+
+                
+
+                double score = Double.Parse(_results[i]["score"].ToString());
+
+                ProgressBar progressBar = new ProgressBar();
+                progressBar.Margin = new Thickness(10, 15, 10, 15);
+                ResultsGrid.Children.Add(progressBar);
+                Grid.SetColumn(progressBar, 2);
+                Grid.SetRow(progressBar, i);
+
+                var fillUp = new DoubleAnimation()
+                {
+                    From = 0,
+                    To = score,
+                    Duration = TimeSpan.FromSeconds(2),
+                };
+
+                Storyboard.SetTarget(fillUp, progressBar);
+                Storyboard.SetTargetProperty(fillUp, new PropertyPath(ProgressBar.ValueProperty));
+                sb.Children.Add(fillUp);
             }
+            sb.Begin();
         }
 
     }

@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DotaPickerFront"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1600">
+        Title="MainWindow" Height="600" Width="1600"
+        ResizeMode="NoResize">
     <Grid x:Name="MainGrid" ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />

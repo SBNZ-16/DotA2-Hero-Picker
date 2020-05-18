@@ -33,8 +33,12 @@ namespace DotaPickerFront
         private Dictionary<string, string> nameToId;
         public Dictionary<string, BitmapImage> images;
         public Dictionary<string, FormatConvertedBitmap> grayImages;
+
+        public Dictionary<string, BitmapImage> avatarImages;
         
         private Dictionary<string, Image> controlIcons;
+        private List<Image> allyIcons;
+        private List<Image> enemyIcons;
 
         public Dictionary<string, object> Heroes { get; set; }
         public List<string> HeroPreferences { get; set; }
@@ -43,6 +47,7 @@ namespace DotaPickerFront
 
         private List<string> allies;
         private List<string> enemies;
+        private List<string> banned;
 
         private static readonly HttpClient client = new HttpClient();
 
@@ -51,10 +56,15 @@ namespace DotaPickerFront
             InitializeComponent();
 
             controlIcons = new Dictionary<string, Image>();
+            allyIcons = new List<Image>();
+            enemyIcons = new List<Image>();
+
             images = new Dictionary<string, BitmapImage>();
             grayImages = new Dictionary<string, FormatConvertedBitmap>();
+            avatarImages = new Dictionary<string, BitmapImage>();
             allies = new List<string>();
             enemies = new List<string>();
+            banned = new List<string>();
 
             HeroPreferences = new List<string>();
             LanePreferences = new List<string>();
@@ -64,6 +74,62 @@ namespace DotaPickerFront
 
             LoadFiles();
             PopulateHeroGrid();
+            PopulateSelectedHeroes();
+        }
+
+
+        private void PopulateSelectedHeroes()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Image allyHeroImage = new Image();
+                allyHeroImage.Margin = new Thickness(5, 0, 5, 0);
+                allyHeroImage.Tag = "";
+                allyHeroImage.MouseLeftButtonUp += UnselectHero;
+
+                SelectedHeroesGrid.Children.Add(allyHeroImage);
+                Grid.SetRow(allyHeroImage, 0);
+                Grid.SetColumn(allyHeroImage, i);
+                allyIcons.Add(allyHeroImage);
+            }
+            redrawAllies();
+
+            Image playerImage = new Image();
+            playerImage.Margin = new Thickness(5, 0, 5, 0);
+            playerImage.Source = avatarImages["player_avatar"];
+            playerImage.Tag = "";
+
+            SelectedHeroesGrid.Children.Add(playerImage);
+            Grid.SetRow(playerImage, 0);
+            Grid.SetColumn(playerImage, 4);
+
+
+            StackPanel stackPanel = new StackPanel();
+            stackPanel.VerticalAlignment = VerticalAlignment.Center;
+            stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
+            Label vsLabel = new Label();
+            vsLabel.Content = "VS";
+            vsLabel.FontSize = 40;
+            stackPanel.Children.Add(vsLabel);
+
+            SelectedHeroesGrid.Children.Add(stackPanel);
+            Grid.SetRow(stackPanel, 0);
+            Grid.SetColumn(stackPanel, 5);
+
+            for (int i = 0; i < 5; i++)
+            {
+                Image enemyHeroImage = new Image();
+                enemyHeroImage.Margin = new Thickness(5, 0, 5, 0);
+                enemyHeroImage.Tag = "";
+                enemyHeroImage.MouseLeftButtonUp += UnselectHero;
+
+                SelectedHeroesGrid.Children.Add(enemyHeroImage);
+                Grid.SetRow(enemyHeroImage, 0);
+                Grid.SetColumn(enemyHeroImage, i+6);
+
+                enemyIcons.Add(enemyHeroImage);
+            }
+            redrawEnemies();
         }
 
         private void LoadPreferences()
@@ -116,6 +182,18 @@ namespace DotaPickerFront
                 grayImages[entry.Key] = BitmapConverter.BitmapImageToGraycale(this.images[entry.Key]);
             }
 
+            var avatarMappings = new List<List<string>>()
+            {
+                new List<string> {"ally_avatar"},
+                new List<string> {"enemy_avatar"},
+                new List<string> {"player_avatar"}
+            };
+            var avatarImages = FileLoader.LoadImages(avatarMappings);
+            foreach (KeyValuePair<string, Bitmap> entry in avatarImages)
+            {
+                this.avatarImages[entry.Key] = BitmapConverter.BitmapToImageSource(entry.Value);
+            } 
+
 
             Heroes = FileLoader.LoadHeroes(mappings);
         }
@@ -152,6 +230,7 @@ namespace DotaPickerFront
                 heroIcon.Tag = hero;
                 heroIcon.MouseLeftButtonUp += addHeroToAllies;
                 heroIcon.MouseRightButtonUp += addHeroToEnemies;
+                heroIcon.MouseDown += ChangeBanStatus;
                 heroIcon.MouseEnter += HeroIcon_MouseEnter;
                 heroIcon.MouseLeave += HeroIcon_MouseLeave;
 
@@ -162,9 +241,84 @@ namespace DotaPickerFront
             }
         }
 
+        private void ChangeBanStatus(object sender, MouseButtonEventArgs e)
+        {
+            if (e.MiddleButton == MouseButtonState.Pressed)
+            {
+                Image heroImage = (Image)sender;
+                string hero = (string)heroImage.Tag;
+                if (!allies.Contains(hero) && !enemies.Contains(hero))
+                {
+                    Grid grid = determineGrid(hero);
+                    if (!banned.Contains(hero))
+                    {
+                        drawRedEllipse(heroImage, grid);
+                        banned.Add(hero);
+                    }
+                    else
+                    {
+                        removeRedEllipse(heroImage, grid);
+                        banned.Remove(hero);
+                    }
+                }
+            }
+        }
+
+        private Grid determineGrid(string hero)
+        {
+            string attribute = (string)((Dictionary<string, object>)Heroes[hero])["primary_attribute"];
+            if (attribute == "agility")
+            {
+                return AgilityHeroesGrid;
+            }
+            else if (attribute == "strength")
+            {
+                return StrengthHeroesGrid;
+            }
+            else
+            {
+                return IntelligenceHeroesGrid;
+            }
+        }
+
+        private void drawRedEllipse(Image heroImage, Grid grid)
+        {
+            Canvas canvas = new Canvas();
+            Ellipse ellipse = new Ellipse();
+            ellipse.Fill = System.Windows.Media.Brushes.Red;
+            ellipse.Width = 25;
+            ellipse.Height = 25;
+            ellipse.StrokeThickness = 2;
+
+            int row = Grid.GetRow(heroImage);
+            int columnn = Grid.GetColumn(heroImage);
+
+            canvas.Children.Add(ellipse);
+
+            double left = (canvas.ActualWidth - ellipse.ActualWidth) / 2;
+            Canvas.SetLeft(ellipse, left);
+
+            double top = (canvas.ActualHeight - ellipse.ActualHeight) / 2;
+            Canvas.SetTop(ellipse, top);
+
+            grid.Children.Add(canvas);
+
+            Grid.SetColumn(canvas, columnn);
+            Grid.SetRow(canvas, row);
+        }
+
+        private void removeRedEllipse(Image heroImage, Grid grid)
+        {
+            int row = Grid.GetRow(heroImage);
+            int column = Grid.GetColumn(heroImage);
+
+            UIElement toRemove = grid.Children.Cast<UIElement>().Where(e => Grid.GetRow(e) == row && Grid.GetColumn(e) == column).ToList()[1];
+            grid.Children.Remove(toRemove);
+        }
 
         private void HeroIcon_MouseLeave(object sender, MouseEventArgs e)
         {
+            
             Image heroImage = (Image)sender;
             heroImage.Margin = new Thickness(5, 2, 5, 2);
         }
@@ -180,7 +334,7 @@ namespace DotaPickerFront
             Image heroImage = (Image)sender;
             string hero = (string)heroImage.Tag;
 
-            if (allies.Count >= 4 || allies.Contains(hero) || enemies.Contains(hero))
+            if (allies.Count >= 4 || allies.Contains(hero) || enemies.Contains(hero) || banned.Contains(hero))
             {
                 return;
             }
@@ -190,12 +344,9 @@ namespace DotaPickerFront
             int column = allies.Count;
             allies.Add(hero);
 
-            Image selectedHeroIcon = new Image();
+            Image selectedHeroIcon = allyIcons[column];
             selectedHeroIcon.Source = images[hero];
             selectedHeroIcon.Tag = heroImage.Tag;
-            SelectedHeroesGrid.Children.Add(selectedHeroIcon);
-            Grid.SetRow(selectedHeroIcon, 0);
-            Grid.SetColumn(selectedHeroIcon, column);
         }
 
         private void addHeroToEnemies(object sender, MouseButtonEventArgs e)
@@ -203,23 +354,78 @@ namespace DotaPickerFront
             Image heroImage = (Image)sender;
             string hero = (string)heroImage.Tag;
 
-            if (enemies.Count >= 5 || allies.Contains(hero) || enemies.Contains(hero))
+            if (enemies.Count >= 5 || allies.Contains(hero) || enemies.Contains(hero) || banned.Contains(hero))
             {
                 return;
             }
 
             controlIcons[hero].Source = grayImages[hero];
 
-            int column = enemies.Count + 6;
+            int column = enemies.Count;
             enemies.Add(hero);
 
-            Image selectedHeroIcon = new Image();
-            selectedHeroIcon.Margin = new Thickness(5, 0, 5, 0);
+            Image selectedHeroIcon = enemyIcons[column];
             selectedHeroIcon.Source = images[hero];
             selectedHeroIcon.Tag = heroImage.Tag;
-            SelectedHeroesGrid.Children.Add(selectedHeroIcon);
-            Grid.SetRow(selectedHeroIcon, 0);
-            Grid.SetColumn(selectedHeroIcon, column);
+        }
+
+        private void UnselectHero(object sender, MouseButtonEventArgs e)
+        {
+            Image heroImage = (Image)sender;
+            string hero = (string)heroImage.Tag;
+            if (hero != "") // "" is for avatars
+            {
+                if (allies.Contains(hero))
+                {
+                    allies.Remove(hero);
+                    redrawAllies();
+                }
+                else
+                {
+                    enemies.Remove(hero);
+                    redrawEnemies();
+                }
+                controlIcons[hero].Source = images[hero];
+            }
+        }
+
+        private void redrawAllies()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (i < allies.Count)
+                {
+                    string hero = allies[i];
+                    allyIcons[i].Tag = hero;
+                    allyIcons[i].Source = images[hero];
+                }
+                else
+                {
+                    string hero = "";
+                    allyIcons[i].Tag = hero;
+                    allyIcons[i].Source = avatarImages["ally_avatar"];
+                }
+            }
+
+        }
+
+        private void redrawEnemies()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                if (i < enemies.Count)
+                {
+                    string hero = enemies[i];
+                    enemyIcons[i].Tag = hero;
+                    enemyIcons[i].Source = images[hero];
+                }
+                else
+                {
+                    string hero = "";
+                    enemyIcons[i].Tag = hero;
+                    enemyIcons[i].Source = avatarImages["enemy_avatar"];
+                }
+            }
         }
 
         private List<string> FilterByPrimaryAttribute(string primaryAttribute)
@@ -255,6 +461,7 @@ namespace DotaPickerFront
             postDict["rolePreferences"] = RolePreferences;
             postDict["allies"] = allies;
             postDict["enemies"] = enemies;
+            postDict["banned"] = banned;
             var content = new JavaScriptSerializer().Serialize(postDict);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:8080/api/pick");
             request.Content = new StringContent(content, Encoding.UTF8, "application/json");
@@ -264,7 +471,6 @@ namespace DotaPickerFront
 
             ResultWindow resultWindow = new ResultWindow(recommendations, this);
             resultWindow.ShowDialog();
-            
         }
     }
 }

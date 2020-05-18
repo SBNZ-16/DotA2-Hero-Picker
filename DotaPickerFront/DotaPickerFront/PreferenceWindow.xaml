@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DotaPickerFront"
         mc:Ignorable="d"
-        Title="PreferenceWindow" Height="400" Width="400" Closing="Window_Closing">
+        Title="PreferenceWindow" Height="400" Width="400" Closing="Window_Closing"
+        ResizeMode="NoResize">
     <Grid>
         <GroupBox x:Name="groupBoxLanes" Header="Lanes&#xD;&#xA;" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Height="130" Width="110">
             <Grid>
@@ -48,7 +49,7 @@
             </Grid>
         </GroupBox>
         <ListBox x:Name="HeroesListBox" HorizontalAlignment="Left" Height="150" Margin="20,165,0,0" VerticalAlignment="Top" Width="360" SelectionMode="Multiple"/>
-        <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Left" Margin="305,335,0,0" VerticalAlignment="Top" Width="75" Click="CloseButton_Click"/>
+        <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Left" Margin="305,330,0,0" VerticalAlignment="Top" Width="75" Click="CloseButton_Click"/>
 
 
     </Grid>

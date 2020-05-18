@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DotaPickerFront"
         mc:Ignorable="d"
-        Title="ResultWindow" Height="300" Width="300">
+        Title="ResultWindow" Height="600" Width="700"
+        ResizeMode="NoResize">
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
             <Grid x:Name="ResultsGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
             </Grid>
         </ScrollViewer>

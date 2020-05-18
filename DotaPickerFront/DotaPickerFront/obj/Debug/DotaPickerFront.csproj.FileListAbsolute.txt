@@ -44,3 +44,4 @@ F:\Arbeit\semestar 8\SBNZ\Repo\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPic
 F:\Arbeit\semestar 8\SBNZ\Repo\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.pdb
 F:\Arbeit\semestar 8\SBNZ\Repo\DotaPickerFront\DotaPickerFront\obj\Debug\ResultWindow.g.cs
 F:\Arbeit\semestar 8\SBNZ\Repo\DotaPickerFront\DotaPickerFront\obj\Debug\ResultWindow.baml
+F:\Arbeit\semestar 8\SBNZ\Repo\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.csprojResolveAssemblyReference.cache

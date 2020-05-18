@@ -2,5 +2,6 @@
 <ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <string>Alchemist</string>
   <string>Ancient Apparition</string>
-  <string>Anti-Mage</string>
+  <string>Axe</string>
+  <string>Arc Warden</string>
 </ArrayOfString>

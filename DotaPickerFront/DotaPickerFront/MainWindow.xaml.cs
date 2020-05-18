@@ -31,8 +31,8 @@ namespace DotaPickerFront
 
         private List<List<string>> mappings;
         private Dictionary<string, string> nameToId;
-        private Dictionary<string, BitmapImage> images;
-        private Dictionary<string, FormatConvertedBitmap> grayImages;
+        public Dictionary<string, BitmapImage> images;
+        public Dictionary<string, FormatConvertedBitmap> grayImages;
         
         private Dictionary<string, Image> controlIcons;
 
@@ -249,7 +249,6 @@ namespace DotaPickerFront
 
         private async void ShowButton_Click(object sender, RoutedEventArgs e)
         {
-
             var postDict = new Dictionary<string, object>();
             postDict["heroPreferences"] = heroNamesToIds(HeroPreferences);
             postDict["lanePreferences"] = LanePreferences;
@@ -260,6 +259,12 @@ namespace DotaPickerFront
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:8080/api/pick");
             request.Content = new StringContent(content, Encoding.UTF8, "application/json");
             var response = await client.SendAsync(request);
+            var responseString = await response.Content.ReadAsStringAsync();
+            List<Dictionary<string, object>> recommendations = new JavaScriptSerializer().Deserialize<List<Dictionary<string, object>>>(responseString);
+
+            ResultWindow resultWindow = new ResultWindow(recommendations, this);
+            resultWindow.ShowDialog();
+            
         }
     }
 }

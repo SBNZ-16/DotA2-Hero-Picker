@@ -30,15 +30,6 @@ import com.sample.DroolsTest;
 @RequestMapping("/api/pick")
 public class PickController {
 	
-	@GetMapping()
-	public ResponseEntity<ArrayList<HeroRecommendation>> test() {
-		List<Fact> facts = new ArrayList<Fact>();
-		facts.add(new AllyHeroPickedFact("tinker"));
-		facts.add(new EnemyHeroPickedFact("zeus", false));
-    	ArrayList<HeroRecommendation> retVal = DroolsTest.test(facts).getHeroRecommendations();
-        return new ResponseEntity<ArrayList<HeroRecommendation>>(retVal, HttpStatus.OK);
-    }
-	
 	@PostMapping()
 	public ResponseEntity<ArrayList<HeroRecommendation>> recommend(@RequestBody FactsDto info) {
 		List<Fact> facts = info.toFacts();

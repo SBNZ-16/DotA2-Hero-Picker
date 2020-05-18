@@ -7,6 +7,8 @@ import com.heropicker.facts.EnemyHeroPickedFact;
 import com.heropicker.facts.Fact;
 import com.heropicker.facts.HeroBannedFact;
 import com.heropicker.facts.HeroPreferredFact;
+import com.heropicker.facts.LanePreferredFact;
+import com.heropicker.facts.RolePreferredFact;
 
 public class FactsDto {
 
@@ -82,6 +84,12 @@ public class FactsDto {
 		}
 		for (String bannedId: banned) {
 			retVal.add(new HeroBannedFact(bannedId));
+		}
+		for (String role: rolePreferences) {
+			retVal.add(new RolePreferredFact(role));
+		}
+		for (String lane: lanePreferences) {
+			retVal.add(new LanePreferredFact(lane));
 		}
 		return retVal;
 	}

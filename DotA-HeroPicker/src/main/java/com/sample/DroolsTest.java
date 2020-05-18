@@ -63,6 +63,7 @@ public class DroolsTest {
 			kSession.getAgenda().getAgendaGroup("preferences").setFocus();
 			kSession.fireAllRules();
 
+			heroRecommendationList.scaleScore(0,100);
 			heroRecommendationList.displayReccomendations(10);
 
 			return heroRecommendationList;

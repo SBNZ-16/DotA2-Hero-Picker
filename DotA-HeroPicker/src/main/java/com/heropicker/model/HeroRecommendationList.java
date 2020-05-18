@@ -47,8 +47,8 @@ public class HeroRecommendationList {
 		});
 		for (int i = 0; i < countToDisplay; i++) {
 			HeroRecommendation heroRecommendation = heroReccomendations.get(i);
-			System.out.println(
-					i + 1 + ". " + heroRecommendation.getHero().getHeroName() + ", score: " + heroRecommendation.getScore());
+			System.out.println(i + 1 + ". " + heroRecommendation.getHero().getHeroName() + ", score: "
+					+ heroRecommendation.getScore());
 		}
 	}
 
@@ -61,6 +61,17 @@ public class HeroRecommendationList {
 			}
 		});
 		return heroReccomendations;
+	}
+
+	public void scaleScore(double minValue, double maxValue) {
+		double minScore = heroRecommendationsMap.values().stream().map(HeroRecommendation::getScore)
+				.min(Double::compare).get();
+		double maxScore = heroRecommendationsMap.values().stream().map(HeroRecommendation::getScore)
+				.max(Double::compare).get();
+		double scoreRange = maxScore - minScore;
+		double newValueRange = maxValue - minValue;
+		heroRecommendationsMap.values().forEach(heroRecommendation -> heroRecommendation
+				.setScore((heroRecommendation.getScore() - minScore) / scoreRange * newValueRange + minValue));
 	}
 
 }

@@ -61,7 +61,7 @@ rule "Nuker role"
 		AllyHeroPickedFact()
 		$count : Long() from accumulate ($hero : Hero(roles contains "Nuker") from pickedAllyHeroes.heroes, count($hero))
 	then
-		double penalty = (1 - (double)$count) * 0.1;
+		double penalty = (1 - (double)$count) * 0.05;
 		insert(new UpdateScoresFact(penalty + 1, 0, null, "Nuker", null));
 end
 
@@ -72,7 +72,7 @@ rule "Escape role"
 		AllyHeroPickedFact()
 		$count : Long() from accumulate ($hero : Hero(roles contains "Escape") from pickedAllyHeroes.heroes, count($hero))
 	then
-		double penalty = (1 - (double)$count) * 0.05;
+		double penalty = (1 - (double)$count) * 0.025;
 		insert(new UpdateScoresFact(penalty + 1, 0, null, "Escape", null));
 end
 
@@ -83,7 +83,7 @@ rule "Support role"
 		AllyHeroPickedFact()
 		$count : Long() from accumulate ($hero : Hero(roles contains "Support") from pickedAllyHeroes.heroes, count($hero))
 	then
-		double penalty = (2 - (double)$count) * 0.1;
+		double penalty = (2 - (double)$count) * 0.05;
 		insert(new UpdateScoresFact(penalty + 1, 0, null, "Support", null));
 end
 
@@ -94,7 +94,7 @@ rule "Initiator role"
 		AllyHeroPickedFact()
 		$count : Long() from accumulate ($hero : Hero(roles contains "Initiator") from pickedAllyHeroes.heroes, count($hero))
 	then
-		double penalty = (1.5 - (double)$count) * 0.1;
+		double penalty = (1.5 - (double)$count) * 0.05;
 		insert(new UpdateScoresFact(penalty + 1, 0, null, "Initiator", null));
 end
 
@@ -105,7 +105,7 @@ rule "Carry role"
 		AllyHeroPickedFact()
 		$count : Long() from accumulate ($hero : Hero(roles contains "Carry") from pickedAllyHeroes.heroes, count($hero))
 	then
-		double penalty = (2 - (double)$count) * 0.1;
+		double penalty = (2 - (double)$count) * 0.05;
 		insert(new UpdateScoresFact(penalty + 1, 0, null, "Carry", null));
 end
 
@@ -116,7 +116,7 @@ rule "Jungler role"
 		AllyHeroPickedFact()
 		$count : Long() from accumulate ($hero : Hero(roles contains "Jungler") from pickedAllyHeroes.heroes, count($hero))
 	then
-		double penalty = (0.5 - (double)$count) * 0.05;
+		double penalty = (0.5 - (double)$count) * 0.025;
 		insert(new UpdateScoresFact(penalty + 1, 0, null, "Jungler", null));
 end
 
@@ -127,7 +127,7 @@ rule "Durable role"
 		AllyHeroPickedFact()
 		$count : Long() from accumulate ($hero : Hero(roles contains "Durable") from pickedAllyHeroes.heroes, count($hero))
 	then
-		double penalty = (1.5 - (double)$count) * 0.1;
+		double penalty = (1.5 - (double)$count) * 0.05;
 		insert(new UpdateScoresFact(penalty + 1, 0, null, "Durable", null));
 end
 
@@ -138,7 +138,7 @@ rule "Disabler role"
 		AllyHeroPickedFact()
 		$count : Long() from accumulate ($hero : Hero(roles contains "Disabler") from pickedAllyHeroes.heroes, count($hero))
 	then
-		double penalty = (2 - (double)$count) * 0.05;
+		double penalty = (2 - (double)$count) * 0.025;
 		insert(new UpdateScoresFact(penalty + 1, 0, null, "Disabler", null));
 end
 
@@ -149,7 +149,7 @@ rule "Pusher role"
 		AllyHeroPickedFact()
 		$count : Long() from accumulate ($hero : Hero(roles contains "Disabler") from pickedAllyHeroes.heroes, count($hero))
 	then
-		double penalty = (1.5 - (double)$count) * 0.1;
+		double penalty = (1.5 - (double)$count) * 0.05;
 		insert(new UpdateScoresFact(penalty + 1, 0, null, "Pusher", null));
 end
 

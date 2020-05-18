@@ -180,7 +180,6 @@ rule "Lane preferred"
 end
 
 rule "Update score by heroId"
-	agenda-group "preferences"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
 		$heroRecommendation : HeroRecommendation(hero.heroId==$heroId) from heroRecommendationList.getHeroRecommendations()
@@ -189,7 +188,6 @@ rule "Update score by heroId"
 end
 
 rule "Update score by role"
-	agenda-group "preferences"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
 		$heroRecommendation : HeroRecommendation(hero.roles contains $role) from heroRecommendationList.getHeroRecommendations()
@@ -198,7 +196,6 @@ rule "Update score by role"
 end
 
 rule "Update score by lane"
-	agenda-group "preferences"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
 		$heroRecommendation : HeroRecommendation($hero : hero) from heroRecommendationList.getHeroRecommendations()

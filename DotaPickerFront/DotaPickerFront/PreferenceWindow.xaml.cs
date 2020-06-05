@@ -128,5 +128,10 @@ namespace DotaPickerFront
              _mainWindow.RolePreferences = _mainWindow.RolePreferences.Distinct().ToList();
             _mainWindow.RolePreferences.Add(((CheckBox)sender).Content.ToString());
         }
+
+        private void DeselectPreferredHeroes(object sender, RoutedEventArgs e)
+        {
+            HeroesListBox.SelectedItems.Clear();
+        }
     }
 }

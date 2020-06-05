@@ -45,3 +45,33 @@ F:\Arbeit\semestar 8\SBNZ\Repo\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPic
 F:\Arbeit\semestar 8\SBNZ\Repo\DotaPickerFront\DotaPickerFront\obj\Debug\ResultWindow.g.cs
 F:\Arbeit\semestar 8\SBNZ\Repo\DotaPickerFront\DotaPickerFront\obj\Debug\ResultWindow.baml
 F:\Arbeit\semestar 8\SBNZ\Repo\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.csprojResolveAssemblyReference.cache
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\bin\Debug\DotaPickerFront.exe.config
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\bin\Debug\DotaPickerFront.exe
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\bin\Debug\DotaPickerFront.pdb
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\MainWindow.g.cs
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\PreferenceWindow.g.cs
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\ResultWindow.g.cs
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\App.g.cs
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront_MarkupCompile.cache
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront_MarkupCompile.lref
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\MainWindow.baml
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\PreferenceWindow.baml
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\ResultWindow.baml
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.g.resources
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.Properties.Resources.resources
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.csproj.GenerateResource.cache
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.csproj.CoreCompileInputs.cache
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.exe
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.pdb
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\bin\Debug\MaterialDesignColors.dll
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\bin\Debug\MaterialDesignThemes.Wpf.dll
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\bin\Debug\MaterialDesignColors.pdb
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\bin\Debug\MaterialDesignThemes.Wpf.pdb
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\bin\Debug\MaterialDesignThemes.Wpf.xml
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\App.baml
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.csproj.CopyComplete
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPickerFront.csprojAssemblyReference.cache
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\LaneToggle.g.cs
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\LaneToggle.baml
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\SettingsWindow.g.cs
+C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\SettingsWindow.baml

@@ -68,6 +68,8 @@
     <Compile Include="LaneToggle.xaml.cs">
       <DependentUpon>LaneToggle.xaml</DependentUpon>
     </Compile>
+    <Compile Include="model\RoleStats.cs" />
+    <Compile Include="model\SettingsStats.cs" />
     <Compile Include="PreferenceWindow.xaml.cs">
       <DependentUpon>PreferenceWindow.xaml</DependentUpon>
     </Compile>

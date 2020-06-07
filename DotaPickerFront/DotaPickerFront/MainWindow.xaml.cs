@@ -1,4 +1,5 @@
-﻿using DotaPickerFront.ultility;
+﻿using DotaPickerFront.model;
+using DotaPickerFront.ultility;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -36,7 +37,7 @@ namespace DotaPickerFront
         public Dictionary<string, FormatConvertedBitmap> grayImages;
 
         public Dictionary<string, BitmapImage> avatarImages;
-        
+
         private Dictionary<string, Image> controlIcons;
         private List<Image> allyIcons;
         private List<Image> enemyIcons;
@@ -128,7 +129,7 @@ namespace DotaPickerFront
 
                 SelectedHeroesGrid.Children.Add(enemyHeroImage);
                 Grid.SetRow(enemyHeroImage, 0);
-                Grid.SetColumn(enemyHeroImage, i+6);
+                Grid.SetColumn(enemyHeroImage, i + 6);
 
                 enemyIcons.Add(enemyHeroImage);
             }
@@ -195,7 +196,7 @@ namespace DotaPickerFront
             foreach (KeyValuePair<string, Bitmap> entry in avatarImages)
             {
                 this.avatarImages[entry.Key] = BitmapConverter.BitmapToImageSource(entry.Value);
-            } 
+            }
 
 
             Heroes = FileLoader.LoadHeroes(mappings);
@@ -321,7 +322,7 @@ namespace DotaPickerFront
 
         private void HeroIcon_MouseLeave(object sender, MouseEventArgs e)
         {
-            
+
             Image heroImage = (Image)sender;
             heroImage.Margin = new Thickness(5, 2, 5, 2);
         }
@@ -481,7 +482,7 @@ namespace DotaPickerFront
             postDict["rolePreferences"] = RolePreferences;
             postDict["allies"] = allies;
             postDict["enemies"] = enemies;
-            postDict["enemyLanes"] = enemyLaneToggles.Select(x=>((ToggleButton)x.FindName("toggleButton")).IsChecked).ToList();
+            postDict["enemyLanes"] = enemyLaneToggles.Select(x => ((ToggleButton)x.FindName("toggleButton")).IsChecked).ToList();
             postDict["banned"] = banned;
             var content = new JavaScriptSerializer().Serialize(postDict);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:8080/api/pick");
@@ -495,16 +496,29 @@ namespace DotaPickerFront
                 ResultWindow resultWindow = new ResultWindow(recommendations, this);
                 resultWindow.ShowDialog();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return;
             }
         }
 
-        private void SettingsButtonClick(object sender, RoutedEventArgs e)
+        private async void SettingsButtonClick(object sender, RoutedEventArgs e)
         {
-            SettingsWindow settingsWindow = new SettingsWindow();
-            settingsWindow.ShowDialog();
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:8080/api/settings");
+            try
+            {
+                var response = await client.SendAsync(request);
+                var responseString = await response.Content.ReadAsStringAsync();
+                SettingsStats settingsStats = new JavaScriptSerializer().Deserialize<SettingsStats>(responseString);
+
+                SettingsWindow settingsWindow = new SettingsWindow(settingsStats);
+                settingsWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+
         }
     }
 }

@@ -13,39 +13,32 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Net.Http;
 using System.Web.Script.Serialization;
+using DotaPickerFront.model;
+using System.ComponentModel;
 
 namespace DotaPickerFront
 {
     /// <summary>
     /// Interaction logic for SettingsWindow.xaml
     /// </summary>
-    public partial class SettingsWindow : Window
+    public partial class SettingsWindow : Window, INotifyPropertyChanged
     {
-        private static readonly HttpClient client = new HttpClient();
+        private SettingsStats settingsStats;
 
-        public SettingsWindow()
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string name)
         {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public SettingsStats SettingsStats { get { return settingsStats; } set { if (value != settingsStats) { settingsStats = value; OnPropertyChanged("SettingsStats"); } } }
+
+        public SettingsWindow(SettingsStats settingsStats)
+        {
+            SettingsStats = settingsStats;
             InitializeComponent();
-
-            LoadData();
         }
 
-        private async void LoadData()
-        {
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:8080/api/settings");
-            try
-            {
-                var response = await client.SendAsync(request);
-                var responseString = await response.Content.ReadAsStringAsync();
-                List<Dictionary<string, object>> recommendations = new JavaScriptSerializer().Deserialize<List<Dictionary<string, object>>>(responseString);
-
-                
-            }
-            catch (Exception ex)
-            {
-                return;
-            }
-        }
 
         private void SaveChanges(object sender, RoutedEventArgs e)
         {

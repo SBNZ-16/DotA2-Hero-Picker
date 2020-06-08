@@ -25,6 +25,11 @@ public class SettingsStatsController {
         return new ResponseEntity<SettingsStatsDTO>(settingsStatsService.getSettingsStats(), HttpStatus.OK);
 	}
 	
+	@GetMapping("/default")
+	public ResponseEntity<SettingsStatsDTO> getDefaultSettingsStats() {
+        return new ResponseEntity<SettingsStatsDTO>(settingsStatsService.getDefaultSettingsStats(), HttpStatus.OK);
+	}
+	
 	@PostMapping()
 	public ResponseEntity<String> postSettingsStats(@RequestBody SettingsStatsDTO settingsStats) {
         return new ResponseEntity<String>(settingsStatsService.postSettingsStats(settingsStats), HttpStatus.OK);

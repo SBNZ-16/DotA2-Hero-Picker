@@ -3,10 +3,8 @@ package com.heropicker.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SettingsStatsDTO {
-	@JsonProperty("RulesTemplate")
-	private String rulesTemplate;
-	@JsonProperty("VanillaRulesTemplate")
-	private String vanillaRulesTemplate;
+	@JsonProperty("UserAddedRules")
+	private String userAddedRules;
 	@JsonProperty("EnemyHeroDisadvantage")
 	private double enemyHeroDisadvantage;
 	@JsonProperty("EnemyLaneHeroDisadvantage")
@@ -40,20 +38,12 @@ public class SettingsStatsDTO {
 		super();
 	}
 
-	public String getRulesTemplate() {
-		return rulesTemplate;
+	public String getUserAddedRules() {
+		return userAddedRules;
 	}
 
-	public void setRulesTemplate(String rulesTemplate) {
-		this.rulesTemplate = rulesTemplate;
-	}
-
-	public String getVanillaRulesTemplate() {
-		return vanillaRulesTemplate;
-	}
-
-	public void setVanillaRulesTemplate(String vanillaRulesTemplate) {
-		this.vanillaRulesTemplate = vanillaRulesTemplate;
+	public void setUserAddedRules(String userAddedRules) {
+		this.userAddedRules = userAddedRules;
 	}
 
 	public double getEnemyHeroDisadvantage() {

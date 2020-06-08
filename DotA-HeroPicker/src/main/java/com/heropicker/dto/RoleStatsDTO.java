@@ -1,7 +1,11 @@
 package com.heropicker.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class RoleStatsDTO {
+	@JsonProperty("HeroesPerRole")
 	private double heroesPerRole;
+	@JsonProperty("ScoreLossPercentage")
 	private double scoreLossPercentage;
 
 	public RoleStatsDTO() {

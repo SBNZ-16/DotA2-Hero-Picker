@@ -66,7 +66,26 @@ namespace DotaPickerFront
 
         private void ResetToVanillaRules(object sender, RoutedEventArgs e)
         {
-            SettingsStats.RulesTemplate = SettingsStats.VanillaRulesTemplate;
+            SettingsStats.UserAddedRules = "";
+        }
+
+        private async void ResetToDefaultStats(object sender, RoutedEventArgs e)
+        {
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:8080/api/settings/default");
+            try
+            {
+                var response = await client.SendAsync(request);
+                var responseString = await response.Content.ReadAsStringAsync();
+                SettingsStats settingsStats = new JavaScriptSerializer().Deserialize<SettingsStats>(responseString);
+
+                settingsStats.UserAddedRules = SettingsStats.UserAddedRules;
+                SettingsStats = settingsStats;
+                MyCustomMessageQueue.Enqueue("Settings stats reset to default values");
+            }
+            catch (Exception)
+            {
+                MyCustomMessageQueue.Enqueue("Error in communication with a server");
+            }
         }
     }
 }

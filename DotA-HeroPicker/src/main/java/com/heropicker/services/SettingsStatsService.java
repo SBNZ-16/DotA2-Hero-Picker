@@ -27,14 +27,26 @@ public class SettingsStatsService {
 	public SettingsStatsDTO getSettingsStats() {
 		SettingsStatsDTO retval = new SettingsStatsDTO();
 		try {
-			String rulesTemplate = new Scanner(new File(path + "rules.drt")).useDelimiter("\\Z").next();
-			String vanillaRulesTemplate = new Scanner(new File(path + "vanilla.drt")).useDelimiter("\\Z").next();
+			String userAddedRules = new Scanner(new File(path + "userAddedRules.drl")).useDelimiter("\\Z").next();
 			String settingsStats = new Scanner(new File(path + "settingsStats.json")).useDelimiter("\\Z").next();
 			GsonBuilder builder = new GsonBuilder();
 			Gson gson = builder.create();
 			retval = gson.fromJson(settingsStats, SettingsStatsDTO.class);
-			retval.setRulesTemplate(rulesTemplate);
-			retval.setVanillaRulesTemplate(vanillaRulesTemplate);
+			retval.setUserAddedRules(userAddedRules);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return retval;
+	}
+	
+	public SettingsStatsDTO getDefaultSettingsStats() {
+		SettingsStatsDTO retval = new SettingsStatsDTO();
+		try {
+			String settingsStats = new Scanner(new File(path + "defaultSettingsStats.json")).useDelimiter("\\Z").next();
+			GsonBuilder builder = new GsonBuilder();
+			Gson gson = builder.create();
+			retval = gson.fromJson(settingsStats, SettingsStatsDTO.class);
+			retval.setUserAddedRules(null);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -43,7 +55,7 @@ public class SettingsStatsService {
 
 	public String postSettingsStats(SettingsStatsDTO settingsStats) {
 		try {
-			Files.write(Paths.get(path + "rules.drt"), settingsStats.getRulesTemplate().getBytes());
+			Files.write(Paths.get(path + "userAddedRules.drl"), settingsStats.getUserAddedRules().getBytes());
 			GsonBuilder builder = (new GsonBuilder()).setPrettyPrinting();
 			Gson gson = builder.create();
 			Files.write(Paths.get(path + "settingsStats.json"), gson.toJson(settingsStats).getBytes());
@@ -56,4 +68,6 @@ public class SettingsStatsService {
 		}
 		return "Saved successfully";
 	}
+
+
 }

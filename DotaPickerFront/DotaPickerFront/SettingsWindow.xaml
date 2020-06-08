@@ -8,7 +8,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d"
     Title="SettingsWindow"
-    Height="550"
+    Height="600"
     Width="900"
     Icon="icon_altform-unplated.png">
     <Grid>
@@ -25,6 +25,8 @@
             Grid.Row="0"
             Grid.Column="0">
             <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="auto" />
                 <RowDefinition
                     Height="auto" />
                 <RowDefinition
@@ -205,6 +207,11 @@
                         Value="{Binding Path=SettingsStats.PreferredLaneFactor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </GroupBox>
             </Grid>
+            <Button
+                Grid.Row="3"
+                Margin="10, 10, 10, 10"
+                HorizontalAlignment="Right"
+                Click="ResetToDefaultStats">Reset to Default Stats</Button>
         </Grid>
         <Grid
             Grid.Row="0"
@@ -223,13 +230,13 @@
                 AcceptsReturn="True"
                 VerticalScrollBarVisibility="Auto"
                 SpellCheck.IsEnabled="True"
-                Text="{Binding Path=SettingsStats.RulesTemplate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                Text="{Binding Path=SettingsStats.UserAddedRules, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
             <Button
                 HorizontalAlignment="Right"
                 Margin="10, 10, 10, 10"
                 Grid.Row="1"
-                Click="ResetToVanillaRules">Reset to vanilla rules</Button>
+                Click="ResetToVanillaRules">Clear User Added Rules</Button>
         </Grid>
         <Button
             Grid.Row="1"

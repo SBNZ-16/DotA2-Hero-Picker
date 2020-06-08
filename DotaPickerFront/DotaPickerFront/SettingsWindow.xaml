@@ -5,20 +5,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:DotaPickerFront"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d"
     Title="SettingsWindow"
     Height="550"
     Width="900"
-    Icon="icon_altform-unplated.png"
-    x:Name="_this">
+    Icon="icon_altform-unplated.png">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition
-                Width="111*" />
-            <ColumnDefinition
-                Width="335*" />
-            <ColumnDefinition
-                Width="446*" />
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -27,8 +23,7 @@
         </Grid.RowDefinitions>
         <Grid
             Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="2">
+            Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition
                     Height="auto" />
@@ -56,7 +51,7 @@
                         TickFrequency="0.01"
                         Minimum="1"
                         Maximum="2"
-                        Value="1.5" />
+                        Value="{Binding Path=SettingsStats.EnemyHeroDisadvantage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </GroupBox>
                 <GroupBox
                     Header="EnemyLaneHeroDisadvantage"
@@ -70,7 +65,7 @@
                         TickFrequency="0.01"
                         Minimum="2"
                         Maximum="4"
-                        Value="3" />
+                        Value="{Binding Path=SettingsStats.EnemyLaneHeroDisadvantage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </GroupBox>
             </Grid>
             <Grid
@@ -88,32 +83,42 @@
                     Margin="10,10,10,0"
                     SelectedIndex="0"
                     Grid.Row="0"
-                    Grid.ColumnSpan="2">
-                    <ComboBoxItem>
+                    Grid.ColumnSpan="2"
+                    x:Name="RoleComboBox">
+                    <ComboBoxItem
+                        DataContext="{Binding Path=SettingsStats.Nuker, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         Nuker
                     </ComboBoxItem>
-                    <ComboBoxItem>
+                    <ComboBoxItem
+                        DataContext="{Binding Path=SettingsStats.Escape, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         Escape
                     </ComboBoxItem>
-                    <ComboBoxItem>
+                    <ComboBoxItem
+                        DataContext="{Binding Path=SettingsStats.Support, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         Support
                     </ComboBoxItem>
-                    <ComboBoxItem>
+                    <ComboBoxItem
+                        DataContext="{Binding Path=SettingsStats.Initiator, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         Initiator
                     </ComboBoxItem>
-                    <ComboBoxItem>
+                    <ComboBoxItem
+                        DataContext="{Binding Path=SettingsStats.Carry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         Carry
                     </ComboBoxItem>
-                    <ComboBoxItem>
+                    <ComboBoxItem
+                        DataContext="{Binding Path=SettingsStats.Jungler, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         Jungler
                     </ComboBoxItem>
-                    <ComboBoxItem>
+                    <ComboBoxItem
+                        DataContext="{Binding Path=SettingsStats.Durable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         Durable
                     </ComboBoxItem>
-                    <ComboBoxItem>
+                    <ComboBoxItem
+                        DataContext="{Binding Path=SettingsStats.Disabler, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         Disabler
                     </ComboBoxItem>
-                    <ComboBoxItem>
+                    <ComboBoxItem
+                        DataContext="{Binding Path=SettingsStats.Pusher, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         Pusher
                     </ComboBoxItem>
                 </ComboBox>
@@ -130,7 +135,7 @@
                         TickFrequency="0.01"
                         Minimum="0"
                         Maximum="3"
-                        Value="1.5" />
+                        Value="{Binding Path=SelectedItem.DataContext.HeroesPerRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=RoleComboBox}" />
                 </GroupBox>
                 <GroupBox
                     Margin="10,10,10,0"
@@ -142,10 +147,10 @@
                         VerticalAlignment="Center"
                         Style="{StaticResource MaterialDesignDiscreteSlider}"
                         Orientation="Horizontal"
-                        TickFrequency="0.01"
+                        TickFrequency="0.001"
                         Minimum="0"
                         Maximum="0.1"
-                        Value="0.05" />
+                        Value="{Binding Path=SelectedItem.DataContext.ScoreLossPercentage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=RoleComboBox}" />
                 </GroupBox>
             </Grid>
             <Grid
@@ -169,7 +174,7 @@
                         TickFrequency="0.01"
                         Minimum="1"
                         Maximum="2"
-                        Value="1.5" />
+                        Value="{Binding Path=SettingsStats.PreferredHeroFactor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </GroupBox>
                 <GroupBox
                     Margin="10,10,10,0"
@@ -183,7 +188,7 @@
                         TickFrequency="0.01"
                         Minimum="1"
                         Maximum="2"
-                        Value="1.5" />
+                        Value="{Binding Path=SettingsStats.PreferredRoleFactor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </GroupBox>
                 <GroupBox
                     Margin="10,10,10,0"
@@ -197,28 +202,47 @@
                         TickFrequency="0.01"
                         Minimum="1"
                         Maximum="2"
-                        Value="1.5" />
+                        Value="{Binding Path=SettingsStats.PreferredLaneFactor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </GroupBox>
             </Grid>
         </Grid>
-        <TextBox
-            Margin="10,10,10,10"
+        <Grid
             Grid.Row="0"
-            Grid.Column="2"
-            TextWrapping="Wrap"
-            VerticalAlignment="Stretch"
-            MinWidth="280"
-            AcceptsReturn="True"
-            VerticalScrollBarVisibility="Auto"
-            SpellCheck.IsEnabled="True"
-            Text="{Binding Path=SettingsStats.RulesTemplate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=_this}">
-        </TextBox>
+            Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition
+                    Height="auto" />
+            </Grid.RowDefinitions>
+            <TextBox
+                Grid.Row="0"
+                Margin="10,10,10,0"
+                TextWrapping="Wrap"
+                VerticalAlignment="Stretch"
+                MinWidth="280"
+                AcceptsReturn="True"
+                VerticalScrollBarVisibility="Auto"
+                SpellCheck.IsEnabled="True"
+                Text="{Binding Path=SettingsStats.RulesTemplate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            </TextBox>
+            <Button
+                HorizontalAlignment="Right"
+                Margin="10, 10, 10, 10"
+                Grid.Row="1"
+                Click="ResetToVanillaRules">Reset to vanilla rules</Button>
+        </Grid>
         <Button
             Grid.Row="1"
+            Grid.Column="0"
             Grid.ColumnSpan="2"
+            HorizontalAlignment="Right"
+            Margin="10, 0, 10, 0"
             Width="80"
-            Click="SaveChanges"
-            Grid.Column="1"
-            Margin="295.165,9,406,9">Save</Button>
+            Click="SaveChanges">Save</Button>
+        <materialDesign:Snackbar
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            MessageQueue="{Binding MyCustomMessageQueue}" />
     </Grid>
 </Window>

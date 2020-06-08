@@ -143,5 +143,10 @@
             <materialDesign:PackIcon
                 Kind="Cog" />
         </Button>
+        <materialDesign:Snackbar
+            Grid.Row="1"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Center"
+            MessageQueue="{Binding MyCustomMessageQueue}" />
     </Grid>
 </Window>

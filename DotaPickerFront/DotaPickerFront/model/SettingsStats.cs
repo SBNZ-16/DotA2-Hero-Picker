@@ -10,7 +10,7 @@ namespace DotaPickerFront.model
     public class SettingsStats : INotifyPropertyChanged
     {
         private String rulesTemplate;
-        private String vanillaRulesTempalte;
+        private String vanillaRulesTemplate;
         private double enemyHeroDisadvantage;
         private double enemyLaneHeroDisadvantage;
         private double preferredHeroFactor;
@@ -18,7 +18,7 @@ namespace DotaPickerFront.model
         private double preferredRoleFactor;
 
         public String RulesTemplate { get { return rulesTemplate; } set { if (value != rulesTemplate) { rulesTemplate = value; OnPropertyChanged("RulesTemplate"); } } }
-        public String VanillaRulesTempalte { get { return vanillaRulesTempalte; } set { if (value != vanillaRulesTempalte) { vanillaRulesTempalte = value; OnPropertyChanged("VanillaRulesTempalte"); } } }
+        public String VanillaRulesTemplate { get { return vanillaRulesTemplate; } set { if (value != vanillaRulesTemplate) { vanillaRulesTemplate = value; OnPropertyChanged("VanillaRulesTempalte"); } } }
         public double EnemyHeroDisadvantage { get { return enemyHeroDisadvantage; } set { if (value != enemyHeroDisadvantage) { enemyHeroDisadvantage = value; OnPropertyChanged("VnemyHeroDisadvantage"); } } }
         public double EnemyLaneHeroDisadvantage { get { return enemyLaneHeroDisadvantage; } set { if (value != enemyLaneHeroDisadvantage) { enemyLaneHeroDisadvantage = value; OnPropertyChanged("EnemyLaneHeroDisadvantage"); } } }
         public double PreferredHeroFactor { get { return preferredHeroFactor; } set { if (value != preferredHeroFactor) { preferredHeroFactor = value; OnPropertyChanged("PreferredHeroFactor"); } } }

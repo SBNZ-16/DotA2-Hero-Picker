@@ -2,7 +2,7 @@ package com.heropicker.dto;
 
 public class SettingsStatsDTO {
 	private String rulesTemplate;
-	private String vanillaRulesTempalte;
+	private String vanillaRulesTemplate;
 	private double enemyHeroDisadvantage;
 	private double enemyLaneHeroDisadvantage;
 	private double preferredHeroFactor;
@@ -29,11 +29,11 @@ public class SettingsStatsDTO {
 	public void setRulesTemplate(String rulesTemplate) {
 		this.rulesTemplate = rulesTemplate;
 	}
-	public String getVanillaRulesTempalte() {
-		return vanillaRulesTempalte;
+	public String getVanillaRulesTemplate() {
+		return vanillaRulesTemplate;
 	}
-	public void setVanillaRulesTempalte(String vanillaRulesTempalte) {
-		this.vanillaRulesTempalte = vanillaRulesTempalte;
+	public void setVanillaRulesTemplate(String vanillaRulesTemplate) {
+		this.vanillaRulesTemplate = vanillaRulesTemplate;
 	}
 	public double getEnemyHeroDisadvantage() {
 		return enemyHeroDisadvantage;

@@ -15,6 +15,7 @@ using System.Net.Http;
 using System.Web.Script.Serialization;
 using DotaPickerFront.model;
 using System.ComponentModel;
+using MaterialDesignThemes.Wpf;
 
 namespace DotaPickerFront
 {
@@ -33,16 +34,39 @@ namespace DotaPickerFront
 
         public SettingsStats SettingsStats { get { return settingsStats; } set { if (value != settingsStats) { settingsStats = value; OnPropertyChanged("SettingsStats"); } } }
 
+        public SnackbarMessageQueue MyCustomMessageQueue { get; set; }
+
+        private static readonly HttpClient client = new HttpClient();
+
         public SettingsWindow(SettingsStats settingsStats)
         {
-            SettingsStats = settingsStats;
             InitializeComponent();
+            SettingsStats = settingsStats;
+            DataContext = this;
+            MyCustomMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
         }
 
 
-        private void SaveChanges(object sender, RoutedEventArgs e)
+        private async void SaveChanges(object sender, RoutedEventArgs e)
         {
+            var content = new JavaScriptSerializer().Serialize(SettingsStats);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:8080/api/settings");
+            request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+            try
+            {
+                var response = await client.SendAsync(request);
+                var responseString = await response.Content.ReadAsStringAsync();
+                MyCustomMessageQueue.Enqueue(responseString);
+            }
+            catch (Exception)
+            {
+                MyCustomMessageQueue.Enqueue("Error in communication with a server");
+            }
+        }
 
+        private void ResetToVanillaRules(object sender, RoutedEventArgs e)
+        {
+            SettingsStats.RulesTemplate = SettingsStats.VanillaRulesTemplate;
         }
     }
 }

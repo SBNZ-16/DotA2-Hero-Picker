@@ -18,13 +18,13 @@ public class SettingsStatsService {
 		String path = System.getProperty("user.dir") + "/src/main/resources/rules/";
 		try {
 			String rulesTemplate = new Scanner(new File(path + "rules.drt")).useDelimiter("\\Z").next();
-			String vanillaRulesTempalte = new Scanner(new File(path + "vanilla.drt")).useDelimiter("\\Z").next();
+			String vanillaRulesTemplate = new Scanner(new File(path + "vanilla.drt")).useDelimiter("\\Z").next();
 			String settingsStats = new Scanner(new File(path + "settingsStats.json")).useDelimiter("\\Z").next();
 			GsonBuilder builder = new GsonBuilder();
 			Gson gson = builder.create();
 			retval = gson.fromJson(settingsStats, SettingsStatsDTO.class);
 			retval.setRulesTemplate(rulesTemplate);
-			retval.setVanillaRulesTempalte(vanillaRulesTempalte);
+			retval.setVanillaRulesTemplate(vanillaRulesTemplate);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

@@ -1,5 +1,6 @@
 ﻿using DotaPickerFront.model;
 using DotaPickerFront.ultility;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -52,11 +53,16 @@ namespace DotaPickerFront
         private List<string> enemies;
         private List<string> banned;
 
+        public SnackbarMessageQueue MyCustomMessageQueue { get; set; }
+
+
         private static readonly HttpClient client = new HttpClient();
 
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
+            MyCustomMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
 
             controlIcons = new Dictionary<string, Image>();
             allyIcons = new List<Image>();
@@ -496,9 +502,9 @@ namespace DotaPickerFront
                 ResultWindow resultWindow = new ResultWindow(recommendations, this);
                 resultWindow.ShowDialog();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return;
+                MyCustomMessageQueue.Enqueue("Error in communication with a server");
             }
         }
 
@@ -514,9 +520,9 @@ namespace DotaPickerFront
                 SettingsWindow settingsWindow = new SettingsWindow(settingsStats);
                 settingsWindow.ShowDialog();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return;
+                MyCustomMessageQueue.Enqueue("Error in communication with a server");
             }
 
         }

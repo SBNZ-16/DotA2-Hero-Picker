@@ -41,15 +41,15 @@ public class DroolsTest {
         ArrayList<RoleConfiguration> coll = new ArrayList<RoleConfiguration>();
         coll.add(new RoleConfiguration("Jungler", 0.5, 0.025));
         
-        RuleFileManager.dumpRoleRuleTemplateObjects(coll);
+//        RuleFileManager.dumpConfigObjects();
         
         InputStream ejo = RuleFileManager.loadTemplate("roles.drt");
         
         String ultimate = objectDataCompiler.compile(coll, ejo);
         
-        System.out.println(ultimate);
         
         
+        RuleFileManager.exportNewRules(RuleFileManager.loadActiveRules());
         
         
         

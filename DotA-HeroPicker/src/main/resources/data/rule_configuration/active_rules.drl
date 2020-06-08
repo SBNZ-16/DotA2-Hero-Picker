@@ -28,7 +28,6 @@ rule "Ally hero picked"
 	then
 		heroRecommendationList.removeHeroRecommendationByHeroId($picked.getHeroId());
 		pickedAllyHeroes.addHero($picked.getHeroId());
-		System.out.println("Izmenjenooooooooooo");
 end
 
 rule "Enemy hero picked"
@@ -210,4 +209,3 @@ rule "Update score by lane"
 		$heroRecommendation.updateScore(laneEffectiveness*$updateScore.getMultiplyScale(),
 		 $updateScore.getAddValue());
 end
-

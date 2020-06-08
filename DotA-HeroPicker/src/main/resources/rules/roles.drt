@@ -1,0 +1,21 @@
+template header
+
+role
+heroesPerRole
+scoreLossPercentage
+
+template "Role rules"
+
+
+	rule "@{role} role"
+		agenda-group "team-composition"
+		salience -1
+		when
+			exists(AllyHeroPickedFact())
+			roleOverflow("@{role}", $count;)
+		then
+			double penalty = (@{heroesPerRole} - (double)$count) * @{scoreLossPercentage};
+			insert(new UpdateScoresFact(penalty + 1, 0, null, "@{role}", null));
+	end
+
+end template

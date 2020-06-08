@@ -1,0 +1,53 @@
+template header
+
+preferredHeroFactor
+preferredRoleFactor
+preferredLaneFactor
+enemyHeroDisadvantage
+enemyLaneHeroDisadvantage
+
+
+template "Role rules"
+
+	rule "Enemy hero picked"
+		agenda-group "hero-statistics"
+		when
+			$picked : EnemyHeroPickedFact()
+		then
+			heroRecommendationList.removeHeroRecommendationByHeroId($picked.getHeroId());
+			heroRecommendationList.changeScoresByHeroDisadvantage($picked.getHeroId(), @{enemyHeroDisadvantage});
+	end
+
+	rule "Enemy hero picked is expected to show in my lane"
+		agenda-group "hero-statistics"
+		when
+			$picked : EnemyHeroPickedFact(goingToFaceInLane == true)
+		then
+			heroRecommendationList.changeScoresByHeroDisadvantage($picked.getHeroId(), @{enemyLaneHeroDisadvantage});
+	end
+
+	rule "Hero preferred"
+		agenda-group "preferences"
+		when
+			HeroPreferredFact($heroId : heroId)
+		then
+			insert(new UpdateScoresFact(@{preferredHeroFactor}, 0, $heroId, null, null));
+	end
+	
+	rule "Role preferred"
+		agenda-group "preferences"
+		when
+			RolePreferredFact($role : role)
+		then
+			insert(new UpdateScoresFact(@{preferredRoleFactor}, 0, null, $role, null));
+	end
+	
+	rule "Lane preferred"
+		agenda-group "preferences"
+		when
+			LanePreferredFact($lane : lane)
+		then
+			insert(new UpdateScoresFact(@{preferredLaneFactor}, 0, null, null, $lane));
+	end
+
+end template

@@ -24,7 +24,7 @@ import com.heropicker.io.RuleFileManager;
 import com.heropicker.model.HeroDatabase;
 import com.heropicker.model.HeroRecommendationList;
 import com.heropicker.model.PickedAllyHeroes;
-import com.heropicker.templating.RoleConfiguration;
+
 
 /**
  * This is a sample class to launch a rule.
@@ -32,29 +32,7 @@ import com.heropicker.templating.RoleConfiguration;
 public class DroolsTest {
 
 	public static final void main(String[] args) {
-		
-		
-        ObjectDataCompiler objectDataCompiler = new ObjectDataCompiler();
-		
-
-        
-        ArrayList<RoleConfiguration> coll = new ArrayList<RoleConfiguration>();
-        coll.add(new RoleConfiguration("Jungler", 0.5, 0.025));
-        
-//        RuleFileManager.dumpConfigObjects();
-        
-        InputStream ejo = RuleFileManager.loadTemplate("roles.drt");
-        
-        String ultimate = objectDataCompiler.compile(coll, ejo);
-        
-        
-        
-        RuleFileManager.exportNewRules(RuleFileManager.loadActiveRules());
-        
-        
-        
-		
-		
+			
 		List<Fact> facts = new ArrayList<Fact>();
 		facts.add(new AllyHeroPickedFact("tinker"));
 		facts.add(new AllyHeroPickedFact("ursa"));

@@ -28,24 +28,6 @@ rule "Ally hero picked"
 	then
 		heroRecommendationList.removeHeroRecommendationByHeroId($picked.getHeroId());
 		pickedAllyHeroes.addHero($picked.getHeroId());
-		System.out.println("Jajeeeee");
-end
-
-rule "Enemy hero picked"
-	agenda-group "hero-statistics"
-	when
-		$picked : EnemyHeroPickedFact()
-	then
-		heroRecommendationList.removeHeroRecommendationByHeroId($picked.getHeroId());
-		heroRecommendationList.changeScoresByHeroDisadvantage($picked.getHeroId(), 1.5);
-end
-
-rule "Enemy hero picked is expected to show in my lane"
-	agenda-group "hero-statistics"
-	when
-		$picked : EnemyHeroPickedFact(goingToFaceInLane == true)
-	then
-		heroRecommendationList.changeScoresByHeroDisadvantage($picked.getHeroId(), 3);
 end
 
 rule "Hero banned"
@@ -54,134 +36,6 @@ rule "Hero banned"
 		$banned : HeroBannedFact()
 	then
 		heroRecommendationList.removeHeroRecommendationByHeroId($banned.getHeroId());
-end
-
-
-
-rule "Nuker role"
-	agenda-group "team-composition"
-	salience -1
-	when
-		exists(AllyHeroPickedFact())
-		roleOverflow("Nuker", $count;)
-	then
-		double penalty = (1 - (double)$count) * 0.05;
-		insert(new UpdateScoresFact(penalty + 1, 0, null, "Nuker", null));
-end
-
-rule "Escape role"
-	agenda-group "team-composition"
-	salience -1
-	when
-		exists(AllyHeroPickedFact())
-		roleOverflow("Escape", $count;)
-	then
-		double penalty = (1 - (double)$count) * 0.025;
-		insert(new UpdateScoresFact(penalty + 1, 0, null, "Escape", null));
-end
-
-rule "Support role"
-	agenda-group "team-composition"
-	salience -1
-	when
-		exists(AllyHeroPickedFact())
-		roleOverflow("Support", $count;)
-	then
-		double penalty = (2 - (double)$count) * 0.05;
-		insert(new UpdateScoresFact(penalty + 1, 0, null, "Support", null));
-end
-
-rule "Initiator role"
-	agenda-group "team-composition"
-	salience -1
-	when
-		exists(AllyHeroPickedFact())
-		roleOverflow("Initiator", $count;)
-	then
-		double penalty = (1.5 - (double)$count) * 0.05;
-		insert(new UpdateScoresFact(penalty + 1, 0, null, "Initiator", null));
-end
-
-rule "Carry role"
-	agenda-group "team-composition"
-	salience -1
-	when
-		exists(AllyHeroPickedFact())
-		roleOverflow("Carry", $count;)
-	then
-		double penalty = (2 - (double)$count) * 0.05;
-		insert(new UpdateScoresFact(penalty + 1, 0, null, "Carry", null));
-end
-
-rule "Jungler role"
-	agenda-group "team-composition"
-	salience -1
-	when
-		exists(AllyHeroPickedFact())
-		roleOverflow("Jungler", $count;)
-	then
-		double penalty = (0.5 - (double)$count) * 0.025;
-		insert(new UpdateScoresFact(penalty + 1, 0, null, "Jungler", null));
-end
-
-rule "Durable role"
-	agenda-group "team-composition"
-	salience -1
-	when
-		exists(AllyHeroPickedFact())
-		roleOverflow("Durable", $count;)
-	then
-		double penalty = (1.5 - (double)$count) * 0.05;
-		insert(new UpdateScoresFact(penalty + 1, 0, null, "Durable", null));
-end
-
-
-rule "Disabler role"
-	agenda-group "team-composition"
-	salience -1
-	when
-		exists(AllyHeroPickedFact())
-		roleOverflow("Disabler", $count;)
-	then
-		double penalty = (2 - (double)$count) * 0.025;
-		insert(new UpdateScoresFact(penalty + 1, 0, null, "Disabler", null));
-end
-
-rule "Pusher role"
-	agenda-group "team-composition"
-	salience -1
-	when
-		exists(AllyHeroPickedFact())
-		roleOverflow("Pusher", $count;)
-	then
-		double penalty = (1.5 - (double)$count) * 0.05;
-		insert(new UpdateScoresFact(penalty + 1, 0, null, "Pusher", null));
-end
-
-
-
-rule "Hero preferred"
-	agenda-group "preferences"
-	when
-		HeroPreferredFact($heroId : heroId)
-	then
-		insert(new UpdateScoresFact(1.3, 0, $heroId, null, null));
-end
-
-rule "Role preferred"
-	agenda-group "preferences"
-	when
-		RolePreferredFact($role : role)
-	then
-		insert(new UpdateScoresFact(1.3, 0, null, $role, null));
-end
-
-rule "Lane preferred"
-	agenda-group "preferences"
-	when
-		LanePreferredFact($lane : lane)
-	then
-		insert(new UpdateScoresFact(1, 0, null, null, $lane));
 end
 
 rule "Update score by heroId"
@@ -210,4 +64,145 @@ rule "Update score by lane"
 		$heroRecommendation.updateScore(laneEffectiveness*$updateScore.getMultiplyScale(),
 		 $updateScore.getAddValue());
 end
+
+
+	rule "Pusher role"
+		agenda-group "team-composition"
+		salience -1
+		when
+			exists(AllyHeroPickedFact())
+			roleOverflow("Pusher", $count;)
+		then
+			double penalty = (1.5 - (double)$count) * 0.05;
+			insert(new UpdateScoresFact(penalty + 1, 0, null, "Pusher", null));
+	end
+
+	rule "Disabler role"
+		agenda-group "team-composition"
+		salience -1
+		when
+			exists(AllyHeroPickedFact())
+			roleOverflow("Disabler", $count;)
+		then
+			double penalty = (2.0 - (double)$count) * 0.025;
+			insert(new UpdateScoresFact(penalty + 1, 0, null, "Disabler", null));
+	end
+
+	rule "Durable role"
+		agenda-group "team-composition"
+		salience -1
+		when
+			exists(AllyHeroPickedFact())
+			roleOverflow("Durable", $count;)
+		then
+			double penalty = (1.5 - (double)$count) * 0.05;
+			insert(new UpdateScoresFact(penalty + 1, 0, null, "Durable", null));
+	end
+
+	rule "Jungler role"
+		agenda-group "team-composition"
+		salience -1
+		when
+			exists(AllyHeroPickedFact())
+			roleOverflow("Jungler", $count;)
+		then
+			double penalty = (0.5 - (double)$count) * 0.025;
+			insert(new UpdateScoresFact(penalty + 1, 0, null, "Jungler", null));
+	end
+
+	rule "Carry role"
+		agenda-group "team-composition"
+		salience -1
+		when
+			exists(AllyHeroPickedFact())
+			roleOverflow("Carry", $count;)
+		then
+			double penalty = (2.0 - (double)$count) * 0.05;
+			insert(new UpdateScoresFact(penalty + 1, 0, null, "Carry", null));
+	end
+
+	rule "Initiator role"
+		agenda-group "team-composition"
+		salience -1
+		when
+			exists(AllyHeroPickedFact())
+			roleOverflow("Initiator", $count;)
+		then
+			double penalty = (1.5 - (double)$count) * 0.05;
+			insert(new UpdateScoresFact(penalty + 1, 0, null, "Initiator", null));
+	end
+
+	rule "Support role"
+		agenda-group "team-composition"
+		salience -1
+		when
+			exists(AllyHeroPickedFact())
+			roleOverflow("Support", $count;)
+		then
+			double penalty = (2.0 - (double)$count) * 0.05;
+			insert(new UpdateScoresFact(penalty + 1, 0, null, "Support", null));
+	end
+
+	rule "Escape role"
+		agenda-group "team-composition"
+		salience -1
+		when
+			exists(AllyHeroPickedFact())
+			roleOverflow("Escape", $count;)
+		then
+			double penalty = (1.0 - (double)$count) * 0.025;
+			insert(new UpdateScoresFact(penalty + 1, 0, null, "Escape", null));
+	end
+
+	rule "Nuker role"
+		agenda-group "team-composition"
+		salience -1
+		when
+			exists(AllyHeroPickedFact())
+			roleOverflow("Nuker", $count;)
+		then
+			double penalty = (1.0 - (double)$count) * 0.05;
+			insert(new UpdateScoresFact(penalty + 1, 0, null, "Nuker", null));
+	end
+
+
+
+	rule "Enemy hero picked"
+		agenda-group "hero-statistics"
+		when
+			$picked : EnemyHeroPickedFact()
+		then
+			heroRecommendationList.removeHeroRecommendationByHeroId($picked.getHeroId());
+			heroRecommendationList.changeScoresByHeroDisadvantage($picked.getHeroId(), 1.5);
+	end
+	rule "Enemy hero picked is expected to show in my lane"
+		agenda-group "hero-statistics"
+		when
+			$picked : EnemyHeroPickedFact(goingToFaceInLane == true)
+		then
+			heroRecommendationList.changeScoresByHeroDisadvantage($picked.getHeroId(), 3.0);
+	end
+	rule "Hero preferred"
+		agenda-group "preferences"
+		when
+			HeroPreferredFact($heroId : heroId)
+		then
+			insert(new UpdateScoresFact(1.3, 0, $heroId, null, null));
+	end
+	rule "Role preferred"
+		agenda-group "preferences"
+		when
+			RolePreferredFact($role : role)
+		then
+			insert(new UpdateScoresFact(1.3, 0, null, $role, null));
+	end
+	rule "Lane preferred"
+		agenda-group "preferences"
+		when
+			LanePreferredFact($lane : lane)
+		then
+			insert(new UpdateScoresFact(1.0, 0, null, null, $lane));
+	end
+
+
 

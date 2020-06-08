@@ -1,0 +1,67 @@
+package com.sample;
+ 
+import com.heropicker.facts.HeroBannedFact;
+import com.heropicker.facts.AllyHeroPickedFact;
+import com.heropicker.facts.EnemyHeroPickedFact;
+import com.heropicker.facts.UpdateScoresFact;
+import com.heropicker.facts.HeroPreferredFact;
+import com.heropicker.facts.RolePreferredFact;
+import com.heropicker.facts.LanePreferredFact;
+import com.heropicker.model.PickedAllyHeroes;
+import com.heropicker.model.HeroRecommendation;
+import com.heropicker.model.LaneStats;
+import com.heropicker.model.Hero;
+
+
+global com.heropicker.model.HeroDatabase heroDatabase;
+global com.heropicker.model.HeroRecommendationList heroRecommendationList;
+global PickedAllyHeroes pickedAllyHeroes;
+
+query roleOverflow(String $role, Long $count)
+	 $count := Number() from accumulate ($hero : Hero(roles contains $role) from pickedAllyHeroes.heroes, count($hero))
+end
+ 
+rule "Ally hero picked"
+	agenda-group "hero-statistics"
+	when
+		$picked : AllyHeroPickedFact()
+	then
+		heroRecommendationList.removeHeroRecommendationByHeroId($picked.getHeroId());
+		pickedAllyHeroes.addHero($picked.getHeroId());
+end
+
+rule "Hero banned"
+	agenda-group "hero-statistics"
+	when
+		$banned : HeroBannedFact()
+	then
+		heroRecommendationList.removeHeroRecommendationByHeroId($banned.getHeroId());
+end
+
+rule "Update score by heroId"
+	when
+		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
+		$heroRecommendation : HeroRecommendation(hero.heroId==$heroId) from heroRecommendationList.getHeroRecommendations()
+	then
+		$heroRecommendation.updateScore($updateScore.getMultiplyScale(), $updateScore.getAddValue());
+end
+
+rule "Update score by role"
+	when
+		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
+		$heroRecommendation : HeroRecommendation(hero.roles contains $role) from heroRecommendationList.getHeroRecommendations()
+	then
+		$heroRecommendation.updateScore($updateScore.getMultiplyScale(), $updateScore.getAddValue());
+end
+
+rule "Update score by lane"
+	when
+		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
+		$heroRecommendation : HeroRecommendation($hero : hero) from heroRecommendationList.getHeroRecommendations()
+		$laneStats: LaneStats(name == $lane) from $hero.lanes
+	then
+		double laneEffectiveness = ($laneStats.getWinrate() * $laneStats.getPresence());
+		$heroRecommendation.updateScore(laneEffectiveness*$updateScore.getMultiplyScale(),
+		 $updateScore.getAddValue());
+end
+

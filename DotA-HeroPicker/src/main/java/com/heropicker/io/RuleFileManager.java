@@ -11,16 +11,12 @@ import java.util.ArrayList;
 import org.apache.commons.io.FileUtils;
 
 import com.google.gson.Gson;
-import com.heropicker.templating.RoleConfiguration;
-
-
-
 
 
 public class RuleFileManager {
 	
 	public static InputStream loadTemplate(String fileName) {
-		String filePath = System.getProperty("user.dir") + "/src/main/resources/data/rule_configuration/templates/" + fileName;
+		String filePath = System.getProperty("user.dir") + "/src/main/resources/rules/" + fileName;
 		try {
 			return new FileInputStream(new File(filePath));
 		} catch (IOException e) {
@@ -29,37 +25,9 @@ public class RuleFileManager {
 		return null;
 	}
 	
-//	public static ArrayList<RoleConfiguration> loadRoleConfigurations(String fileName) {
-//		String filePath = System.getProperty("user.dir") + "/src/main/resources/data/rule_configuration/template_configs/" + fileName;
-//		
-//		Gson gson = new Gson();
-//		
-//		ArrayList<RoleConfiguration> roleConfigs = new ArrayList<RoleConfiguration>();
-//
-//			
-//		
-//			
-//		
-//	}
 	
-	public static void dumpConfigObjects(ArrayList<Object> configObjects, String configFileName) {
-		String filePath = System.getProperty("user.dir") + "/src/main/resources/data/rule_configuration/template_configs/" + configFileName;
-		
-		Gson gson = new Gson();
-		String json = gson.toJson(configObjects);
-		
-		try {
-			PrintWriter out = new PrintWriter(filePath);
-			out.println(json);
-			out.flush();
-			out.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static String loadActiveRules() {
-		String filePath = System.getProperty("user.dir") + "/src/main/resources/data/rule_configuration/active_rules.drl";
+	public static String loadRuleFile(String fileName) {
+		String filePath = System.getProperty("user.dir") + "/src/main/resources/rules/" + fileName;
 		return loadText(filePath);
 	}
 	

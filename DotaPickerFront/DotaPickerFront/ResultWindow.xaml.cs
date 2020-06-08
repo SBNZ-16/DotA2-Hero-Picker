@@ -72,8 +72,11 @@ namespace DotaPickerFront
 
                 double score = Double.Parse(_results[i]["score"].ToString());
 
-                ProgressBar progressBar = new ProgressBar();
-                progressBar.Margin = new Thickness(10, 15, 10, 15);
+                ProgressBar progressBar = new ProgressBar
+                {
+                    Margin = new Thickness(10, 15, 10, 15),
+                    Height = 20
+                };
                 ResultsGrid.Children.Add(progressBar);
                 Grid.SetColumn(progressBar, 2);
                 Grid.SetRow(progressBar, i);
@@ -82,7 +85,7 @@ namespace DotaPickerFront
                 {
                     From = 0,
                     To = score,
-                    Duration = TimeSpan.FromSeconds(2),
+                    Duration = TimeSpan.FromSeconds(1),
                 };
 
                 Storyboard.SetTarget(fillUp, progressBar);

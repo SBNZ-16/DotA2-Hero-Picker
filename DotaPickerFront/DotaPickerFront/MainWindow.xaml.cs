@@ -1,4 +1,6 @@
-﻿using DotaPickerFront.ultility;
+﻿using DotaPickerFront.model;
+using DotaPickerFront.ultility;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -35,10 +38,11 @@ namespace DotaPickerFront
         public Dictionary<string, FormatConvertedBitmap> grayImages;
 
         public Dictionary<string, BitmapImage> avatarImages;
-        
+
         private Dictionary<string, Image> controlIcons;
         private List<Image> allyIcons;
         private List<Image> enemyIcons;
+        private List<LaneToggle> enemyLaneToggles;
 
         public Dictionary<string, object> Heroes { get; set; }
         public List<string> HeroPreferences { get; set; }
@@ -49,15 +53,21 @@ namespace DotaPickerFront
         private List<string> enemies;
         private List<string> banned;
 
+        public SnackbarMessageQueue MyCustomMessageQueue { get; set; }
+
+
         private static readonly HttpClient client = new HttpClient();
 
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
+            MyCustomMessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
 
             controlIcons = new Dictionary<string, Image>();
             allyIcons = new List<Image>();
             enemyIcons = new List<Image>();
+            enemyLaneToggles = new List<LaneToggle>();
 
             images = new Dictionary<string, BitmapImage>();
             grayImages = new Dictionary<string, FormatConvertedBitmap>();
@@ -125,7 +135,7 @@ namespace DotaPickerFront
 
                 SelectedHeroesGrid.Children.Add(enemyHeroImage);
                 Grid.SetRow(enemyHeroImage, 0);
-                Grid.SetColumn(enemyHeroImage, i+6);
+                Grid.SetColumn(enemyHeroImage, i + 6);
 
                 enemyIcons.Add(enemyHeroImage);
             }
@@ -192,7 +202,7 @@ namespace DotaPickerFront
             foreach (KeyValuePair<string, Bitmap> entry in avatarImages)
             {
                 this.avatarImages[entry.Key] = BitmapConverter.BitmapToImageSource(entry.Value);
-            } 
+            }
 
 
             Heroes = FileLoader.LoadHeroes(mappings);
@@ -225,7 +235,7 @@ namespace DotaPickerFront
                 string hero = heroes[i];
                 Image heroIcon = new Image();
                 heroIcon.Source = images[hero];
-                heroIcon.Margin = new Thickness(5, 2, 5, 2);
+                heroIcon.Margin = new Thickness(5, 0, 5, 0);
 
                 heroIcon.Tag = hero;
                 heroIcon.MouseLeftButtonUp += addHeroToAllies;
@@ -318,7 +328,7 @@ namespace DotaPickerFront
 
         private void HeroIcon_MouseLeave(object sender, MouseEventArgs e)
         {
-            
+
             Image heroImage = (Image)sender;
             heroImage.Margin = new Thickness(5, 2, 5, 2);
         }
@@ -367,6 +377,13 @@ namespace DotaPickerFront
             Image selectedHeroIcon = enemyIcons[column];
             selectedHeroIcon.Source = images[hero];
             selectedHeroIcon.Tag = heroImage.Tag;
+
+            LaneToggle laneToggle = new LaneToggle();
+            SelectedHeroesGrid.Children.Add(laneToggle);
+            Grid.SetRow(laneToggle, 1);
+            Grid.SetColumn(laneToggle, column + 6);
+            laneToggle.Margin = new Thickness(0, 5, 0, 0);
+            enemyLaneToggles.Add(laneToggle);
         }
 
         private void UnselectHero(object sender, MouseButtonEventArgs e)
@@ -382,7 +399,13 @@ namespace DotaPickerFront
                 }
                 else
                 {
+                    int index = enemies.IndexOf(hero);
                     enemies.Remove(hero);
+
+                    LaneToggle laneToggle = enemyLaneToggles[index];
+                    enemyLaneToggles.Remove(laneToggle);
+                    SelectedHeroesGrid.Children.Remove(laneToggle);
+
                     redrawEnemies();
                 }
                 controlIcons[hero].Source = images[hero];
@@ -426,6 +449,10 @@ namespace DotaPickerFront
                     enemyIcons[i].Source = avatarImages["enemy_avatar"];
                 }
             }
+            for (int i = 0; i < enemyLaneToggles.Count; i++)
+            {
+                Grid.SetColumn(enemyLaneToggles[i], i + 6);
+            }
         }
 
         private List<string> FilterByPrimaryAttribute(string primaryAttribute)
@@ -461,16 +488,43 @@ namespace DotaPickerFront
             postDict["rolePreferences"] = RolePreferences;
             postDict["allies"] = allies;
             postDict["enemies"] = enemies;
+            postDict["enemyLanes"] = enemyLaneToggles.Select(x => ((ToggleButton)x.FindName("toggleButton")).IsChecked).ToList();
             postDict["banned"] = banned;
             var content = new JavaScriptSerializer().Serialize(postDict);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:8080/api/pick");
             request.Content = new StringContent(content, Encoding.UTF8, "application/json");
-            var response = await client.SendAsync(request);
-            var responseString = await response.Content.ReadAsStringAsync();
-            List<Dictionary<string, object>> recommendations = new JavaScriptSerializer().Deserialize<List<Dictionary<string, object>>>(responseString);
+            try
+            {
+                var response = await client.SendAsync(request);
+                var responseString = await response.Content.ReadAsStringAsync();
+                List<Dictionary<string, object>> recommendations = new JavaScriptSerializer().Deserialize<List<Dictionary<string, object>>>(responseString);
 
-            ResultWindow resultWindow = new ResultWindow(recommendations, this);
-            resultWindow.ShowDialog();
+                ResultWindow resultWindow = new ResultWindow(recommendations, this);
+                resultWindow.ShowDialog();
+            }
+            catch (Exception)
+            {
+                MyCustomMessageQueue.Enqueue("Error in communication with a server");
+            }
+        }
+
+        private async void SettingsButtonClick(object sender, RoutedEventArgs e)
+        {
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:8080/api/settings");
+            try
+            {
+                var response = await client.SendAsync(request);
+                var responseString = await response.Content.ReadAsStringAsync();
+                SettingsStats settingsStats = new JavaScriptSerializer().Deserialize<SettingsStats>(responseString);
+
+                SettingsWindow settingsWindow = new SettingsWindow(settingsStats);
+                settingsWindow.ShowDialog();
+            }
+            catch (Exception)
+            {
+                MyCustomMessageQueue.Enqueue("Error in communication with a server");
+            }
+
         }
     }
 }

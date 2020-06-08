@@ -13,7 +13,7 @@ import org.apache.commons.io.FileUtils;
 import com.google.gson.Gson;
 import com.heropicker.templating.RoleConfiguration;
 
-import aj.org.objectweb.asm.Type;
+
 
 
 
@@ -60,6 +60,10 @@ public class RuleFileManager {
 	
 	public static String loadActiveRules() {
 		String filePath = System.getProperty("user.dir") + "/src/main/resources/data/rule_configuration/active_rules.drl";
+		return loadText(filePath);
+	}
+	
+	public static String loadText(String filePath) {
 		String content;
 		try {
 			content = FileUtils.readFileToString(new File(filePath));

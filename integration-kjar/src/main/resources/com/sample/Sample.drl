@@ -28,7 +28,7 @@ rule "Ally hero picked"
 	then
 		heroRecommendationList.removeHeroRecommendationByHeroId($picked.getHeroId());
 		pickedAllyHeroes.addHero($picked.getHeroId());
-		System.out.println("Izmenjenooooooooooo");
+		System.out.println("Jajeeeee");
 end
 
 rule "Enemy hero picked"

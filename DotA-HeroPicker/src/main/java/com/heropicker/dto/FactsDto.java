@@ -16,11 +16,12 @@ public class FactsDto {
 	private ArrayList<String> lanePreferences;
 	private ArrayList<String> rolePreferences;
 	private ArrayList<String> allies;
+	private ArrayList<Boolean> enemyLanes;
 	private ArrayList<String> enemies;
 	private ArrayList<String> banned;
-	
+
 	public FactsDto() {
-		
+
 	}
 
 	public ArrayList<String> getHeroPreferences() {
@@ -62,7 +63,7 @@ public class FactsDto {
 	public void setEnemies(ArrayList<String> enemies) {
 		this.enemies = enemies;
 	}
-	
+
 	public ArrayList<String> getBanned() {
 		return banned;
 	}
@@ -71,27 +72,35 @@ public class FactsDto {
 		this.banned = banned;
 	}
 
+	public ArrayList<Boolean> getEnemyLanes() {
+		return enemyLanes;
+	}
+
+	public void setEnemyLanes(ArrayList<Boolean> enemyLanes) {
+		this.enemyLanes = enemyLanes;
+	}
+
 	public ArrayList<Fact> toFacts() {
 		ArrayList<Fact> retVal = new ArrayList<>();
-		for (String allyId: allies) {
+		for (String allyId : allies) {
 			retVal.add(new AllyHeroPickedFact(allyId));
 		}
-		for (String enemyId: enemies) {
-			retVal.add(new EnemyHeroPickedFact(enemyId, false));
+		for (int i = 0; i < enemies.size(); i++) {
+			retVal.add(new EnemyHeroPickedFact(enemies.get(i), enemyLanes.get(i)));
 		}
-		for (String perfId: heroPreferences) {
+		for (String perfId : heroPreferences) {
 			retVal.add(new HeroPreferredFact(perfId));
 		}
-		for (String bannedId: banned) {
+		for (String bannedId : banned) {
 			retVal.add(new HeroBannedFact(bannedId));
 		}
-		for (String role: rolePreferences) {
+		for (String role : rolePreferences) {
 			retVal.add(new RolePreferredFact(role));
 		}
-		for (String lane: lanePreferences) {
+		for (String lane : lanePreferences) {
 			retVal.add(new LanePreferredFact(lane));
 		}
 		return retVal;
 	}
-	
+
 }

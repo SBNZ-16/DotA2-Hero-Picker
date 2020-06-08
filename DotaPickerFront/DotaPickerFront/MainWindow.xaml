@@ -1,54 +1,152 @@
-﻿<Window x:Class="DotaPickerFront.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DotaPickerFront"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1600"
-        ResizeMode="NoResize">
-    <Grid x:Name="MainGrid" ShowGridLines="True">
+﻿<Window
+    Icon="resources/icon_altform-unplated.png"
+    x:Class="DotaPickerFront.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:DotaPickerFront"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d"
+    Title="Dota 2 Hero-Picker"
+    Height="600"
+    Width="1600"
+    ResizeMode="NoResize">
+    <Grid
+        x:Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="6*" />
+            <RowDefinition
+                Height="2*" />
+            <RowDefinition
+                Height="6*" />
         </Grid.RowDefinitions>
-        <Grid x:Name="SelectedHeroesGrid" Grid.Column="0" Grid.Row="0" ShowGridLines="True">
+        <Grid
+            x:Name="SelectedHeroesGrid"
+            Grid.Column="0"
+            Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-        </Grid>
-        <Grid x:Name="HeroesGrid" Grid.Column="0" Grid.Row="1" ShowGridLines="True">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="1*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition
+                    Height="auto"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="AgilityHeroesGrid" Grid.Row="0" Grid.Column="0" ShowGridLines="True">
-            </Grid>
-            <Grid x:Name="StrengthHeroesGrid" Grid.Row="0" Grid.Column="2" ShowGridLines="True">
-            </Grid>
-            <Grid x:Name="IntelligenceHeroesGrid" Grid.Row="0" Grid.Column="4" ShowGridLines="True">
-            </Grid>
-            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="2">
-                <Button x:Name="ShowButton" Width="250" Height="50" Content="Show" Margin="0, 20, 0, 5" Click="ShowButton_Click"></Button>
-                <Button Width="200" Height="40" Content="Preferences" Click="Button_Click"></Button>
+        </Grid>
+        <Grid
+            x:Name="HeroesGrid"
+            Grid.Column="0"
+            Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="8*" />
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="8*" />
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="8*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="5*" />
+                <RowDefinition
+                    Height="2*" />
+            </Grid.RowDefinitions>
+            <GroupBox
+                Grid.Row="0"
+                Grid.Column="0">
+                <GroupBox.Header>
+                    <Grid>
+                        <Label
+                            HorizontalAlignment="Center">Strength heroes</Label>
+                    </Grid>
+                </GroupBox.Header>
+                <Grid
+                    x:Name="StrengthHeroesGrid">
+                </Grid>
+            </GroupBox>
+            <GroupBox
+                Grid.Row="0"
+                Grid.Column="2">
+                <GroupBox.Header>
+                    <Grid>
+                        <Label
+                            HorizontalAlignment="Center">Agilty heroes</Label>
+                    </Grid>
+                </GroupBox.Header>
+                <Grid
+                    x:Name="AgilityHeroesGrid">
+                </Grid>
+            </GroupBox>
+            <GroupBox
+                Grid.Row="0"
+                Grid.Column="4">
+                <GroupBox.Header>
+                    <Grid>
+                        <Label
+                            HorizontalAlignment="Center">Intelligence heroes</Label>
+                    </Grid>
+                </GroupBox.Header>
+                <Grid
+                    x:Name="IntelligenceHeroesGrid">
+                </Grid>
+            </GroupBox>
+            <StackPanel
+                Orientation="Vertical"
+                Grid.Row="1"
+                Grid.Column="2">
+                <Button
+                    x:Name="ShowButton"
+                    Width="250"
+                    Height="50"
+                    Content="Show"
+                    Margin="0, 20, 0, 5"
+                    Click="ShowButton_Click"></Button>
+                <Button
+                    Width="200"
+                    Height="40"
+                    Content="Preferences"
+                    Click="Button_Click"></Button>
             </StackPanel>
         </Grid>
+        <Button
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Grid.Row="1"
+            Style="{StaticResource MaterialDesignIconForegroundButton}"
+            ToolTip="MaterialDesignIconForegroundButton"
+            Click="SettingsButtonClick">
+            <materialDesign:PackIcon
+                Kind="Cog" />
+        </Button>
+        <materialDesign:Snackbar
+            Grid.Row="1"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Center"
+            MessageQueue="{Binding MyCustomMessageQueue}" />
     </Grid>
 </Window>

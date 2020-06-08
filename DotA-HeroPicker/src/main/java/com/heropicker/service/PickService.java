@@ -54,6 +54,25 @@ public class PickService {
 
 		return heroRecommendationList;
 	}
-	
 
+
+	public KieContainer getKieContainer() {
+		return kieContainer;
+	}
+
+
+	public void setKieContainer(KieContainer kieContainer) {
+		this.kieContainer = kieContainer;
+	}
+
+
+	public HeroDatabase getHeroDatabase() {
+		return heroDatabase;
+	}
+
+
+	public void setHeroDatabase(HeroDatabase heroDatabase) {
+		this.heroDatabase = heroDatabase;
+	}
+	
 }

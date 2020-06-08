@@ -1,11 +1,16 @@
 package com.sample;
 
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+
+import org.drools.template.ObjectDataCompiler;
 
 import com.heropicker.facts.AllyHeroPickedFact;
 import com.heropicker.facts.EnemyHeroPickedFact;
@@ -15,9 +20,11 @@ import com.heropicker.facts.HeroPreferredFact;
 import com.heropicker.facts.LanePreferredFact;
 import com.heropicker.facts.RolePreferredFact;
 import com.heropicker.io.HeroLoader;
+import com.heropicker.io.RuleFileManager;
 import com.heropicker.model.HeroDatabase;
 import com.heropicker.model.HeroRecommendationList;
 import com.heropicker.model.PickedAllyHeroes;
+import com.heropicker.templating.RoleConfiguration;
 
 /**
  * This is a sample class to launch a rule.
@@ -25,8 +32,36 @@ import com.heropicker.model.PickedAllyHeroes;
 public class DroolsTest {
 
 	public static final void main(String[] args) {
+		
+		
+        ObjectDataCompiler objectDataCompiler = new ObjectDataCompiler();
+		
+
+        
+        ArrayList<RoleConfiguration> coll = new ArrayList<RoleConfiguration>();
+        coll.add(new RoleConfiguration("Jungler", 0.5, 0.025));
+        
+        RuleFileManager.dumpRoleRuleTemplateObjects(coll);
+        
+        InputStream ejo = RuleFileManager.loadTemplate("roles.drt");
+        
+        String ultimate = objectDataCompiler.compile(coll, ejo);
+        
+        System.out.println(ultimate);
+        
+        
+        
+        
+        
+		
+		
 		List<Fact> facts = new ArrayList<Fact>();
 		facts.add(new AllyHeroPickedFact("tinker"));
+		facts.add(new AllyHeroPickedFact("ursa"));
+		facts.add(new AllyHeroPickedFact("venomancer"));
+		facts.add(new AllyHeroPickedFact("lion"));
+		//facts.add(new AllyHeroPickedFact("lina"));
+		
 		facts.add(new EnemyHeroPickedFact("invoker", true));
 		facts.add(new HeroBannedFact("riki"));
 		facts.add(new HeroPreferredFact("lycan"));

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:DotaPickerFront"
         mc:Ignorable="d"
         Title="ResultWindow" Height="600" Width="700"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+    Icon="icon_altform-unplated.png">
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
             <Grid x:Name="ResultsGrid">

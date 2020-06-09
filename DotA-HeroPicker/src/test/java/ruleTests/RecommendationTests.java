@@ -7,7 +7,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
 import org.junit.jupiter.api.Assertions;
 
 import com.heropicker.service.PickService;
@@ -19,25 +21,26 @@ import com.heropicker.facts.AllyHeroPickedFact;
 import com.heropicker.facts.EnemyHeroPickedFact;
 import com.heropicker.facts.Fact;
 import com.heropicker.facts.HeroBannedFact;
+import com.heropicker.io.HeroLoader;
 import com.heropicker.model.Hero;
 import com.heropicker.model.HeroDatabase;
 import com.heropicker.model.HeroRecommendation;
 import com.heropicker.model.HeroRecommendationList;
+import com.heropicker.model.PickedAllyHeroes;
 
-public class QuickTest {
+public class RecommendationTests {
 
-	private static PickService pickService;
+
+	
+	private static HeroDatabase heroDatabase;
 	
 	@BeforeAll
-	public static void setupKieSession() {
-		Config config = new Config();
-		
-		KieContainer kieContainer = config.kieContainer();
-		HeroDatabase heroDatabase = config.heroDatabase();
-		
-		pickService = new PickService();
-		pickService.setKieContainer(kieContainer);
-		pickService.setHeroDatabase(heroDatabase);
+	public static void setupHeroDatabase() {
+		try {
+			heroDatabase = HeroLoader.loadHeroDatabase();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -47,7 +50,7 @@ public class QuickTest {
 		
 		List<Fact> facts = new ArrayList<Fact>();
 		
-		ArrayList<HeroRecommendation> heroRecommendationList = pickService.recommend(facts).getHeroRecommendations();
+		ArrayList<HeroRecommendation> heroRecommendationList = getResults(facts).getHeroRecommendations();
 		
 		HeroRecommendation firstHero = heroRecommendationList.get(0);
 		
@@ -64,11 +67,44 @@ public class QuickTest {
 		facts.add(new EnemyHeroPickedFact("ursa", true));
 		facts.add(new HeroBannedFact("venomancer"));
 		
-		HeroRecommendationList heroRecommendationList = pickService.recommend(facts);
+		HeroRecommendationList heroRecommendationList = getResults(facts);
 		
 		Assertions.assertNull(heroRecommendationList.findHeroRecommendationByHeroId("tinker"));
 		Assertions.assertNull(heroRecommendationList.findHeroRecommendationByHeroId("ursa"));
 		Assertions.assertNull(heroRecommendationList.findHeroRecommendationByHeroId("venomancer"));
+	}
+	
+	
+	public HeroRecommendationList getResults(List<Fact> facts) {
+			
+		HeroRecommendationList heroRecommendationList = new HeroRecommendationList(heroDatabase);
+		PickedAllyHeroes pickedAllyHeroes= new PickedAllyHeroes(heroDatabase);
+				
+		// load up the knowledge base
+		KieServices ks = KieServices.Factory.get();
+		KieContainer kContainer = ks.getKieClasspathContainer();
+		KieSession kSession = kContainer.newKieSession("ksession-rules");
+
+		kSession.setGlobal("heroDatabase", heroDatabase);
+		kSession.setGlobal("heroRecommendationList", heroRecommendationList);
+		kSession.setGlobal("pickedAllyHeroes", pickedAllyHeroes);
+
+		for (Fact heroPickedFact : facts) {
+			kSession.insert(heroPickedFact);
+		}
+			
+		kSession.getAgenda().getAgendaGroup("hero-statistics").setFocus();
+		kSession.fireAllRules();
+		
+		kSession.getAgenda().getAgendaGroup("team-composition").setFocus();
+		kSession.fireAllRules();
+		
+		kSession.getAgenda().getAgendaGroup("preferences").setFocus();
+		kSession.fireAllRules();
+
+		heroRecommendationList.scaleScore(0,100);
+		heroRecommendationList.displayReccomendations(10);
+		return heroRecommendationList;
 	}
 	
 	

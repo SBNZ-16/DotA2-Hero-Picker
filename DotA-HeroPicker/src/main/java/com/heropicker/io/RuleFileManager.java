@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 public class RuleFileManager {
 	
 	public static InputStream loadTemplate(String fileName) {
-		String filePath = System.getProperty("user.dir") + "/src/main/resources/rules/" + fileName;
+		String filePath = System.getProperty("user.dir") + "/src/main/resources/rules/integration/" + fileName;
 		try {
 			return new FileInputStream(new File(filePath));
 		} catch (IOException e) {
@@ -27,7 +27,7 @@ public class RuleFileManager {
 	
 	
 	public static String loadRuleFile(String fileName) {
-		String filePath = System.getProperty("user.dir") + "/src/main/resources/rules/" + fileName;
+		String filePath = System.getProperty("user.dir") + "/src/main/resources/rules/integration/" + fileName;
 		return loadText(filePath);
 	}
 	

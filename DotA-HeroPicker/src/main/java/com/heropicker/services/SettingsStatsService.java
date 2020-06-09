@@ -23,12 +23,12 @@ public class SettingsStatsService {
 	@Autowired
 	private RuleManagerService ruleManagerService;
 
-	private String path = System.getProperty("user.dir") + "/src/main/resources/rules/";
+	private String path = System.getProperty("user.dir") + "/src/main/resources/rules/integration/";
 
 	public SettingsStatsDTO getSettingsStats() {
 		SettingsStatsDTO retval = new SettingsStatsDTO();
 		try {
-			String userAddedRules = RuleFileManager.loadRuleFile("userAddedRules.drl");
+			String userAddedRules = RuleFileManager.loadRuleFile("userAddedRules.txt");
 			String settingsStats = new Scanner(new File(path + "settingsStats.json")).useDelimiter("\\Z").next();
 			GsonBuilder builder = new GsonBuilder();
 			Gson gson = builder.create();
@@ -56,7 +56,7 @@ public class SettingsStatsService {
 
 	public String postSettingsStats(SettingsStatsDTO settingsStats) {
 		try {
-			Files.write(Paths.get(path + "userAddedRules.drl"), settingsStats.getUserAddedRules().getBytes());
+			Files.write(Paths.get(path + "userAddedRules.txt"), settingsStats.getUserAddedRules().getBytes());
 			GsonBuilder builder = (new GsonBuilder()).setPrettyPrinting();
 			Gson gson = builder.create();
 			Files.write(Paths.get(path + "settingsStats.json"), gson.toJson(settingsStats).getBytes());

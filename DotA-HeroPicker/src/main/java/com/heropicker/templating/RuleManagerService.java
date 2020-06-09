@@ -54,7 +54,7 @@ public class RuleManagerService {
 	
 	public void exportChangedRules(SettingsStatsDTO settings) {
 		
-		String basicRules = RuleFileManager.loadRuleFile("basicRules.drl");
+		String basicRules = RuleFileManager.loadRuleFile("basicRules.txt");
 		String roleRules = applyRoleTemplate(settings);
 		String preferenceRules = applyPreferencesTemplate(settings);
 		String userRules = settings.getUserAddedRules();

@@ -19,3 +19,7 @@ template "Role rules"
 	end
 
 end template
+
+query roleOverflow(String $role, Long $count)
+	 $count := Number() from accumulate ($hero : Hero(roles contains $role) from pickedAllyHeroes.heroes, count($hero))
+end

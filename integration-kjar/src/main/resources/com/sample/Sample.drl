@@ -17,9 +17,6 @@ global com.heropicker.model.HeroDatabase heroDatabase;
 global com.heropicker.model.HeroRecommendationList heroRecommendationList;
 global PickedAllyHeroes pickedAllyHeroes;
 
-query roleOverflow(String $role, Long $count)
-	 $count := Number() from accumulate ($hero : Hero(roles contains $role) from pickedAllyHeroes.heroes, count($hero))
-end
  
 rule "Ally hero picked"
 	agenda-group "hero-statistics"
@@ -65,6 +62,9 @@ rule "Update score by lane"
 		 $updateScore.getAddValue());
 end
 
+query roleOverflow(String $role, Long $count)
+	 $count := Number() from accumulate ($hero : Hero(roles contains $role) from pickedAllyHeroes.heroes, count($hero))
+end
 
 	rule "Pusher role"
 		agenda-group "team-composition"

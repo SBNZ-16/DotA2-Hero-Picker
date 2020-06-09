@@ -25,8 +25,6 @@ import com.heropicker.model.HeroRecommendationList;
 import com.heropicker.service.PickService;
 import com.heropicker.model.HeroRecommendation;
 
-import com.sample.DroolsTest;
-
 
 @CrossOrigin
 @RestController

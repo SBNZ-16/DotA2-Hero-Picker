@@ -24,6 +24,17 @@ public class HeroRecommendationList {
 		return heroRecommendationsMap.get(heroId);
 	}
 
+	public int getHeroRank(String heroId) {
+		ArrayList<HeroRecommendation> heroRecommendations = new ArrayList<>(this.heroRecommendationsMap.values());
+		heroRecommendations.sort(new Comparator<HeroRecommendation>() {
+			@Override
+			public int compare(HeroRecommendation o1, HeroRecommendation o2) {
+				return -Double.compare(o1.getScore(), o2.getScore());
+			}
+		});
+		return heroRecommendations.indexOf(heroRecommendationsMap.get(heroId));
+	}
+
 	public HeroRecommendation removeHeroRecommendationByHeroId(String heroId) {
 		return heroRecommendationsMap.remove(heroId);
 	}
@@ -38,15 +49,15 @@ public class HeroRecommendationList {
 	}
 
 	public void displayReccomendations(int countToDisplay) {
-		ArrayList<HeroRecommendation> heroReccomendations = new ArrayList<>(this.heroRecommendationsMap.values());
-		heroReccomendations.sort(new Comparator<HeroRecommendation>() {
+		ArrayList<HeroRecommendation> heroRecommendations = new ArrayList<>(this.heroRecommendationsMap.values());
+		heroRecommendations.sort(new Comparator<HeroRecommendation>() {
 			@Override
 			public int compare(HeroRecommendation o1, HeroRecommendation o2) {
 				return -Double.compare(o1.getScore(), o2.getScore());
 			}
 		});
 		for (int i = 0; i < countToDisplay; i++) {
-			HeroRecommendation heroRecommendation = heroReccomendations.get(i);
+			HeroRecommendation heroRecommendation = heroRecommendations.get(i);
 			System.out.println(i + 1 + ". " + heroRecommendation.getHero().getHeroName() + ", score: "
 					+ heroRecommendation.getScore());
 		}

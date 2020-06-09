@@ -202,6 +202,6 @@ rule "Update score by lane"
 		$laneStats: LaneStats(name == $lane) from $hero.lanes
 	then
 		double laneEffectiveness = ($laneStats.getWinrate() * $laneStats.getPresence());
-		$heroRecommendation.updateScore(laneEffectiveness*$updateScore.getMultiplyScale(),
+		$heroRecommendation.updateScore((1+laneEffectiveness)*$updateScore.getMultiplyScale(),
 		 $updateScore.getAddValue());
 end

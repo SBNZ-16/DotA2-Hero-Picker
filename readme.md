@@ -51,6 +51,8 @@ Ukoliko je config.mvn.autoTrigger postavljen na "true", potrebno je takođe pode
 
 Config.mvn.path varijablu je potrebno postaviti na home direktorijum instaliranog maven alata na računaru, npr. "F:/Program Files/apache-maven-3.6.2/"
 
+Takođe, u direktorijumu instaliranog maven alata na računaru je potrebno da se nalazi mvn.bat i mvnDebug.bat (u slučaju da se nalaze mvn.cmd i mvnDebug.cmd, potrebno ih je kopirati kao mvn.bat i mvnDebug.bat)
+
 # Spisak pravila
 
 Sva pravila su podeljena u 3 agende, sa tim da su neka pravila u implicitnoj MAIN agendi.

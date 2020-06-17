@@ -1,0 +1,1460 @@
+[
+    {
+        "name": "Iron Branch",
+        "cost": 50,
+        "components": []
+    },
+    {
+        "name": "Gauntlets of Strength",
+        "cost": 145,
+        "components": []
+    },
+    {
+        "name": "Mantle of Intelligence",
+        "cost": 145,
+        "components": []
+    },
+    {
+        "name": "Slippers of Agility",
+        "cost": 145,
+        "components": []
+    },
+    {
+        "name": "Circlet",
+        "cost": 155,
+        "components": []
+    },
+    {
+        "name": "Band of Elvenskin",
+        "cost": 450,
+        "components": []
+    },
+    {
+        "name": "Belt of Strength",
+        "cost": 450,
+        "components": []
+    },
+    {
+        "name": "Crown",
+        "cost": 450,
+        "components": []
+    },
+    {
+        "name": "Robe of the Magi",
+        "cost": 450,
+        "components": []
+    },
+    {
+        "name": "Blade of Alacrity",
+        "cost": 1000,
+        "components": []
+    },
+    {
+        "name": "Ogre Axe",
+        "cost": 1000,
+        "components": []
+    },
+    {
+        "name": "Staff of Wizardry",
+        "cost": 1000,
+        "components": []
+    },
+    {
+        "name": "Quelling Blade",
+        "cost": 150,
+        "components": []
+    },
+    {
+        "name": "Ring of Protection",
+        "cost": 150,
+        "components": []
+    },
+    {
+        "name": "Infused Raindrops",
+        "cost": 225,
+        "components": []
+    },
+    {
+        "name": "Blight Stone",
+        "cost": 300,
+        "components": []
+    },
+    {
+        "name": "Orb of Venom",
+        "cost": 300,
+        "components": []
+    },
+    {
+        "name": "Blades of Attack",
+        "cost": 450,
+        "components": []
+    },
+    {
+        "name": "Chainmail",
+        "cost": 550,
+        "components": []
+    },
+    {
+        "name": "Quarterstaff",
+        "cost": 875,
+        "components": []
+    },
+    {
+        "name": "Helm of Iron Will",
+        "cost": 925,
+        "components": []
+    },
+    {
+        "name": "Broadsword",
+        "cost": 1000,
+        "components": []
+    },
+    {
+        "name": "Javelin",
+        "cost": 1100,
+        "components": []
+    },
+    {
+        "name": "Claymore",
+        "cost": 1400,
+        "components": []
+    },
+    {
+        "name": "Mithril Hammer",
+        "cost": 1600,
+        "components": []
+    },
+    {
+        "name": "Magic Stick",
+        "cost": 200,
+        "components": []
+    },
+    {
+        "name": "Ring of Regen",
+        "cost": 225,
+        "components": []
+    },
+    {
+        "name": "Sage's Mask",
+        "cost": 225,
+        "components": []
+    },
+    {
+        "name": "Wind Lace",
+        "cost": 250,
+        "components": []
+    },
+    {
+        "name": "Gloves of Haste",
+        "cost": 450,
+        "components": []
+    },
+    {
+        "name": "Boots of Speed",
+        "cost": 500,
+        "components": []
+    },
+    {
+        "name": "Cloak",
+        "cost": 550,
+        "components": []
+    },
+    {
+        "name": "Ring of Tarrasque",
+        "cost": 650,
+        "components": []
+    },
+    {
+        "name": "Gem of True Sight",
+        "cost": 900,
+        "components": []
+    },
+    {
+        "name": "Morbid Mask",
+        "cost": 900,
+        "components": []
+    },
+    {
+        "name": "Shadow Amulet",
+        "cost": 1400,
+        "components": []
+    },
+    {
+        "name": "Ghost Scepter",
+        "cost": 1500,
+        "components": []
+    },
+    {
+        "name": "Blink Dagger",
+        "cost": 2250,
+        "components": []
+    },
+    {
+        "name": "Ring of Health",
+        "cost": 825,
+        "components": []
+    },
+    {
+        "name": "Void Stone",
+        "cost": 825,
+        "components": []
+    },
+    {
+        "name": "Energy Booster",
+        "cost": 900,
+        "components": []
+    },
+    {
+        "name": "Vitality Booster",
+        "cost": 1100,
+        "components": []
+    },
+    {
+        "name": "Point Booster",
+        "cost": 1200,
+        "components": []
+    },
+    {
+        "name": "Platemail",
+        "cost": 1400,
+        "components": []
+    },
+    {
+        "name": "Talisman of Evasion",
+        "cost": 1400,
+        "components": []
+    },
+    {
+        "name": "Hyperstone",
+        "cost": 2000,
+        "components": []
+    },
+    {
+        "name": "Ultimate Orb",
+        "cost": 2150,
+        "components": []
+    },
+    {
+        "name": "Demon Edge",
+        "cost": 2200,
+        "components": []
+    },
+    {
+        "name": "Mystic Staff",
+        "cost": 2700,
+        "components": []
+    },
+    {
+        "name": "Eaglesong",
+        "cost": 3000,
+        "components": []
+    },
+    {
+        "name": "Reaver",
+        "cost": 3000,
+        "components": []
+    },
+    {
+        "name": "Sacred Relic",
+        "cost": 3800,
+        "components": []
+    },
+    {
+        "name": "Magic Wand",
+        "cost": 450,
+        "components": [
+            "Magic Stick",
+            "Iron Branch",
+            "Iron Branch",
+            "Recipe: Magic Wand"
+        ]
+    },
+    {
+        "name": "Recipe: Magic Wand",
+        "cost": 150,
+        "components": []
+    },
+    {
+        "name": "Bracer",
+        "cost": 510,
+        "components": [
+            "Circlet",
+            "Gauntlets of Strength",
+            "Recipe: Bracer"
+        ]
+    },
+    {
+        "name": "Recipe: Bracer",
+        "cost": 210,
+        "components": []
+    },
+    {
+        "name": "Null Talisman",
+        "cost": 510,
+        "components": [
+            "Circlet",
+            "Mantle of Intelligence",
+            "Recipe: Null Talisman"
+        ]
+    },
+    {
+        "name": "Recipe: Null Talisman",
+        "cost": 210,
+        "components": []
+    },
+    {
+        "name": "Wraith Band",
+        "cost": 510,
+        "components": [
+            "Circlet",
+            "Slippers of Agility",
+            "Recipe: Wraith Band"
+        ]
+    },
+    {
+        "name": "Recipe: Wraith Band",
+        "cost": 210,
+        "components": []
+    },
+    {
+        "name": "Soul Ring",
+        "cost": 815,
+        "components": [
+            "Ring of Regen",
+            "Gauntlets of Strength",
+            "Gauntlets of Strength",
+            "Recipe: Soul Ring"
+        ]
+    },
+    {
+        "name": "Recipe: Soul Ring",
+        "cost": 300,
+        "components": []
+    },
+    {
+        "name": "Power Treads (Agility)",
+        "cost": 1400,
+        "components": [
+            "Boots of Speed",
+            "Gloves of Haste",
+            "Band of Elvenskin"
+        ]
+    },
+    {
+        "name": "Power Treads (Intelligence)",
+        "cost": 1400,
+        "components": [
+            "Boots of Speed",
+            "Gloves of Haste",
+            "Robe of the Magi"
+        ]
+    },
+    {
+        "name": "Power Treads (Strength)",
+        "cost": 1400,
+        "components": [
+            "Boots of Speed",
+            "Gloves of Haste",
+            "Belt of Strength"
+        ]
+    },
+    {
+        "name": "Phase Boots",
+        "cost": 1500,
+        "components": [
+            "Boots of Speed",
+            "Chainmail",
+            "Blades of Attack"
+        ]
+    },
+    {
+        "name": "Oblivion Staff",
+        "cost": 1550,
+        "components": [
+            "Quarterstaff",
+            "Robe of the Magi",
+            "Sage's Mask"
+        ]
+    },
+    {
+        "name": "Perseverance",
+        "cost": 1650,
+        "components": [
+            "Ring of Health",
+            "Void Stone"
+        ]
+    },
+    {
+        "name": "Mask of Madness",
+        "cost": 1775,
+        "components": [
+            "Morbid Mask",
+            "Quarterstaff"
+        ]
+    },
+    {
+        "name": "Helm of the Dominator",
+        "cost": 2175,
+        "components": [
+            "Broadsword",
+            "Headdress",
+            "Crown",
+            "Recipe: Helm of the Dominator"
+        ]
+    },
+    {
+        "name": "Recipe: Helm of the Dominator",
+        "cost": 300,
+        "components": []
+    },
+    {
+        "name": "Hand of Midas",
+        "cost": 2300,
+        "components": [
+            "Gloves of Haste",
+            "Recipe: Hand of Midas"
+        ]
+    },
+    {
+        "name": "Recipe: Hand of Midas",
+        "cost": 1850,
+        "components": []
+    },
+    {
+        "name": "Boots of Travel 1",
+        "cost": 2500,
+        "components": [
+            "Boots of Speed",
+            "Recipe: Boots of Travel 1"
+        ]
+    },
+    {
+        "name": "Recipe: Boots of Travel 1",
+        "cost": 2000,
+        "components": []
+    },
+    {
+        "name": "Moon Shard",
+        "cost": 4000,
+        "components": [
+            "Hyperstone",
+            "Hyperstone"
+        ]
+    },
+    {
+        "name": "Boots of Travel 2",
+        "cost": 4500,
+        "components": [
+            "Boots of Travel 1",
+            "Recipe: Boots of Travel 2"
+        ]
+    },
+    {
+        "name": "Recipe: Boots of Travel 2",
+        "cost": 2000,
+        "components": []
+    },
+    {
+        "name": "Buckler",
+        "cost": 375,
+        "components": [
+            "Ring of Protection",
+            "Recipe: Buckler"
+        ]
+    },
+    {
+        "name": "Recipe: Buckler",
+        "cost": 225,
+        "components": []
+    },
+    {
+        "name": "Headdress",
+        "cost": 425,
+        "components": [
+            "Ring of Regen",
+            "Recipe: Headdress"
+        ]
+    },
+    {
+        "name": "Recipe: Headdress",
+        "cost": 200,
+        "components": []
+    },
+    {
+        "name": "Ring of Basilius",
+        "cost": 425,
+        "components": [
+            "Sage's Mask",
+            "Recipe: Ring of Basilius"
+        ]
+    },
+    {
+        "name": "Recipe: Ring of Basilius",
+        "cost": 200,
+        "components": []
+    },
+    {
+        "name": "Urn of Shadows",
+        "cost": 840,
+        "components": [
+            "Sage's Mask",
+            "Circlet",
+            "Ring of Protection",
+            "Recipe: Urn of Shadows"
+        ]
+    },
+    {
+        "name": "Recipe: Urn of Shadows",
+        "cost": 310,
+        "components": []
+    },
+    {
+        "name": "Tranquil Boots",
+        "cost": 975,
+        "components": [
+            "Boots of Speed",
+            "Wind Lace",
+            "Ring of Regen"
+        ]
+    },
+    {
+        "name": "Medallion of Courage",
+        "cost": 1075,
+        "components": [
+            "Chainmail",
+            "Sage's Mask",
+            "Blight Stone"
+        ]
+    },
+    {
+        "name": "Arcane Boots",
+        "cost": 1400,
+        "components": [
+            "Boots of Speed",
+            "Energy Booster"
+        ]
+    },
+    {
+        "name": "Drum of Endurance",
+        "cost": 1950,
+        "components": [
+            "Gloves of Haste",
+            "Crown",
+            "Wind Lace",
+            "Recipe: Drum of Endurance"
+        ]
+    },
+    {
+        "name": "Recipe: Drum of Endurance",
+        "cost": 800,
+        "components": []
+    },
+    {
+        "name": "Mekansm",
+        "cost": 1975,
+        "components": [
+            "Headdress",
+            "Chainmail",
+            "Recipe: Mekansm"
+        ]
+    },
+    {
+        "name": "Recipe: Mekansm",
+        "cost": 1000,
+        "components": []
+    },
+    {
+        "name": "Vladmir's Offering",
+        "cost": 2300,
+        "components": [
+            "Ring of Basilius",
+            "Buckler",
+            "Morbid Mask",
+            "Recipe: Vladmir's Offering"
+        ]
+    },
+    {
+        "name": "Recipe: Vladmir's Offering",
+        "cost": 600,
+        "components": []
+    },
+    {
+        "name": "Holy Locket",
+        "cost": 2500,
+        "components": [
+            "Ring of Tarrasque",
+            "Energy Booster",
+            "Magic Wand",
+            "Recipe: Holy Locket"
+        ]
+    },
+    {
+        "name": "Recipe: Holy Locket",
+        "cost": 500,
+        "components": []
+    },
+    {
+        "name": "Spirit Vessel",
+        "cost": 2940,
+        "components": [
+            "Urn of Shadows",
+            "Vitality Booster",
+            "Recipe: Spirit Vessel"
+        ]
+    },
+    {
+        "name": "Recipe: Spirit Vessel",
+        "cost": 1000,
+        "components": []
+    },
+    {
+        "name": "Pipe of Insight",
+        "cost": 3425,
+        "components": [
+            "Hood of Defiance",
+            "Headdress",
+            "Recipe: Pipe of Insight"
+        ]
+    },
+    {
+        "name": "Recipe: Pipe of Insight",
+        "cost": 1200,
+        "components": []
+    },
+    {
+        "name": "Guardian Greaves",
+        "cost": 4975,
+        "components": [
+            "Mekansm",
+            "Arcane Boots",
+            "Recipe: Guardian Greaves"
+        ]
+    },
+    {
+        "name": "Recipe: Guardian Greaves",
+        "cost": 1600,
+        "components": []
+    },
+    {
+        "name": "Glimmer Cape",
+        "cost": 1950,
+        "components": [
+            "Shadow Amulet",
+            "Cloak"
+        ]
+    },
+    {
+        "name": "Veil of Discord",
+        "cost": 2025,
+        "components": [
+            "Ring of Basilius",
+            "Crown",
+            "Recipe: Veil of Discord"
+        ]
+    },
+    {
+        "name": "Recipe: Veil of Discord",
+        "cost": 1150,
+        "components": []
+    },
+    {
+        "name": "Necronomicon",
+        "cost": 2150,
+        "components": [
+            "Sage's Mask",
+            "Sage's Mask",
+            "Belt of Strength",
+            "Recipe: Necronomicon"
+        ]
+    },
+    {
+        "name": "Recipe: Necronomicon",
+        "cost": 1250,
+        "components": []
+    },
+    {
+        "name": "Necronomicon 1",
+        "cost": 2150,
+        "components": [
+            "Sage's Mask",
+            "Sage's Mask",
+            "Belt of Strength",
+            "Recipe: Necronomicon 1"
+        ]
+    },
+    {
+        "name": "Recipe: Necronomicon 1",
+        "cost": 1250,
+        "components": []
+    },
+    {
+        "name": "Force Staff",
+        "cost": 2225,
+        "components": [
+            "Staff of Wizardry",
+            "Ring of Regen",
+            "Recipe: Force Staff"
+        ]
+    },
+    {
+        "name": "Recipe: Force Staff",
+        "cost": 1000,
+        "components": []
+    },
+    {
+        "name": "Aether Lens",
+        "cost": 2325,
+        "components": [
+            "Energy Booster",
+            "Void Stone",
+            "Recipe: Aether Lens"
+        ]
+    },
+    {
+        "name": "Recipe: Aether Lens",
+        "cost": 600,
+        "components": []
+    },
+    {
+        "name": "Dagon",
+        "cost": 2700,
+        "components": [
+            "Staff of Wizardry",
+            "Crown",
+            "Recipe: Dagon"
+        ]
+    },
+    {
+        "name": "Recipe: Dagon",
+        "cost": 1250,
+        "components": []
+    },
+    {
+        "name": "Dagon 1",
+        "cost": 2700,
+        "components": [
+            "Staff of Wizardry",
+            "Crown",
+            "Recipe: Dagon 1"
+        ]
+    },
+    {
+        "name": "Recipe: Dagon 1",
+        "cost": 1250,
+        "components": []
+    },
+    {
+        "name": "Eul's Scepter of Divinity",
+        "cost": 2725,
+        "components": [
+            "Staff of Wizardry",
+            "Void Stone",
+            "Wind Lace",
+            "Recipe: Eul's Scepter of Divinity"
+        ]
+    },
+    {
+        "name": "Recipe: Eul's Scepter of Divinity",
+        "cost": 650,
+        "components": []
+    },
+    {
+        "name": "Rod of Atos",
+        "cost": 2750,
+        "components": [
+            "Staff of Wizardry",
+            "Crown",
+            "Crown",
+            "Recipe: Rod of Atos"
+        ]
+    },
+    {
+        "name": "Recipe: Rod of Atos",
+        "cost": 850,
+        "components": []
+    },
+    {
+        "name": "Necronomicon 2",
+        "cost": 3400,
+        "components": [
+            "Necronomicon 1",
+            "Recipe: Necronomicon 2"
+        ]
+    },
+    {
+        "name": "Recipe: Necronomicon 2",
+        "cost": 1250,
+        "components": []
+    },
+    {
+        "name": "Orchid Malevolence",
+        "cost": 3875,
+        "components": [
+            "Oblivion Staff",
+            "Oblivion Staff",
+            "Recipe: Orchid Malevolence"
+        ]
+    },
+    {
+        "name": "Recipe: Orchid Malevolence",
+        "cost": 775,
+        "components": []
+    },
+    {
+        "name": "Solar Crest",
+        "cost": 3875,
+        "components": [
+            "Medallion of Courage",
+            "Ultimate Orb",
+            "Wind Lace",
+            "Recipe: Solar Crest"
+        ]
+    },
+    {
+        "name": "Recipe: Solar Crest",
+        "cost": 400,
+        "components": []
+    },
+    {
+        "name": "Dagon 2",
+        "cost": 3950,
+        "components": [
+            "Dagon 1",
+            "Recipe: Dagon 2"
+        ]
+    },
+    {
+        "name": "Recipe: Dagon 2",
+        "cost": 1250,
+        "components": []
+    },
+    {
+        "name": "Aghanim's Scepter",
+        "cost": 4200,
+        "components": [
+            "Point Booster",
+            "Staff of Wizardry",
+            "Ogre Axe",
+            "Blade of Alacrity"
+        ]
+    },
+    {
+        "name": "Necronomicon 3",
+        "cost": 4650,
+        "components": [
+            "Necronomicon 2",
+            "Recipe: Necronomicon 3"
+        ]
+    },
+    {
+        "name": "Recipe: Necronomicon 3",
+        "cost": 1250,
+        "components": []
+    },
+    {
+        "name": "Nullifier",
+        "cost": 4725,
+        "components": [
+            "Sacred Relic",
+            "Helm of Iron Will"
+        ]
+    },
+    {
+        "name": "Refresher Orb",
+        "cost": 5000,
+        "components": [
+            "Perseverance",
+            "Perseverance",
+            "Recipe: Refresher Orb"
+        ]
+    },
+    {
+        "name": "Recipe: Refresher Orb",
+        "cost": 1700,
+        "components": []
+    },
+    {
+        "name": "Dagon 3",
+        "cost": 5200,
+        "components": [
+            "Dagon 2",
+            "Recipe: Dagon 3"
+        ]
+    },
+    {
+        "name": "Recipe: Dagon 3",
+        "cost": 1250,
+        "components": []
+    },
+    {
+        "name": "Scythe of Vyse",
+        "cost": 5675,
+        "components": [
+            "Mystic Staff",
+            "Ultimate Orb",
+            "Void Stone"
+        ]
+    },
+    {
+        "name": "Octarine Core",
+        "cost": 5900,
+        "components": [
+            "Mystic Staff",
+            "Soul Booster"
+        ]
+    },
+    {
+        "name": "Aghanim's Blessing",
+        "cost": 6000,
+        "components": [
+            "Aghanim's Scepter",
+            "Recipe: Aghanim's Blessing"
+        ]
+    },
+    {
+        "name": "Recipe: Aghanim's Blessing",
+        "cost": 1800,
+        "components": []
+    },
+    {
+        "name": "Dagon 4",
+        "cost": 6450,
+        "components": [
+            "Dagon 3",
+            "Recipe: Dagon 4"
+        ]
+    },
+    {
+        "name": "Recipe: Dagon 4",
+        "cost": 1250,
+        "components": []
+    },
+    {
+        "name": "Dagon 5",
+        "cost": 7700,
+        "components": [
+            "Dagon 4",
+            "Recipe: Dagon 5"
+        ]
+    },
+    {
+        "name": "Recipe: Dagon 5",
+        "cost": 1250,
+        "components": []
+    },
+    {
+        "name": "Hood of Defiance",
+        "cost": 1800,
+        "components": [
+            "Ring of Health",
+            "Cloak",
+            "Ring of Regen",
+            "Recipe: Hood of Defiance"
+        ]
+    },
+    {
+        "name": "Recipe: Hood of Defiance",
+        "cost": 200,
+        "components": []
+    },
+    {
+        "name": "Vanguard",
+        "cost": 1925,
+        "components": [
+            "Ring of Health",
+            "Vitality Booster"
+        ]
+    },
+    {
+        "name": "Blade Mail",
+        "cost": 2000,
+        "components": [
+            "Broadsword",
+            "Chainmail",
+            "Robe of the Magi"
+        ]
+    },
+    {
+        "name": "Aeon Disk",
+        "cost": 3100,
+        "components": [
+            "Vitality Booster",
+            "Energy Booster",
+            "Recipe: Aeon Disk"
+        ]
+    },
+    {
+        "name": "Recipe: Aeon Disk",
+        "cost": 1100,
+        "components": []
+    },
+    {
+        "name": "Soul Booster",
+        "cost": 3200,
+        "components": [
+            "Vitality Booster",
+            "Energy Booster",
+            "Point Booster"
+        ]
+    },
+    {
+        "name": "Crimson Guard",
+        "cost": 3800,
+        "components": [
+            "Vanguard",
+            "Helm of Iron Will",
+            "Recipe: Crimson Guard"
+        ]
+    },
+    {
+        "name": "Recipe: Crimson Guard",
+        "cost": 950,
+        "components": []
+    },
+    {
+        "name": "Lotus Orb",
+        "cost": 3950,
+        "components": [
+            "Perseverance",
+            "Platemail",
+            "Energy Booster"
+        ]
+    },
+    {
+        "name": "Black King Bar",
+        "cost": 4050,
+        "components": [
+            "Ogre Axe",
+            "Mithril Hammer",
+            "Recipe: Black King Bar"
+        ]
+    },
+    {
+        "name": "Recipe: Black King Bar",
+        "cost": 1450,
+        "components": []
+    },
+    {
+        "name": "Hurricane Pike",
+        "cost": 4575,
+        "components": [
+            "Force Staff",
+            "Dragon Lance",
+            "Recipe: Hurricane Pike"
+        ]
+    },
+    {
+        "name": "Recipe: Hurricane Pike",
+        "cost": 450,
+        "components": []
+    },
+    {
+        "name": "Manta Style",
+        "cost": 4700,
+        "components": [
+            "Yasha",
+            "Ultimate Orb",
+            "Recipe: Manta Style"
+        ]
+    },
+    {
+        "name": "Recipe: Manta Style",
+        "cost": 500,
+        "components": []
+    },
+    {
+        "name": "Shiva's Guard",
+        "cost": 4750,
+        "components": [
+            "Platemail",
+            "Mystic Staff",
+            "Recipe: Shiva's Guard"
+        ]
+    },
+    {
+        "name": "Recipe: Shiva's Guard",
+        "cost": 650,
+        "components": []
+    },
+    {
+        "name": "Linken's Sphere",
+        "cost": 5000,
+        "components": [
+            "Ultimate Orb",
+            "Perseverance",
+            "Recipe: Linken's Sphere"
+        ]
+    },
+    {
+        "name": "Recipe: Linken's Sphere",
+        "cost": 1200,
+        "components": []
+    },
+    {
+        "name": "Assault Cuirass",
+        "cost": 5075,
+        "components": [
+            "Platemail",
+            "Hyperstone",
+            "Buckler",
+            "Recipe: Assault Cuirass"
+        ]
+    },
+    {
+        "name": "Recipe: Assault Cuirass",
+        "cost": 1300,
+        "components": []
+    },
+    {
+        "name": "Heart of Tarrasque",
+        "cost": 5150,
+        "components": [
+            "Ring of Tarrasque",
+            "Vitality Booster",
+            "Reaver",
+            "Recipe: Heart of Tarrasque"
+        ]
+    },
+    {
+        "name": "Recipe: Heart of Tarrasque",
+        "cost": 400,
+        "components": []
+    },
+    {
+        "name": "Bloodstone",
+        "cost": 5250,
+        "components": [
+            "Kaya",
+            "Soul Booster"
+        ]
+    },
+    {
+        "name": "Crystalys",
+        "cost": 2150,
+        "components": [
+            "Broadsword",
+            "Blades of Attack",
+            "Recipe: Crystalys"
+        ]
+    },
+    {
+        "name": "Recipe: Crystalys",
+        "cost": 700,
+        "components": []
+    },
+    {
+        "name": "Meteor Hammer",
+        "cost": 2450,
+        "components": [
+            "Ogre Axe",
+            "Staff of Wizardry",
+            "Ring of Regen",
+            "Sage's Mask"
+        ]
+    },
+    {
+        "name": "Armlet of Mordiggian",
+        "cost": 2475,
+        "components": [
+            "Helm of Iron Will",
+            "Gloves of Haste",
+            "Blades of Attack",
+            "Recipe: Armlet of Mordiggian"
+        ]
+    },
+    {
+        "name": "Recipe: Armlet of Mordiggian",
+        "cost": 650,
+        "components": []
+    },
+    {
+        "name": "Shadow Blade",
+        "cost": 2800,
+        "components": [
+            "Shadow Amulet",
+            "Claymore"
+        ]
+    },
+    {
+        "name": "Skull Basher",
+        "cost": 2950,
+        "components": [
+            "Mithril Hammer",
+            "Belt of Strength",
+            "Recipe: Skull Basher"
+        ]
+    },
+    {
+        "name": "Recipe: Skull Basher",
+        "cost": 900,
+        "components": []
+    },
+    {
+        "name": "Monkey King Bar",
+        "cost": 4175,
+        "components": [
+            "Demon Edge",
+            "Javelin",
+            "Quarterstaff"
+        ]
+    },
+    {
+        "name": "Battle Fury",
+        "cost": 4400,
+        "components": [
+            "Broadsword",
+            "Mithril Hammer",
+            "Perseverance",
+            "Quelling Blade"
+        ]
+    },
+    {
+        "name": "Ethereal Blade",
+        "cost": 4500,
+        "components": [
+            "Eaglesong",
+            "Ghost Scepter"
+        ]
+    },
+    {
+        "name": "Radiance",
+        "cost": 5150,
+        "components": [
+            "Sacred Relic",
+            "Recipe: Radiance"
+        ]
+    },
+    {
+        "name": "Recipe: Radiance",
+        "cost": 1350,
+        "components": []
+    },
+    {
+        "name": "Butterfly",
+        "cost": 5275,
+        "components": [
+            "Eaglesong",
+            "Talisman of Evasion",
+            "Quarterstaff"
+        ]
+    },
+    {
+        "name": "Daedalus",
+        "cost": 5350,
+        "components": [
+            "Crystalys",
+            "Demon Edge",
+            "Recipe: Daedalus"
+        ]
+    },
+    {
+        "name": "Recipe: Daedalus",
+        "cost": 1000,
+        "components": []
+    },
+    {
+        "name": "Silver Edge",
+        "cost": 5550,
+        "components": [
+            "Shadow Blade",
+            "Ultimate Orb",
+            "Recipe: Silver Edge"
+        ]
+    },
+    {
+        "name": "Recipe: Silver Edge",
+        "cost": 600,
+        "components": []
+    },
+    {
+        "name": "Divine Rapier",
+        "cost": 6000,
+        "components": [
+            "Sacred Relic",
+            "Demon Edge"
+        ]
+    },
+    {
+        "name": "Abyssal Blade",
+        "cost": 6625,
+        "components": [
+            "Skull Basher",
+            "Vanguard",
+            "Recipe: Abyssal Blade"
+        ]
+    },
+    {
+        "name": "Recipe: Abyssal Blade",
+        "cost": 1750,
+        "components": []
+    },
+    {
+        "name": "Bloodthorn",
+        "cost": 6875,
+        "components": [
+            "Orchid Malevolence",
+            "Hyperstone",
+            "Recipe: Bloodthorn"
+        ]
+    },
+    {
+        "name": "Recipe: Bloodthorn",
+        "cost": 1000,
+        "components": []
+    },
+    {
+        "name": "Dragon Lance",
+        "cost": 1900,
+        "components": [
+            "Ogre Axe",
+            "Band of Elvenskin",
+            "Band of Elvenskin"
+        ]
+    },
+    {
+        "name": "Kaya",
+        "cost": 2050,
+        "components": [
+            "Staff of Wizardry",
+            "Robe of the Magi",
+            "Recipe: Kaya"
+        ]
+    },
+    {
+        "name": "Recipe: Kaya",
+        "cost": 600,
+        "components": []
+    },
+    {
+        "name": "Sange",
+        "cost": 2050,
+        "components": [
+            "Ogre Axe",
+            "Belt of Strength",
+            "Recipe: Sange"
+        ]
+    },
+    {
+        "name": "Recipe: Sange",
+        "cost": 600,
+        "components": []
+    },
+    {
+        "name": "Yasha",
+        "cost": 2050,
+        "components": [
+            "Blade of Alacrity",
+            "Band of Elvenskin",
+            "Recipe: Yasha"
+        ]
+    },
+    {
+        "name": "Recipe: Yasha",
+        "cost": 600,
+        "components": []
+    },
+    {
+        "name": "Echo Sabre",
+        "cost": 2550,
+        "components": [
+            "Ogre Axe",
+            "Oblivion Staff"
+        ]
+    },
+    {
+        "name": "Maelstrom",
+        "cost": 2700,
+        "components": [
+            "Mithril Hammer",
+            "Javelin"
+        ]
+    },
+    {
+        "name": "Diffusal Blade",
+        "cost": 3150,
+        "components": [
+            "Blade of Alacrity",
+            "Blade of Alacrity",
+            "Robe of the Magi",
+            "Recipe: Diffusal Blade"
+        ]
+    },
+    {
+        "name": "Recipe: Diffusal Blade",
+        "cost": 700,
+        "components": []
+    },
+    {
+        "name": "Heaven's Halberd",
+        "cost": 3450,
+        "components": [
+            "Sange",
+            "Talisman of Evasion"
+        ]
+    },
+    {
+        "name": "Desolator",
+        "cost": 3500,
+        "components": [
+            "Mithril Hammer",
+            "Mithril Hammer",
+            "Blight Stone"
+        ]
+    },
+    {
+        "name": "Kaya and Sange",
+        "cost": 4100,
+        "components": [
+            "Sange",
+            "Kaya"
+        ]
+    },
+    {
+        "name": "Sange and Yasha",
+        "cost": 4100,
+        "components": [
+            "Yasha",
+            "Sange"
+        ]
+    },
+    {
+        "name": "Yasha and Kaya",
+        "cost": 4100,
+        "components": [
+            "Kaya",
+            "Yasha"
+        ]
+    },
+    {
+        "name": "Satanic",
+        "cost": 5300,
+        "components": [
+            "Morbid Mask",
+            "Claymore",
+            "Reaver"
+        ]
+    },
+    {
+        "name": "Eye of Skadi",
+        "cost": 5500,
+        "components": [
+            "Ultimate Orb",
+            "Ultimate Orb",
+            "Point Booster"
+        ]
+    },
+    {
+        "name": "Mjollnir",
+        "cost": 5600,
+        "components": [
+            "Maelstrom",
+            "Hyperstone",
+            "Recipe: Mjollnir"
+        ]
+    },
+    {
+        "name": "Recipe: Mjollnir",
+        "cost": 900,
+        "components": []
+    }
+]

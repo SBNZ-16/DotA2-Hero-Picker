@@ -16,11 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.heropicker.dto.FactsDto;
 import com.heropicker.dto.MessageDto;
-import com.heropicker.facts.AllyHeroPickedFact;
-import com.heropicker.facts.EnemyHeroPickedFact;
 import com.heropicker.facts.Fact;
-
-
+import com.heropicker.facts.heroes.AllyHeroPickedFact;
+import com.heropicker.facts.heroes.EnemyHeroPickedFact;
 import com.heropicker.model.HeroRecommendationList;
 import com.heropicker.service.PickService;
 import com.heropicker.model.HeroRecommendation;

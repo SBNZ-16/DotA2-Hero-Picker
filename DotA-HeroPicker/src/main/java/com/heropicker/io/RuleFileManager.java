@@ -43,7 +43,7 @@ public class RuleFileManager {
 	}
 	
 	public static void exportNewRules(String rules) {
-		String filePath = System.getProperty("user.dir") + "/../integration-kjar/src/main/resources/com/sample/Sample.drl";
+		String filePath = System.getProperty("user.dir") + "/../integration-kjar/src/main/resources/rules/heroes/Heroes.drl";
 		try {
 			PrintWriter out = new PrintWriter(filePath);
 			out.println(rules);

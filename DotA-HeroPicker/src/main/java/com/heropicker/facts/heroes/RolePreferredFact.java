@@ -1,4 +1,6 @@
-package com.heropicker.facts;
+package com.heropicker.facts.heroes;
+
+import com.heropicker.facts.Fact;
 
 public class RolePreferredFact extends Fact {
 	private String role;

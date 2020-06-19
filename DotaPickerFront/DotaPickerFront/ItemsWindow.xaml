@@ -9,8 +9,8 @@
     xmlns:model="clr-namespace:DotaPickerFront.model"
     mc:Ignorable="d"
     Title="Item Price Calculator"
-    Height="450"
-    Width="800"
+    Height="600"
+    Width="900"
     Icon="icon_altform-unplated.png">
     <Grid>
         <Grid.RowDefinitions>
@@ -21,33 +21,317 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TreeView
+        <GroupBox
             Grid.Row="0"
-            Grid.Column="1"
-            ItemsSource="{Binding itemToBuy}">
-            <!--<TreeViewItem>
-                <TreeViewItem.Header>
-                    <Image
-                        Source="/resources/items/icons/Aeon Disk.png">
-                    </Image>
-                </TreeViewItem.Header>
-                <TreeViewItem>
-                    <TreeViewItem.Header>
+            Grid.Column="0">
+            <GroupBox.Header>
+                <Grid>
+                    <Label
+                        HorizontalAlignment="Center">Bought Items</Label>
+                </Grid>
+            </GroupBox.Header>
+            <Grid
+                Width="200"
+                Height="150">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5 3 5 3"
+                    Width="55"
+                    Height="40"
+                    DataContext="{Binding BoughtItems[0]}"
+                    Source="{Binding Image}"
+                    MouseEnter="ItemIcon_MouseEnter"
+                    MouseLeave="ItemIcon_MouseLeave"
+                    MouseLeftButtonUp="RemoveBoughtItem"
+                    MouseRightButtonUp="RemoveBoughtItem">
+                    <Image.ToolTip>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding
+                                    StringFormat="{}{0} ({1})">
+                                    <Binding
+                                        Path="Name" />
+                                    <Binding
+                                        Path="Cost" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Image.ToolTip>
+                </Image>
+                <Image
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5 3 5 3"
+                    Width="55"
+                    Height="40"
+                    DataContext="{Binding BoughtItems[1]}"
+                    Source="{Binding Image}"
+                    MouseEnter="ItemIcon_MouseEnter"
+                    MouseLeave="ItemIcon_MouseLeave"
+                    MouseLeftButtonUp="RemoveBoughtItem"
+                    MouseRightButtonUp="RemoveBoughtItem">
+                    <Image.ToolTip>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding
+                                    StringFormat="{}{0} ({1})">
+                                    <Binding
+                                        Path="Name" />
+                                    <Binding
+                                        Path="Cost" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Image.ToolTip>
+                </Image>
+                <Image
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Margin="5 3 5 3"
+                    Width="55"
+                    Height="40"
+                    DataContext="{Binding BoughtItems[2]}"
+                    Source="{Binding Image}"
+                    MouseEnter="ItemIcon_MouseEnter"
+                    MouseLeave="ItemIcon_MouseLeave"
+                    MouseLeftButtonUp="RemoveBoughtItem"
+                    MouseRightButtonUp="RemoveBoughtItem">
+                    <Image.ToolTip>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding
+                                    StringFormat="{}{0} ({1})">
+                                    <Binding
+                                        Path="Name" />
+                                    <Binding
+                                        Path="Cost" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Image.ToolTip>
+                </Image>
+                <Image
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="5 3 5 3"
+                    Width="55"
+                    Height="40"
+                    DataContext="{Binding BoughtItems[3]}"
+                    Source="{Binding Image}"
+                    MouseEnter="ItemIcon_MouseEnter"
+                    MouseLeave="ItemIcon_MouseLeave"
+                    MouseLeftButtonUp="RemoveBoughtItem"
+                    MouseRightButtonUp="RemoveBoughtItem">
+                    <Image.ToolTip>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding
+                                    StringFormat="{}{0} ({1})">
+                                    <Binding
+                                        Path="Name" />
+                                    <Binding
+                                        Path="Cost" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Image.ToolTip>
+                </Image>
+                <Image
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="5 3 5 3"
+                    Width="55"
+                    Height="40"
+                    DataContext="{Binding BoughtItems[4]}"
+                    Source="{Binding Image}"
+                    MouseEnter="ItemIcon_MouseEnter"
+                    MouseLeave="ItemIcon_MouseLeave"
+                    MouseLeftButtonUp="RemoveBoughtItem"
+                    MouseRightButtonUp="RemoveBoughtItem">
+                    <Image.ToolTip>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding
+                                    StringFormat="{}{0} ({1})">
+                                    <Binding
+                                        Path="Name" />
+                                    <Binding
+                                        Path="Cost" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Image.ToolTip>
+                </Image>
+                <Image
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Margin="5 3 5 3"
+                    Width="55"
+                    Height="40"
+                    DataContext="{Binding BoughtItems[5]}"
+                    Source="{Binding Image}"
+                    MouseEnter="ItemIcon_MouseEnter"
+                    MouseLeave="ItemIcon_MouseLeave"
+                    MouseLeftButtonUp="RemoveBoughtItem"
+                    MouseRightButtonUp="RemoveBoughtItem">
+                    <Image.ToolTip>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding
+                                    StringFormat="{}{0} ({1})">
+                                    <Binding
+                                        Path="Name" />
+                                    <Binding
+                                        Path="Cost" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Image.ToolTip>
+                </Image>
+                <Image
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="5 3 5 3"
+                    Width="55"
+                    Height="40"
+                    DataContext="{Binding BoughtItems[6]}"
+                    Source="{Binding Image}"
+                    MouseEnter="ItemIcon_MouseEnter"
+                    MouseLeave="ItemIcon_MouseLeave"
+                    MouseLeftButtonUp="RemoveBoughtItem"
+                    MouseRightButtonUp="RemoveBoughtItem">
+                    <Image.ToolTip>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding
+                                    StringFormat="{}{0} ({1})">
+                                    <Binding
+                                        Path="Name" />
+                                    <Binding
+                                        Path="Cost" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Image.ToolTip>
+                </Image>
+                <Image
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="5 3 5 3"
+                    Width="55"
+                    Height="40"
+                    DataContext="{Binding BoughtItems[7]}"
+                    Source="{Binding Image}"
+                    MouseEnter="ItemIcon_MouseEnter"
+                    MouseLeave="ItemIcon_MouseLeave"
+                    MouseLeftButtonUp="RemoveBoughtItem"
+                    MouseRightButtonUp="RemoveBoughtItem">
+                    <Image.ToolTip>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding
+                                    StringFormat="{}{0} ({1})">
+                                    <Binding
+                                        Path="Name" />
+                                    <Binding
+                                        Path="Cost" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Image.ToolTip>
+                </Image>
+                <Image
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Margin="5 3 5 3"
+                    Width="55"
+                    Height="40"
+                    DataContext="{Binding BoughtItems[8]}"
+                    Source="{Binding Image}"
+                    MouseEnter="ItemIcon_MouseEnter"
+                    MouseLeave="ItemIcon_MouseLeave"
+                    MouseLeftButtonUp="RemoveBoughtItem"
+                    MouseRightButtonUp="RemoveBoughtItem">
+                    <Image.ToolTip>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding
+                                    StringFormat="{}{0} ({1})">
+                                    <Binding
+                                        Path="Name" />
+                                    <Binding
+                                        Path="Cost" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Image.ToolTip>
+                </Image>
+            </Grid>
+        </GroupBox>
+        <GroupBox
+            Grid.Row="0"
+            Grid.Column="1">
+            <GroupBox.Header>
+                <Grid>
+                    <Label
+                        HorizontalAlignment="Center">
+                        <Label.Content>
+                            <TextBlock>
+                               Wanted Item - Needed to Complete: 
+                                <Bold>  
+                                     <Run
+                                        Text="{Binding NeededToComplete}" />
+                                </Bold>
+                            </TextBlock>
+                        </Label.Content>
+                    </Label>
+                </Grid>
+            </GroupBox.Header>
+            <TreeView
+                Grid.Row="0"
+                Grid.Column="1"
+                ItemsSource="{Binding
+                        Path=ItemsToBuy}"
+                TreeViewItem.Selected="TreeViewItem_Selected"
+                TreeViewItem.PreviewMouseDoubleClick="TreeViewItem_PreviewMouseDoubleClick">
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate
+                        DataType="{x:Type model:Item}"
+                        ItemsSource="{Binding ItemComponents}">
                         <Image
-                            Source="/resources/items/icons/Aeon Disk.png">
+                            Margin="5 3 5 3"
+                            Width="55"
+                            Height="40"
+                            Source="{Binding Image}">
+                            <Image.ToolTip>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding
+                                            StringFormat="{}{0} ({1})">
+                                            <Binding
+                                                Path="Name" />
+                                            <Binding
+                                                Path="Cost" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </Image.ToolTip>
                         </Image>
-                    </TreeViewItem.Header>
-                </TreeViewItem>
-            </TreeViewItem>-->
-            <TreeView.Resources>
-                <HierarchicalDataTemplate
-                    DataType="{x:Type model:Item}"
-                    ItemsSource="{Binding Components}">
-                    <TextBlock
-                        Text="{Binding Name}"></TextBlock>
-                </HierarchicalDataTemplate>
-            </TreeView.Resources>
-        </TreeView>
+                    </HierarchicalDataTemplate>
+                </TreeView.Resources>
+            </TreeView>
+        </GroupBox>
         <Grid
             Grid.Row="1"
             Grid.ColumnSpan="2">
@@ -82,7 +366,8 @@
                                 Margin="5 3 5 3"
                                 Width="55"
                                 Height="40"
-                                Source="{Binding Image}"                                
+                                Source="{Binding Image}"
+                                MouseLeftButtonUp="ItemIcon_LeftMouseUp"
                                 MouseRightButtonUp="ItemIcon_RightMouseUp"
                                 MouseEnter="ItemIcon_MouseEnter"
                                 MouseLeave="ItemIcon_MouseLeave">
@@ -105,5 +390,11 @@
                 </ItemsControl>
             </ScrollViewer>
         </Grid>
+        <materialDesign:Snackbar
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Center"
+            MessageQueue="{Binding MyCustomMessageQueue}" />
     </Grid>
 </Window>

@@ -10,9 +10,9 @@ import java.util.Set;
 
 import org.apache.tomcat.util.json.JSONParser;
 
-import com.heropicker.model.Hero;
-import com.heropicker.model.HeroDatabase;
-import com.heropicker.model.LaneStats;
+import com.heropicker.model.heroes.Hero;
+import com.heropicker.model.heroes.HeroDatabase;
+import com.heropicker.model.heroes.LaneStats;
 
 public class HeroLoader {
 

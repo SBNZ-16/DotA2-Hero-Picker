@@ -1,4 +1,4 @@
-package com.heropicker.model;
+package com.heropicker.model.heroes;
 
 import java.util.ArrayList;
 

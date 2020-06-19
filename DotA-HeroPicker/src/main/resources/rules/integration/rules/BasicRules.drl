@@ -7,14 +7,14 @@ import com.heropicker.facts.heroes.UpdateScoresFact;
 import com.heropicker.facts.heroes.HeroPreferredFact;
 import com.heropicker.facts.heroes.RolePreferredFact;
 import com.heropicker.facts.heroes.LanePreferredFact;
-import com.heropicker.model.PickedAllyHeroes;
-import com.heropicker.model.HeroRecommendation;
-import com.heropicker.model.LaneStats;
-import com.heropicker.model.Hero;
+import com.heropicker.model.heroes.PickedAllyHeroes;
+import com.heropicker.model.heroes.HeroRecommendation;
+import com.heropicker.model.heroes.LaneStats;
+import com.heropicker.model.heroes.Hero;
 
 
-global com.heropicker.model.HeroDatabase heroDatabase;
-global com.heropicker.model.HeroRecommendationList heroRecommendationList;
+global com.heropicker.model.heroes.HeroDatabase heroDatabase;
+global com.heropicker.model.heroes.HeroRecommendationList heroRecommendationList;
 global PickedAllyHeroes pickedAllyHeroes;
 
  

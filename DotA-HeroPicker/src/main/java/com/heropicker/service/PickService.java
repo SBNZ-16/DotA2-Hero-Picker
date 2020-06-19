@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.heropicker.facts.Fact;
 import com.heropicker.io.HeroLoader;
-import com.heropicker.model.HeroDatabase;
-import com.heropicker.model.HeroRecommendationList;
-import com.heropicker.model.PickedAllyHeroes;
+import com.heropicker.model.heroes.HeroDatabase;
+import com.heropicker.model.heroes.HeroRecommendationList;
+import com.heropicker.model.heroes.PickedAllyHeroes;
 
 @Service
 public class PickService {

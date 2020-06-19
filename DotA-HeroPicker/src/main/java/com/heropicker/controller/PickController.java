@@ -19,9 +19,9 @@ import com.heropicker.dto.MessageDto;
 import com.heropicker.facts.Fact;
 import com.heropicker.facts.heroes.AllyHeroPickedFact;
 import com.heropicker.facts.heroes.EnemyHeroPickedFact;
-import com.heropicker.model.HeroRecommendationList;
+import com.heropicker.model.heroes.HeroRecommendation;
+import com.heropicker.model.heroes.HeroRecommendationList;
 import com.heropicker.service.PickService;
-import com.heropicker.model.HeroRecommendation;
 
 
 @CrossOrigin

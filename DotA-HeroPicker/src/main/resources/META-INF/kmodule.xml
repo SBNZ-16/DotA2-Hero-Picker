@@ -3,4 +3,7 @@
     <kbase name="hero-rules-base" packages="rules.test.heroes">
         <ksession name="hero-ksession"/>
     </kbase>
+    <kbase name="item-rules-base" packages="rules.test.items">
+    	<ksession name="item-ksession"/>
+    </kbase>
 </kmodule>

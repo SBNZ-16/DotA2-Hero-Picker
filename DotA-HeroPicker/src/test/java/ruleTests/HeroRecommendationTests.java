@@ -21,11 +21,11 @@ import com.heropicker.facts.heroes.HeroPreferredFact;
 import com.heropicker.facts.heroes.LanePreferredFact;
 import com.heropicker.facts.heroes.RolePreferredFact;
 import com.heropicker.io.HeroLoader;
-import com.heropicker.model.Hero;
-import com.heropicker.model.HeroDatabase;
-import com.heropicker.model.HeroRecommendation;
-import com.heropicker.model.HeroRecommendationList;
-import com.heropicker.model.PickedAllyHeroes;
+import com.heropicker.model.heroes.Hero;
+import com.heropicker.model.heroes.HeroDatabase;
+import com.heropicker.model.heroes.HeroRecommendation;
+import com.heropicker.model.heroes.HeroRecommendationList;
+import com.heropicker.model.heroes.PickedAllyHeroes;
 
 public class HeroRecommendationTests {
 

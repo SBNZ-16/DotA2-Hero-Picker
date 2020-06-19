@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.heropicker.io.HeroLoader;
-import com.heropicker.model.HeroDatabase;
+import com.heropicker.model.heroes.HeroDatabase;
 
 @Configuration
 public class Config {

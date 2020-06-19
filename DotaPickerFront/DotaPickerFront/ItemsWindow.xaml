@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:DotaPickerFront"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:model="clr-namespace:DotaPickerFront.model"
     mc:Ignorable="d"
     Title="Item Price Calculator"
     Height="450"
@@ -16,8 +17,40 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TreeView
+            Grid.Row="0"
+            Grid.Column="1"
+            ItemsSource="{Binding itemToBuy}">
+            <!--<TreeViewItem>
+                <TreeViewItem.Header>
+                    <Image
+                        Source="/resources/items/icons/Aeon Disk.png">
+                    </Image>
+                </TreeViewItem.Header>
+                <TreeViewItem>
+                    <TreeViewItem.Header>
+                        <Image
+                            Source="/resources/items/icons/Aeon Disk.png">
+                        </Image>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+            </TreeViewItem>-->
+            <TreeView.Resources>
+                <HierarchicalDataTemplate
+                    DataType="{x:Type model:Item}"
+                    ItemsSource="{Binding Components}">
+                    <TextBlock
+                        Text="{Binding Name}"></TextBlock>
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+        </TreeView>
         <Grid
-            Grid.Row="1">
+            Grid.Row="1"
+            Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition
                     Height="Auto" />
@@ -49,7 +82,8 @@
                                 Margin="5 3 5 3"
                                 Width="55"
                                 Height="40"
-                                Source="{Binding Image}"
+                                Source="{Binding Image}"                                
+                                MouseRightButtonUp="ItemIcon_RightMouseUp"
                                 MouseEnter="ItemIcon_MouseEnter"
                                 MouseLeave="ItemIcon_MouseLeave">
                                 <Image.ToolTip>

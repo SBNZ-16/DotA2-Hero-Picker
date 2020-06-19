@@ -24,8 +24,11 @@ namespace DotaPickerFront
     {
         private ObservableCollection<Item> items;
         private ObservableCollection<Item> itemsSource;
+        private Item itemToBuy;
 
         public ObservableCollection<Item> Items { get { return items; } set { if (value != items) { items = value; OnPropertyChanged("Items"); } } }
+        //public Item /*ItemToBuy*/
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string name)
@@ -44,19 +47,25 @@ namespace DotaPickerFront
         private void ItemIcon_MouseLeave(object sender, MouseEventArgs e)
         {
 
-            Image heroImage = (Image)sender;
-            heroImage.Width = 55;
-            heroImage.Height = 40;
-            heroImage.Margin = new Thickness(5, 3, 5, 3);
+            Image itemImage = (Image)sender;
+            itemImage.Width = 55;
+            itemImage.Height = 40;
+            itemImage.Margin = new Thickness(5, 3, 5, 3);
 
         }
 
         private void ItemIcon_MouseEnter(object sender, MouseEventArgs e)
         {
-            Image heroImage = (Image)sender;
-            heroImage.Width = 65;
-            heroImage.Height = 46;
-            heroImage.Margin = new Thickness(0, 0, 0, 0);
+            Image itemImage = (Image)sender;
+            itemImage.Width = 65;
+            itemImage.Height = 46;
+            itemImage.Margin = new Thickness(0, 0, 0, 0);
+        }
+
+        private void ItemIcon_RightMouseUp(object sender, MouseEventArgs e)
+        {
+            Image itemImage = (Image)sender;
+            itemToBuy = (Item)itemImage.DataContext;
         }
 
         private void FilterTextChanged(object sender, TextChangedEventArgs e)

@@ -210,7 +210,6 @@ namespace DotaPickerFront
 
 
             items = FileLoader.LoadItems();
-            FileLoader.LoadItemImages(items);
         }
 
         private void PopulateHeroGrid()

@@ -51,17 +51,19 @@ namespace DotaPickerFront.ultility
         {
             string jsonPath = $"../../resources/items/items.json";
             string json = File.ReadAllText(jsonPath);
-            return new JavaScriptSerializer().Deserialize<List<Item>>(json);
-        }
-
-        public static List<Item> LoadItemImages(List<Item> items)
-        {
-            foreach (Item item in items)
+            var retval = new JavaScriptSerializer().Deserialize<List<Item>>(json);
+            foreach (Item item in retval)
             {
                 string jpgPath = $"../../resources/items/icons/{item.Name}.png";
                 item.Image = BitmapConverter.BitmapToImageSource(new Bitmap(Image.FromFile(jpgPath)));
+
+                foreach (string component in item.Components)
+                {
+                    item.ItemComponents.Add(retval.Find(x => x.Name.Equals(component)));
+                }
             }
-            return items;
+            return retval;
         }
+
     }
 }

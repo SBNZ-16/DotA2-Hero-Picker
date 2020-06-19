@@ -17,5 +17,8 @@ namespace DotaPickerFront.model
         public BitmapImage Image { get; set; }
 
         public List<string> Components { get; set; }
+
+        public List<Item> ItemComponents { get; set; } = new List<Item>();
+
     }
 }

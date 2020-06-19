@@ -1,4 +1,4 @@
-package com.heropicker.services;
+package com.heropicker.service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.heropicker.dto.SettingsStatsDTO;
 import com.heropicker.io.RuleFileManager;
-import com.heropicker.templating.RuleManagerService;
 
 @Service
 public class SettingsStatsService {
@@ -28,8 +27,8 @@ public class SettingsStatsService {
 	public SettingsStatsDTO getSettingsStats() {
 		SettingsStatsDTO retval = new SettingsStatsDTO();
 		try {
-			String userAddedRules = RuleFileManager.loadRuleFile("userAddedRules.txt");
-			String settingsStats = new Scanner(new File(path + "settingsStats.json")).useDelimiter("\\Z").next();
+			String userAddedRules = RuleFileManager.loadRuleFile("UserAddedRules.drl");
+			String settingsStats = new Scanner(new File(path + "template_params/settingsStats.json")).useDelimiter("\\Z").next();
 			GsonBuilder builder = new GsonBuilder();
 			Gson gson = builder.create();
 			retval = gson.fromJson(settingsStats, SettingsStatsDTO.class);
@@ -43,7 +42,7 @@ public class SettingsStatsService {
 	public SettingsStatsDTO getDefaultSettingsStats() {
 		SettingsStatsDTO retval = new SettingsStatsDTO();
 		try {
-			String settingsStats = new Scanner(new File(path + "defaultSettingsStats.json")).useDelimiter("\\Z").next();
+			String settingsStats = new Scanner(new File(path + "template_params/defaultSettingsStats.json")).useDelimiter("\\Z").next();
 			GsonBuilder builder = new GsonBuilder();
 			Gson gson = builder.create();
 			retval = gson.fromJson(settingsStats, SettingsStatsDTO.class);
@@ -56,11 +55,10 @@ public class SettingsStatsService {
 
 	public String postSettingsStats(SettingsStatsDTO settingsStats) {
 		try {
-			Files.write(Paths.get(path + "userAddedRules.txt"), settingsStats.getUserAddedRules().getBytes());
+			Files.write(Paths.get(path + "rules/UserAddedRules.drl"), settingsStats.getUserAddedRules().getBytes());
 			GsonBuilder builder = (new GsonBuilder()).setPrettyPrinting();
 			Gson gson = builder.create();
-			Files.write(Paths.get(path + "settingsStats.json"), gson.toJson(settingsStats).getBytes());
-			
+			Files.write(Paths.get(path + "template_params/settingsStats.json"), gson.toJson(settingsStats).getBytes());
 			
 			ruleManagerService.exportChangedRules(settingsStats);
 			ruleManagerService.triggerMvnInstall();

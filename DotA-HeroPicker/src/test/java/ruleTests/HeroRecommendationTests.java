@@ -13,13 +13,13 @@ import org.junit.jupiter.api.Assertions;
 import com.heropicker.service.PickService;
 
 import com.heropicker.config.Config;
-import com.heropicker.facts.AllyHeroPickedFact;
-import com.heropicker.facts.EnemyHeroPickedFact;
 import com.heropicker.facts.Fact;
-import com.heropicker.facts.HeroBannedFact;
-import com.heropicker.facts.HeroPreferredFact;
-import com.heropicker.facts.LanePreferredFact;
-import com.heropicker.facts.RolePreferredFact;
+import com.heropicker.facts.heroes.AllyHeroPickedFact;
+import com.heropicker.facts.heroes.EnemyHeroPickedFact;
+import com.heropicker.facts.heroes.HeroBannedFact;
+import com.heropicker.facts.heroes.HeroPreferredFact;
+import com.heropicker.facts.heroes.LanePreferredFact;
+import com.heropicker.facts.heroes.RolePreferredFact;
 import com.heropicker.io.HeroLoader;
 import com.heropicker.model.Hero;
 import com.heropicker.model.HeroDatabase;
@@ -27,7 +27,7 @@ import com.heropicker.model.HeroRecommendation;
 import com.heropicker.model.HeroRecommendationList;
 import com.heropicker.model.PickedAllyHeroes;
 
-public class RecommendationTests {
+public class HeroRecommendationTests {
 
 	private static HeroDatabase heroDatabase;
 
@@ -48,7 +48,7 @@ public class RecommendationTests {
 		// load up the knowledge base
 		KieServices ks = KieServices.Factory.get();
 		KieContainer kContainer = ks.getKieClasspathContainer();
-		KieSession kSession = kContainer.newKieSession("ksession-rules");
+		KieSession kSession = kContainer.newKieSession("hero-ksession");
 
 		kSession.setGlobal("heroDatabase", heroDatabase);
 		kSession.setGlobal("heroRecommendationList", heroRecommendationList);

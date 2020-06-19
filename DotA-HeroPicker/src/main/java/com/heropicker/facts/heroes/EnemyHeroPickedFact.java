@@ -1,4 +1,6 @@
-package com.heropicker.facts;
+package com.heropicker.facts.heroes;
+
+import com.heropicker.facts.Fact;
 
 public class EnemyHeroPickedFact extends Fact {
 	private boolean goingToFaceInLane = false;

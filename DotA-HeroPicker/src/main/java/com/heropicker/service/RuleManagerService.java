@@ -1,4 +1,4 @@
-package com.heropicker.templating;
+package com.heropicker.service;
 
 import java.io.File;
 import java.io.InputStream;
@@ -54,7 +54,7 @@ public class RuleManagerService {
 	
 	public void exportChangedRules(SettingsStatsDTO settings) {
 		
-		String basicRules = RuleFileManager.loadRuleFile("basicRules.txt");
+		String basicRules = RuleFileManager.loadRuleFile("BasicRules.drl");
 		String roleRules = applyRoleTemplate(settings);
 		String preferenceRules = applyPreferencesTemplate(settings);
 		String userRules = settings.getUserAddedRules();
@@ -146,10 +146,4 @@ public class RuleManagerService {
 		
 		return objectDataCompiler.compile(templateArgs, rolesTemplateStream);
 	}
-	
-	
-	
-	
-	
-
 }

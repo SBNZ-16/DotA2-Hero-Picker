@@ -1,12 +1,12 @@
-package com.sample;
+package rules.heroes;
  
-import com.heropicker.facts.HeroBannedFact;
-import com.heropicker.facts.AllyHeroPickedFact;
-import com.heropicker.facts.EnemyHeroPickedFact;
-import com.heropicker.facts.UpdateScoresFact;
-import com.heropicker.facts.HeroPreferredFact;
-import com.heropicker.facts.RolePreferredFact;
-import com.heropicker.facts.LanePreferredFact;
+import com.heropicker.facts.heroes.HeroBannedFact;
+import com.heropicker.facts.heroes.AllyHeroPickedFact;
+import com.heropicker.facts.heroes.EnemyHeroPickedFact;
+import com.heropicker.facts.heroes.UpdateScoresFact;
+import com.heropicker.facts.heroes.HeroPreferredFact;
+import com.heropicker.facts.heroes.RolePreferredFact;
+import com.heropicker.facts.heroes.LanePreferredFact;
 import com.heropicker.model.PickedAllyHeroes;
 import com.heropicker.model.HeroRecommendation;
 import com.heropicker.model.LaneStats;
@@ -58,7 +58,7 @@ rule "Update score by lane"
 		$laneStats: LaneStats(name == $lane) from $hero.lanes
 	then
 		double laneEffectiveness = ($laneStats.getWinrate() * $laneStats.getPresence());
-		$heroRecommendation.updateScore(laneEffectiveness*$updateScore.getMultiplyScale(),
+		$heroRecommendation.updateScore((1+laneEffectiveness)*$updateScore.getMultiplyScale(),
 		 $updateScore.getAddValue());
 end
 
@@ -201,7 +201,7 @@ end
 		when
 			LanePreferredFact($lane : lane)
 		then
-			insert(new UpdateScoresFact(1.0, 0, null, null, $lane));
+			insert(new UpdateScoresFact(2.0, 0, null, null, $lane));
 	end
 
 

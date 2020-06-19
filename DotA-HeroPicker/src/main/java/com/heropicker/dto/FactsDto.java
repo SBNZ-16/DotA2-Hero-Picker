@@ -2,13 +2,13 @@ package com.heropicker.dto;
 
 import java.util.ArrayList;
 
-import com.heropicker.facts.AllyHeroPickedFact;
-import com.heropicker.facts.EnemyHeroPickedFact;
 import com.heropicker.facts.Fact;
-import com.heropicker.facts.HeroBannedFact;
-import com.heropicker.facts.HeroPreferredFact;
-import com.heropicker.facts.LanePreferredFact;
-import com.heropicker.facts.RolePreferredFact;
+import com.heropicker.facts.heroes.AllyHeroPickedFact;
+import com.heropicker.facts.heroes.EnemyHeroPickedFact;
+import com.heropicker.facts.heroes.HeroBannedFact;
+import com.heropicker.facts.heroes.HeroPreferredFact;
+import com.heropicker.facts.heroes.LanePreferredFact;
+import com.heropicker.facts.heroes.RolePreferredFact;
 
 public class FactsDto {
 

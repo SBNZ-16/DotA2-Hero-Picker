@@ -30,7 +30,7 @@ public class PickService {
 		HeroRecommendationList heroRecommendationList = new HeroRecommendationList(heroDatabase);
 		PickedAllyHeroes pickedAllyHeroes= new PickedAllyHeroes(heroDatabase);
 		
-		KieSession kSession = kieContainer.newKieSession();
+		KieSession kSession = kieContainer.newKieSession("hero-ksession");
 				
 		kSession.setGlobal("heroDatabase", heroDatabase);
 		kSession.setGlobal("heroRecommendationList", heroRecommendationList);

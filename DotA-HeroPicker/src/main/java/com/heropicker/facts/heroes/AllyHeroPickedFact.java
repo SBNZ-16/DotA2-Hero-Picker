@@ -1,4 +1,6 @@
-package com.heropicker.facts;
+package com.heropicker.facts.heroes;
+
+import com.heropicker.facts.Fact;
 
 public class AllyHeroPickedFact extends Fact {
 	public String heroId;

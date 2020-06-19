@@ -59,7 +59,10 @@ public class RuleManagerService {
 		String preferenceRules = applyPreferencesTemplate(settings);
 		String userRules = settings.getUserAddedRules();
 		String wholeFile = basicRules + roleRules + preferenceRules + userRules;
-		RuleFileManager.exportNewRules(wholeFile);		
+		RuleFileManager.exportHeroRules(wholeFile);
+		
+		String itemRules = RuleFileManager.loadRuleFile("Items.drl");
+		RuleFileManager.exportItemRules(itemRules);
 	}
 	
 	public String applyPreferencesTemplate(SettingsStatsDTO settings) {

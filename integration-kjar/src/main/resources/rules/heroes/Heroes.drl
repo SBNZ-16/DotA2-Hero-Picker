@@ -201,7 +201,7 @@ end
 		when
 			LanePreferredFact($lane : lane)
 		then
-			insert(new UpdateScoresFact(2.0, 0, null, null, $lane));
+			insert(new UpdateScoresFact(1.0, 0, null, null, $lane));
 	end
 
 

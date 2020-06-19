@@ -8,7 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.heropicker.io.HeroLoader;
+import com.heropicker.io.ItemLoader;
 import com.heropicker.model.heroes.HeroDatabase;
+import com.heropicker.model.items.ItemDatabase;
 
 @Configuration
 public class Config {
@@ -43,6 +45,17 @@ public class Config {
 			e.printStackTrace();
 		}
 		return heroDatabase;
+	}
+	
+	@Bean
+	public ItemDatabase itemDatabase() {
+		ItemDatabase itemDatabase = null;
+		try {
+			itemDatabase = ItemLoader.loadItemDatabase();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemDatabase;
 	}
 	
 

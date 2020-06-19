@@ -1,4 +1,4 @@
-package rules.test.items;
+package rules.items;
  
 import com.heropicker.facts.items.BoughtItemCollectionFact;
 import com.heropicker.facts.items.BoughtItemFact;

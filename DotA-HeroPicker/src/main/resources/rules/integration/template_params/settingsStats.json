@@ -3,7 +3,7 @@
   "enemyHeroDisadvantage": 1.5,
   "enemyLaneHeroDisadvantage": 3.0,
   "preferredHeroFactor": 1.3,
-  "preferredLaneFactor": 2.0,
+  "preferredLaneFactor": 1.0,
   "preferredRoleFactor": 1.3,
   "nuker": {
     "heroesPerRole": 1.0,

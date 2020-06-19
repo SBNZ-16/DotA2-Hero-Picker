@@ -42,8 +42,17 @@ public class RuleFileManager {
 		return null;
 	}
 	
-	public static void exportNewRules(String rules) {
+	public static void exportHeroRules(String rules) {
 		String filePath = System.getProperty("user.dir") + "/../integration-kjar/src/main/resources/rules/heroes/Heroes.drl";
+		exportRules(rules, filePath);
+	}
+	
+	public static void exportItemRules(String rules) {
+		String filePath = System.getProperty("user.dir") + "/../integration-kjar/src/main/resources/rules/items/Items.drl";
+		exportRules(rules, filePath);
+	}
+	
+	private static void exportRules(String rules, String filePath) {
 		try {
 			PrintWriter out = new PrintWriter(filePath);
 			out.println(rules);

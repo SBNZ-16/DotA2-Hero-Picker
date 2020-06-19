@@ -91,30 +91,7 @@ namespace DotaPickerFront
             ItemsToBuy.Clear();
             ItemsToBuy.Add(itemToBuy);
 
-
-            var boughtItemsNames = new List<string>();
-            for(int i = 0; i< boughtItemCount; i++)
-            {
-                boughtItemsNames.Add(BoughtItems[i].Name);
-            }
-
-            var postDict = new Dictionary<string, object>();
-            postDict["wanted"] = itemToBuy.Name;
-            postDict["boughtItems"] = boughtItemsNames;
-           
-            var content = new JavaScriptSerializer().Serialize(postDict);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:8080/api/items"); //TODO endpoint promeni
-            request.Content = new StringContent(content, Encoding.UTF8, "application/json");
-            try
-            {
-                var response = await client.SendAsync(request);
-                var responseString = await response.Content.ReadAsStringAsync();
-                NeededToComplete = Int32.Parse(responseString);
-            }
-            catch (Exception)
-            {
-                MyCustomMessageQueue.Enqueue("Error in communication with a server");
-            }
+            calculateRemainingPrice();
         }
 
         private void ItemIcon_LeftMouseUp(object sender, MouseEventArgs e)
@@ -124,6 +101,7 @@ namespace DotaPickerFront
             {
                 BoughtItems[boughtItemCount] = (Item)itemImage.DataContext;
                 boughtItemCount++;
+                calculateRemainingPrice();
             }
         }
 
@@ -136,6 +114,39 @@ namespace DotaPickerFront
                 BoughtItems.Remove(itemToRemove);
                 BoughtItems.Add(emptyItem);
                 boughtItemCount--;
+                calculateRemainingPrice();
+            }
+        }
+
+        private async void calculateRemainingPrice()
+        {
+            if (ItemsToBuy.Count == 0)
+            {
+                return;
+            }
+
+            var boughtItemsNames = new List<string>();
+            for (int i = 0; i < boughtItemCount; i++)
+            {
+                boughtItemsNames.Add(BoughtItems[i].Name);
+            }
+
+            var postDict = new Dictionary<string, object>();
+            postDict["wanted"] = ItemsToBuy[0].Name;
+            postDict["boughtItems"] = boughtItemsNames;
+
+            var content = new JavaScriptSerializer().Serialize(postDict);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:8080/api/itemCalculator");
+            request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+            try
+            {
+                var response = await client.SendAsync(request);
+                var responseString = await response.Content.ReadAsStringAsync();
+                NeededToComplete = Int32.Parse(responseString);
+            }
+            catch (Exception)
+            {
+                MyCustomMessageQueue.Enqueue("Error in communication with a server");
             }
         }
 

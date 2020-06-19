@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:DotaPickerFront"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d"
     Title="Item Price Calculator"
     Height="450"
@@ -15,26 +16,60 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <ScrollViewer
-            Grid.Row="1"
-            HorizontalScrollBarVisibility="Disabled"
-            VerticalScrollBarVisibility="Auto">
-            <ItemsControl
-                ItemsSource="{Binding
-                        Path=Items}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Image
-                            ToolTip="{Binding Name}"
-                            Source="{Binding Image}" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+        <Grid
+            Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBox
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Grid.Row="0"
+                Width="100"
+                Margin="10 10 10 10"
+                materialDesign:HintAssist.Hint="Filter Items"
+                TextChanged="FilterTextChanged" />
+            <ScrollViewer
+                Grid.Row="1"
+                HorizontalScrollBarVisibility="Disabled"
+                VerticalScrollBarVisibility="Auto">
+                <ItemsControl
+                    ItemsSource="{Binding
+                        Path=Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Image
+                                Margin="5 3 5 3"
+                                Width="55"
+                                Height="40"
+                                Source="{Binding Image}"
+                                MouseEnter="ItemIcon_MouseEnter"
+                                MouseLeave="ItemIcon_MouseLeave">
+                                <Image.ToolTip>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding
+                                                StringFormat="{}{0} ({1})">
+                                                <Binding
+                                                    Path="Name" />
+                                                <Binding
+                                                    Path="Cost" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </Image.ToolTip>
+                            </Image>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Window>

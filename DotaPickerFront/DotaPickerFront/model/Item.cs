@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace DotaPickerFront.model
 {
@@ -13,7 +14,7 @@ namespace DotaPickerFront.model
 
         public int Cost { get; set; }
 
-        public Bitmap Image { get; set; }
+        public BitmapImage Image { get; set; }
 
         public List<string> Components { get; set; }
     }

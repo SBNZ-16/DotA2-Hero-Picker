@@ -59,7 +59,7 @@ namespace DotaPickerFront.ultility
             foreach (Item item in items)
             {
                 string jpgPath = $"../../resources/items/icons/{item.Name}.png";
-                item.Image = new Bitmap(Image.FromFile(jpgPath));
+                item.Image = BitmapConverter.BitmapToImageSource(new Bitmap(Image.FromFile(jpgPath)));
             }
             return items;
         }

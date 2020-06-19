@@ -88,3 +88,6 @@ F:\Arbeit\semestar 8\SBNZ\Repo\DotaPickerFront\DotaPickerFront\obj\Debug\DotaPic
 C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\ItemsWindow.g.cs
 C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\ItemsWindow.baml
 C:\Mi\Alex\Faks\Moji predmeti\Osmi semestar\Sistemi bazirani na znanju\DotA2-Hero-Picker\DotaPickerFront\DotaPickerFront\obj\Debug\GeneratedInternalTypeHelper.g.cs
+F:\Arbeit\semestar 8\SBNZ\Repo\DotaPickerFront\DotaPickerFront\obj\Debug\ItemsWindow.g.cs
+F:\Arbeit\semestar 8\SBNZ\Repo\DotaPickerFront\DotaPickerFront\obj\Debug\GeneratedInternalTypeHelper.g.cs
+F:\Arbeit\semestar 8\SBNZ\Repo\DotaPickerFront\DotaPickerFront\obj\Debug\ItemsWindow.baml

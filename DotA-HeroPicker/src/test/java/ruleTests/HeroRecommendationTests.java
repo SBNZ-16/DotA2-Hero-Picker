@@ -27,7 +27,7 @@ import com.heropicker.model.HeroRecommendation;
 import com.heropicker.model.HeroRecommendationList;
 import com.heropicker.model.PickedAllyHeroes;
 
-public class RecommendationTests {
+public class HeroRecommendationTests {
 
 	private static HeroDatabase heroDatabase;
 
@@ -48,7 +48,7 @@ public class RecommendationTests {
 		// load up the knowledge base
 		KieServices ks = KieServices.Factory.get();
 		KieContainer kContainer = ks.getKieClasspathContainer();
-		KieSession kSession = kContainer.newKieSession("ksession-rules");
+		KieSession kSession = kContainer.newKieSession("hero-ksession");
 
 		kSession.setGlobal("heroDatabase", heroDatabase);
 		kSession.setGlobal("heroRecommendationList", heroRecommendationList);

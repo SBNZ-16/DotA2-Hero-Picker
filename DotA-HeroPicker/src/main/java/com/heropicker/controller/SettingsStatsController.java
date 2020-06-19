@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.heropicker.dto.SettingsStatsDTO;
-import com.heropicker.services.SettingsStatsService;
+import com.heropicker.service.SettingsStatsService;
 
 @CrossOrigin
 @RestController

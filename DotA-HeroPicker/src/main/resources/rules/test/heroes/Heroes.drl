@@ -1,4 +1,4 @@
-package com.sample
+package rules.test.heroes
  
 import com.heropicker.facts.HeroBannedFact;
 import com.heropicker.facts.AllyHeroPickedFact;

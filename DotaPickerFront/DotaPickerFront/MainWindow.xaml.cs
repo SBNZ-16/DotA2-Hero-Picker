@@ -43,6 +43,7 @@ namespace DotaPickerFront
         private List<Image> allyIcons;
         private List<Image> enemyIcons;
         private List<LaneToggle> enemyLaneToggles;
+        private List<Item> items;
 
         public Dictionary<string, object> Heroes { get; set; }
         public List<string> HeroPreferences { get; set; }
@@ -206,6 +207,10 @@ namespace DotaPickerFront
 
 
             Heroes = FileLoader.LoadHeroes(mappings);
+
+
+            items = FileLoader.LoadItems();
+            FileLoader.LoadItemImages(items);
         }
 
         private void PopulateHeroGrid()
@@ -525,6 +530,12 @@ namespace DotaPickerFront
                 MyCustomMessageQueue.Enqueue("Error in communication with a server");
             }
 
+        }
+
+        private void ItemsButtonClick(object sender, RoutedEventArgs e)
+        {
+            ItemsWindow itemsWindow = new ItemsWindow(items);
+            itemsWindow.ShowDialog();
         }
     }
 }

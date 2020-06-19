@@ -55,9 +55,10 @@ def scrape_item(url, item_suffix):
                 name_and_price = component_div.a['title'].rsplit('(', 1)
                 component_name = name_and_price[0].strip()
                 if component_name == 'Recipe':
-                    component_name = 'Recipe: ' + item['name']
+                    component_name = 'Recipe - ' + item['name']
                     component_cost = int(name_and_price[1][:-1].strip())
                     retval.append({'name': component_name, 'components': [], 'cost': component_cost})
+                    save_img(component_div.a.img['src'], component_name)
                 item['components'].append(component_name)
     return retval
 

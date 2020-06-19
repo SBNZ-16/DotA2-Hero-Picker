@@ -49,9 +49,10 @@
                     Width="1*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
                 <RowDefinition
-                    Height="auto"/>
+                    Height="auto" />
+                <RowDefinition
+                    Height="auto" />
             </Grid.RowDefinitions>
         </Grid>
         <Grid
@@ -133,16 +134,26 @@
                     Click="Button_Click"></Button>
             </StackPanel>
         </Grid>
-        <Button
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
+        <StackPanel
+            Orientation="Horizontal"
             Grid.Row="1"
-            Style="{StaticResource MaterialDesignIconForegroundButton}"
-            ToolTip="MaterialDesignIconForegroundButton"
-            Click="SettingsButtonClick">
-            <materialDesign:PackIcon
-                Kind="Cog" />
-        </Button>
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom">
+            <Button
+                Style="{StaticResource MaterialDesignIconForegroundButton}"
+                ToolTip="MaterialDesignIconForegroundButton"
+                Click="ItemsButtonClick">
+                <materialDesign:PackIcon
+                    Kind="Sword" />
+            </Button>
+            <Button
+                Style="{StaticResource MaterialDesignIconForegroundButton}"
+                ToolTip="MaterialDesignIconForegroundButton"
+                Click="SettingsButtonClick">
+                <materialDesign:PackIcon
+                    Kind="Cog" />
+            </Button>
+        </StackPanel>
         <materialDesign:Snackbar
             Grid.Row="1"
             VerticalAlignment="Bottom"

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotaPickerFront.model;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -46,5 +47,21 @@ namespace DotaPickerFront.ultility
             return retVal;
         }
 
+        public static List<Item> LoadItems()
+        {
+            string jsonPath = $"../../resources/items/items.json";
+            string json = File.ReadAllText(jsonPath);
+            return new JavaScriptSerializer().Deserialize<List<Item>>(json);
+        }
+
+        public static List<Item> LoadItemImages(List<Item> items)
+        {
+            foreach (Item item in items)
+            {
+                string jpgPath = $"../../resources/items/icons/{item.Name}.png";
+                item.Image = BitmapConverter.BitmapToImageSource(new Bitmap(Image.FromFile(jpgPath)));
+            }
+            return items;
+        }
     }
 }

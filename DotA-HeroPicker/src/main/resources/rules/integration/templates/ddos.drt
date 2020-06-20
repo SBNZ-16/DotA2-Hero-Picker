@@ -1,0 +1,27 @@
+package rules.ddos;
+
+import com.heropicker.facts.ddos.IpAccessFact;
+
+
+
+declare window LatestIpAccessFact
+	IpAccessFact() over window:length(1)
+end
+
+declare window TimeWindow
+	IpAccessFact() over window:time(@{timeFrame})
+end
+
+rule "Too many requests by a single ip address"
+    when
+        $ip1: IpAccessFact($ipAddress: ipAddress) from window LatestIpAccessFact
+        $total: Number(intValue >= @{maxRequests}) from accumulate(
+            $ip2: IpAccessFact(
+                ipAddress.equals($ipAddress)
+            ) from window TimeWindow,
+            count($ip2)
+        )
+    then
+		System.out.println("DDOS spotted");
+end
+

@@ -25,6 +25,11 @@ public class RuleFileManager {
 		return null;
 	}
 	
+	public static String loadTemplateAsString(String fileName) {
+		String filePath = System.getProperty("user.dir") + "/src/main/resources/rules/integration/templates/" + fileName;
+		return loadText(filePath);
+	}
+	
 	
 	public static String loadRuleFile(String fileName) {
 		String filePath = System.getProperty("user.dir") + "/src/main/resources/rules/integration/rules/" + fileName;
@@ -49,6 +54,11 @@ public class RuleFileManager {
 	
 	public static void exportItemRules(String rules) {
 		String filePath = System.getProperty("user.dir") + "/../integration-kjar/src/main/resources/rules/items/Items.drl";
+		exportRules(rules, filePath);
+	}
+	
+	public static void exportDdosRules(String rules) {
+		String filePath = System.getProperty("user.dir") + "/../integration-kjar/src/main/resources/rules/ddos/DDOS.drl";
 		exportRules(rules, filePath);
 	}
 	

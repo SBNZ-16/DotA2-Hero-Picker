@@ -7,4 +7,7 @@
     <kbase name="item-rules-base" packages="rules.items">
     	<ksession name="item-ksession"/>
     </kbase>
+    <kbase name="ddos-rules-base" packages="rules.ddos">
+    	<ksession name="ddos-ksession"/>
+    </kbase>
 </kmodule>

@@ -1,6 +1,7 @@
 package com.heropicker.service;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -148,5 +149,12 @@ public class RuleManagerService {
 		InputStream rolesTemplateStream = RuleFileManager.loadTemplate("roles.drt");
 		
 		return objectDataCompiler.compile(templateArgs, rolesTemplateStream);
+	}
+
+	public void exportDdosRules() {
+		String template = RuleFileManager.loadTemplateAsString("ddos.drt");
+		template = template.replaceAll("@\\{timeFrame\\}", env.getProperty("ddos.timeFrame"));
+		template = template.replaceAll("@\\{maxRequests\\}", env.getProperty("ddos.maxRequests"));
+		RuleFileManager.exportDdosRules(template);
 	}
 }

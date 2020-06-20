@@ -53,7 +53,7 @@ Config.mvn.path varijablu je potrebno postaviti na home direktorijum instalirano
 
 Takođe, u direktorijumu instaliranog maven alata na računaru je potrebno da se nalazi mvn.bat i mvnDebug.bat (u slučaju da se nalaze mvn.cmd i mvnDebug.cmd, potrebno ih je kopirati kao mvn.bat i mvnDebug.bat)
 
-# Spisak pravila
+# Spisak pravila za preporuke heroja
 
 Sva pravila su podeljena u 3 agende, sa tim da su neka pravila u implicitnoj MAIN agendi.
 
@@ -158,3 +158,65 @@ Ovo pravilo na osnovu UpdateScoresFact činjenice menja score za više heroja na
 ### Pravilo "Update score by lane"
 
 Ovo pravilo na osnovu UpdateScoresFact činjenice menja score za više heroja na osnovu lane atribute UpdateScoresFact činjenice.
+
+# Spisak pravila za racunanje cene item-a
+
+Sva pravila se nalaze u implicitnoj MAIN agendi.
+
+Računanje cene Item-a se radi tako što se uzimaju u obzir item-i koje korisnik već poseduje. Ukoliko neki item kojeg korisnik poseduje može da se iskoristi za izgradnju ciljnog item-a, cena ciljnog item-a se umanjuje za cenu posedovanog.
+
+Prepoznavanje da li se jedan item može sagraditi na osnovu drugog se radi pomoću backward chaining mehanizma.
+
+Ulazne činjenice za ovaj sistem su posedovani item-i i željeni item.
+
+Pravila se nalaze u Items.drl fajlu.
+
+### Pravilo "Subtract cost of wanted item from current balance, and set wanted item global string"
+
+Ovo je prvo pravilo koje se izvrši, i ono se izvršava tačno jednom.
+
+Ono ima za cilj da postavi dve globalne varijable, balance i wantedItem.
+
+Balance je količina novca potrebna da se ciljni item kupi, koja je u početku jednaka samoj ceni ciljnog item-a.
+
+WantedItem je string naziv ciljnog item-a.
+
+### Query "isContainedIn"
+
+Ovaj query omogućava backward chaining. On proverava da li se neki item nalazi u ciljnom item-u ili nekoj njegovoj podkomponenti. Ovo radi rekurzivnim pozivanjem.
+
+Pored određivanja da li je jedan item sadržan u drugom, ovaj query takođe vraća objekat koji predstavlja vezu između njih.
+
+### Pravilo "Remove cost of bought item from wanted item, if it is contained by wanted item"
+
+Ovo pravilo se aktivira po jednom za svaki kupljeni item koji se može koristiti za izgradnju ciljnog.
+
+Da bi odredilo da li se jedan item gradi pomoću drugog koristi prethodno pomenuti "isContainedIn" query.
+
+Kada se pravilo aktivira, cena ciljnog item-a se smanji za cenu posedovanog. Takođe se izbaci taj kupljeni item iz stabla, da se ne bi mogla više puta oduzimala njegova cena od cene ciljnog.
+
+# Spisak pravila za detekciju DDOS napada
+
+Sva pravila se nalaze u implicitnoj MAIN agendi.
+
+Ovaj skup pravila ima za cilj da detektuje DDOS napad. Ovo se postiže pomoću CEP mehanizma.
+
+Posmatraju se IP adrese dolazećih zahteva. Ukoliko se u izvsenom vremenskom periodu primi previše zahteva sa iste IP adrese, prijavljuje se DDOS napad.
+
+Dužina vremenskog perioda i broj zahteva u vremenskom periodu potrebni za detektovanje napada se mogu menjati u application.properties fajlu pomoću ddos.timeFrame i ddos.maxRequests varijabli.
+
+Ova pravila se nalaze u DDOS.drl fajlu.
+
+### Window "LatestIpAccessFact"
+
+Ovaj window služi za pronalazak poslednje IpAccessFact činjenice.
+
+### Window "TimeWindow"
+
+Ovaj window služi za pronalazak svih IpAccessFact činjenica koje su se pojavile u vremenskom periodu definisanom u application.properties fajlu.
+
+### Pravilo "Too many requests by a single ip address"
+
+Ovo pravilo se aktivira kada najnovija činjenica, zajedno sa prethodnim prekoračuje dozvoljen broj zahteva sa iste IP adrese u definisanom vremenskom periodu. Da bi pronašlo najnoviju činjenicu koristi "LatestIpAccessFact" window, dok za pronalazak svih činjenica u vremenskom periodu koristi "TimeWindow".
+
+Ukoliko se uoči DDOS napad, ispiše se odgovarajuća poruka u konzoli servera.

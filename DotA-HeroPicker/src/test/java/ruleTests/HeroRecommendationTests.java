@@ -48,7 +48,7 @@ public class HeroRecommendationTests {
 		// load up the knowledge base
 		KieServices ks = KieServices.Factory.get();
 		KieContainer kContainer = ks.getKieClasspathContainer();
-		KieSession kSession = kContainer.newKieSession("hero-ksession");
+		KieSession kSession = kContainer.newKieSession("hero-test-ksession");
 
 		kSession.setGlobal("heroDatabase", heroDatabase);
 		kSession.setGlobal("heroRecommendationList", heroRecommendationList);

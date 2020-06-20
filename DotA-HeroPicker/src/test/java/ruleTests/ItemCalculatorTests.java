@@ -49,7 +49,7 @@ public class ItemCalculatorTests {
 		
 		KieServices ks = KieServices.Factory.get();
 		KieContainer kContainer = ks.getKieClasspathContainer();
-		KieSession kSession = kContainer.newKieSession("item-ksession");
+		KieSession kSession = kContainer.newKieSession("item-test-ksession");
 		
 		for (ItemHierarchyFact fact: hierarchyFacts) {
 			kSession.insert(fact);

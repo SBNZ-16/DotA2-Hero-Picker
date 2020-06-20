@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule">
     <kbase name="hero-rules-base" packages="rules.test.heroes">
-        <ksession name="hero-ksession"/>
+        <ksession name="hero-test-ksession"/>
     </kbase>
     <kbase name="item-rules-base" packages="rules.test.items">
-    	<ksession name="item-ksession"/>
+    	<ksession name="item-test-ksession"/>
     </kbase>
 </kmodule>

@@ -6,4 +6,7 @@
     <kbase name="item-rules-base" packages="rules.test.items">
     	<ksession name="item-test-ksession"/>
     </kbase>
+    <kbase name="ddos-rules-base" packages="rules.test.ddos">
+    	<ksession name="ddos-test-ksession" clockType="pseudo"/>
+    </kbase>
 </kmodule>

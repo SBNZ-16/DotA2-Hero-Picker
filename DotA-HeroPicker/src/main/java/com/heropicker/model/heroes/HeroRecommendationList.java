@@ -9,7 +9,13 @@ public class HeroRecommendationList {
 
 	private Map<String, HeroRecommendation> heroRecommendationsMap;
 
+	private ArrayList<HeroRecommendation> sortedRecommendations = new ArrayList<HeroRecommendation>();
+
 	private HeroDatabase heroDatabase;
+
+	private double minScore;
+
+	private double maxScore;
 
 	public HeroRecommendationList(HeroDatabase heroDatabase) {
 		this.heroDatabase = heroDatabase;
@@ -49,15 +55,15 @@ public class HeroRecommendationList {
 	}
 
 	public void displayReccomendations(int countToDisplay) {
-		ArrayList<HeroRecommendation> heroRecommendations = new ArrayList<>(this.heroRecommendationsMap.values());
-		heroRecommendations.sort(new Comparator<HeroRecommendation>() {
-			@Override
-			public int compare(HeroRecommendation o1, HeroRecommendation o2) {
-				return -Double.compare(o1.getScore(), o2.getScore());
-			}
-		});
+//		ArrayList<HeroRecommendation> heroRecommendations = new ArrayList<>(this.heroRecommendationsMap.values());
+//		heroRecommendations.sort(new Comparator<HeroRecommendation>() {
+//			@Override
+//			public int compare(HeroRecommendation o1, HeroRecommendation o2) {
+//				return -Double.compare(o1.getScore(), o2.getScore());
+//			}
+//		});
 		for (int i = 0; i < countToDisplay; i++) {
-			HeroRecommendation heroRecommendation = heroRecommendations.get(i);
+			HeroRecommendation heroRecommendation = sortedRecommendations.get(i);
 			System.out.println(i + 1 + ". " + heroRecommendation.getHero().getHeroName() + ", score: "
 					+ heroRecommendation.getScore());
 		}
@@ -65,12 +71,6 @@ public class HeroRecommendationList {
 
 	public ArrayList<HeroRecommendation> getHeroRecommendations() {
 		ArrayList<HeroRecommendation> heroReccomendations = new ArrayList<>(this.heroRecommendationsMap.values());
-		heroReccomendations.sort(new Comparator<HeroRecommendation>() {
-			@Override
-			public int compare(HeroRecommendation o1, HeroRecommendation o2) {
-				return -Double.compare(o1.getScore(), o2.getScore());
-			}
-		});
 		return heroReccomendations;
 	}
 
@@ -83,6 +83,30 @@ public class HeroRecommendationList {
 		double newValueRange = maxValue - minValue;
 		heroRecommendationsMap.values().forEach(heroRecommendation -> heroRecommendation
 				.setScore((heroRecommendation.getScore() - minScore) / scoreRange * newValueRange + minValue));
+	}
+
+	public ArrayList<HeroRecommendation> getSortedRecommendations() {
+		return sortedRecommendations;
+	}
+
+	public void setSortedRecommendations(ArrayList<HeroRecommendation> sortedRecommendations) {
+		this.sortedRecommendations = sortedRecommendations;
+	}
+
+	public double getMinScore() {
+		return minScore;
+	}
+
+	public void setMinScore(double minScore) {
+		this.minScore = minScore;
+	}
+
+	public double getMaxScore() {
+		return maxScore;
+	}
+
+	public void setMaxScore(double maxScore) {
+		this.maxScore = maxScore;
 	}
 
 }

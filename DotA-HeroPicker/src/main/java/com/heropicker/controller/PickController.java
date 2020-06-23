@@ -35,7 +35,7 @@ public class PickController {
 	@PostMapping()
 	public ResponseEntity<ArrayList<HeroRecommendation>> recommend(@RequestBody FactsDto info) {
 		List<Fact> facts = info.toFacts();
-    	ArrayList<HeroRecommendation> retVal = pickService.recommend(facts).getHeroRecommendations();
+    	ArrayList<HeroRecommendation> retVal = pickService.recommend(facts).getSortedRecommendations();
         return new ResponseEntity<ArrayList<HeroRecommendation>>(retVal, HttpStatus.OK);
 	}
 }

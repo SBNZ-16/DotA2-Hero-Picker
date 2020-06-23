@@ -35,6 +35,39 @@ rule "Hero banned"
 		heroRecommendationList.removeHeroRecommendationByHeroId($banned.getHeroId());
 end
 
+rule "Sorting rule"
+salience $score
+	agenda-group "sort"
+	when
+		$heroRecommendation : HeroRecommendation($score : score) from heroRecommendationList.getHeroRecommendations()
+	then
+		heroRecommendationList.getSortedRecommendations().add($heroRecommendation);
+		System.out.println($score);
+end
+
+rule "Find min and max score"
+salience 1
+	agenda-group "scale"
+	when
+		accumulate(HeroRecommendation($score : score) from heroRecommendationList.getHeroRecommendations(),
+					$maxScore: max($score),
+					$minScore: min($score))
+	then
+		heroRecommendationList.setMinScore($minScore.doubleValue());
+		heroRecommendationList.setMaxScore($maxScore.doubleValue());
+		System.out.println("find min max rule");
+end
+
+rule "Scaling rule"
+	agenda-group "scale"
+	when
+		$heroRecommendation : HeroRecommendation($score : score) from heroRecommendationList.getHeroRecommendations()
+	then
+		double scoreRange = heroRecommendationList.getMaxScore() - heroRecommendationList.getMinScore();
+		$heroRecommendation
+				.setScore(($heroRecommendation.getScore() - heroRecommendationList.getMinScore()) / scoreRange * 100);
+end
+
 rule "Update score by heroId"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)

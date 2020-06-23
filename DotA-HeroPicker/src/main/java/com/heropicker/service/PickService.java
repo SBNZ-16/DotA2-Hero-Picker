@@ -49,7 +49,12 @@ public class PickService {
 		kSession.getAgenda().getAgendaGroup("preferences").setFocus();
 		kSession.fireAllRules();
 
-		heroRecommendationList.scaleScore(0,100);
+		kSession.getAgenda().getAgendaGroup("sort").setFocus();
+		kSession.fireAllRules();
+		
+//		kSession.getAgenda().getAgendaGroup("scale").setFocus();
+//		kSession.fireAllRules();
+		
 		heroRecommendationList.displayReccomendations(10);
 
 		return heroRecommendationList;

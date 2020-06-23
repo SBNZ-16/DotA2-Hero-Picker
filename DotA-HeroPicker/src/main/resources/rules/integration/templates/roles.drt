@@ -16,10 +16,14 @@ template "Role rules"
 		then
 			double penalty = (@{heroesPerRole} - (double)$count) * @{scoreLossPercentage};
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "@{role}", null));
+			System.out.println("role rule");
 	end
 
 end template
 
 query roleOverflow(String $role, Long $count)
-	 $count := Number() from accumulate ($hero : Hero(roles contains $role) from pickedAllyHeroes.heroes, count($hero))
+	List() from accumulate (HeroRecommendationFact(hero.roles contains $role)
+	$count := Number() from accumulate (AllyHeroPickedFact($allyHeroId : heroId) 
+										HeroRecommendationFact(hero.heroId == $allyHeroId, 
+															   hero.roles contains $role, $hero: hero), count($hero))
 end

@@ -4,36 +4,45 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.heropicker.facts.heroes.HeroRecommendationFact;
+
 public class HeroDatabase {
-	
+
 	private ArrayList<Hero> heroes;
 	private Map<String, Hero> heroesMap;
-	
+
 	public HeroDatabase() {
 		this.heroesMap = new HashMap<String, Hero>();
 		this.heroes = new ArrayList<Hero>();
 	}
 
+	public ArrayList<HeroRecommendationFact> generateHeroRecommendationFacts() {
+		ArrayList<HeroRecommendationFact> retval = new ArrayList<HeroRecommendationFact>();
+		for (Hero hero : heroes) {
+			retval.add(new HeroRecommendationFact(hero, hero.getOverallWinrate()));
+		}
+		return retval;
+	}
+
 	public ArrayList<Hero> getHeroes() {
 		return heroes;
 	}
-	
+
 	public Hero getById(String heroId) {
 		return heroesMap.get(heroId);
 	}
-	
+
 	public Hero getByName(String heroName) {
-		for (Hero hero: this.heroes) {
+		for (Hero hero : this.heroes) {
 			if (hero.getHeroName().equals(heroName)) {
 				return hero;
 			}
 		}
-		return null; //wont happen 
+		return null; // wont happen
 	}
 
 	public Map<String, Hero> getHeroesMap() {
 		return heroesMap;
 	}
-	
-	
+
 }

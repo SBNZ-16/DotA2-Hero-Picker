@@ -68,7 +68,7 @@ public class HeroRecommendationTests {
 		kSession.fireAllRules();
 
 		heroRecommendationList.scaleScore(0, 100);
-		heroRecommendationList.displayReccomendations(10);
+//		heroRecommendationList.displayReccomendations(10);
 		return heroRecommendationList;
 	}
 

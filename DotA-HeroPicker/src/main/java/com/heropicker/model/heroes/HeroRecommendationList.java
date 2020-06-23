@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.heropicker.facts.heroes.HeroRecommendationFact;
+
 public class HeroRecommendationList {
 
 	private Map<String, HeroRecommendation> heroRecommendationsMap;
@@ -54,7 +56,7 @@ public class HeroRecommendationList {
 		}
 	}
 
-	public void displayReccomendations(int countToDisplay) {
+	public void displayReccomendations(int countToDisplay, ArrayList<HeroRecommendationFact> sortedRecommendations) {
 //		ArrayList<HeroRecommendation> heroRecommendations = new ArrayList<>(this.heroRecommendationsMap.values());
 //		heroRecommendations.sort(new Comparator<HeroRecommendation>() {
 //			@Override
@@ -63,7 +65,7 @@ public class HeroRecommendationList {
 //			}
 //		});
 		for (int i = 0; i < countToDisplay; i++) {
-			HeroRecommendation heroRecommendation = sortedRecommendations.get(i);
+			HeroRecommendationFact heroRecommendation = sortedRecommendations.get(i);
 			System.out.println(i + 1 + ". " + heroRecommendation.getHero().getHeroName() + ", score: "
 					+ heroRecommendation.getScore());
 		}

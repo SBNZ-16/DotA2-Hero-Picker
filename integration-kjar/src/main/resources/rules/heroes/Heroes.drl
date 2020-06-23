@@ -7,41 +7,49 @@ import com.heropicker.facts.heroes.UpdateScoresFact;
 import com.heropicker.facts.heroes.HeroPreferredFact;
 import com.heropicker.facts.heroes.RolePreferredFact;
 import com.heropicker.facts.heroes.LanePreferredFact;
-import com.heropicker.model.heroes.PickedAllyHeroes;
-import com.heropicker.model.heroes.HeroRecommendation;
+import com.heropicker.facts.heroes.MaxScoreFact;
+import com.heropicker.facts.heroes.MinScoreFact;
+import com.heropicker.facts.heroes.HeroRecommendationFact;
 import com.heropicker.model.heroes.LaneStats;
 import com.heropicker.model.heroes.Hero;
+import java.util.ArrayList;
 
-
-global com.heropicker.model.heroes.HeroDatabase heroDatabase;
-global com.heropicker.model.heroes.HeroRecommendationList heroRecommendationList;
-global PickedAllyHeroes pickedAllyHeroes;
-
+global ArrayList<HerorecommendationFact> sortedRecommendations;
  
 rule "Ally hero picked"
 	agenda-group "hero-statistics"
 	when
-		$picked : AllyHeroPickedFact()
+		AllyHeroPickedFact($pickedId : heroId)
+		$recommendation: HeroRecommendationFact(hero.heroId == $pickedId)
 	then
-		heroRecommendationList.removeHeroRecommendationByHeroId($picked.getHeroId());
-		pickedAllyHeroes.addHero($picked.getHeroId());
+		delete($recommendation);
+end
+
+rule "Enemy hero picked"
+	agenda-group "hero-statistics"
+	when
+		EnemyHeroPickedFact($pickedId : heroId)
+		$recommendation: HeroRecommendationFact(hero.heroId == $pickedId)
+	then
+		delete($recommendation);
 end
 
 rule "Hero banned"
 	agenda-group "hero-statistics"
 	when
-		$banned : HeroBannedFact()
+		HeroBannedFact($bannedId : heroId)
+		$recommendation: HeroRecommendationFact(hero.heroId == $bannedId)
 	then
-		heroRecommendationList.removeHeroRecommendationByHeroId($banned.getHeroId());
+		delete($recommendation);
 end
 
 rule "Sorting rule"
-salience $score
+salience ($score*100)
 	agenda-group "sort"
 	when
-		$heroRecommendation : HeroRecommendation($score : score) from heroRecommendationList.getHeroRecommendations()
+		$heroRecommendation : HeroRecommendationFact($score : score)
 	then
-		heroRecommendationList.getSortedRecommendations().add($heroRecommendation);
+		sortedRecommendations.add($heroRecommendation);
 		System.out.println($score);
 end
 
@@ -49,29 +57,30 @@ rule "Find min and max score"
 salience 1
 	agenda-group "scale"
 	when
-		accumulate(HeroRecommendation($score : score) from heroRecommendationList.getHeroRecommendations(),
-					$maxScore: max($score),
-					$minScore: min($score))
+		accumulate(HeroRecommendationFact($score : score),
+				$maxScore: max($score),
+				$minScore: min($score))
 	then
-		heroRecommendationList.setMinScore($minScore.doubleValue());
-		heroRecommendationList.setMaxScore($maxScore.doubleValue());
-		System.out.println("find min max rule");
+		insert(new MaxScoreFact($maxScore.doubleValue()));
+		insert(new MinScoreFact($minScore.doubleValue()));
 end
 
 rule "Scaling rule"
 	agenda-group "scale"
 	when
-		$heroRecommendation : HeroRecommendation($score : score) from heroRecommendationList.getHeroRecommendations()
+		MaxScoreFact($maxScore: maxScore)
+		MinScoreFact($minScore: minScore)
+		$heroRecommendation : HeroRecommendationFact($score : score)
 	then
-		double scoreRange = heroRecommendationList.getMaxScore() - heroRecommendationList.getMinScore();
+		double scoreRange = $maxScore - $minScore;
 		$heroRecommendation
-				.setScore(($heroRecommendation.getScore() - heroRecommendationList.getMinScore()) / scoreRange * 100);
+				.setScore(($heroRecommendation.getScore() - $minScore) / scoreRange * 100);
 end
 
 rule "Update score by heroId"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
-		$heroRecommendation : HeroRecommendation(hero.heroId==$heroId) from heroRecommendationList.getHeroRecommendations()
+		$heroRecommendation : HeroRecommendationFact(hero.heroId==$heroId)
 	then
 		$heroRecommendation.updateScore($updateScore.getMultiplyScale(), $updateScore.getAddValue());
 end
@@ -79,7 +88,7 @@ end
 rule "Update score by role"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
-		$heroRecommendation : HeroRecommendation(hero.roles contains $role) from heroRecommendationList.getHeroRecommendations()
+		$heroRecommendation : HeroRecommendationFact(hero.roles contains $role)
 	then
 		$heroRecommendation.updateScore($updateScore.getMultiplyScale(), $updateScore.getAddValue());
 end
@@ -87,7 +96,7 @@ end
 rule "Update score by lane"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
-		$heroRecommendation : HeroRecommendation($hero : hero) from heroRecommendationList.getHeroRecommendations()
+		$heroRecommendation : HeroRecommendationFact($hero : hero)
 		$laneStats: LaneStats(name == $lane) from $hero.lanes
 	then
 		double laneEffectiveness = ($laneStats.getWinrate() * $laneStats.getPresence());
@@ -96,7 +105,9 @@ rule "Update score by lane"
 end
 
 query roleOverflow(String $role, Long $count)
-	 $count := Number() from accumulate ($hero : Hero(roles contains $role) from pickedAllyHeroes.heroes, count($hero))
+	$count := Number() from accumulate (AllyHeroPickedFact($allyHeroId : heroId) 
+										HeroRecommendationFact(hero.heroId == $allyHeroId, 
+															   hero.roles contains $role, $hero: hero), count($hero))
 end
 
 	rule "Pusher role"
@@ -108,6 +119,7 @@ end
 		then
 			double penalty = (1.5 - (double)$count) * 0.05;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Pusher", null));
+			System.out.println("role rule");
 	end
 
 	rule "Disabler role"
@@ -119,6 +131,7 @@ end
 		then
 			double penalty = (2.0 - (double)$count) * 0.025;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Disabler", null));
+			System.out.println("role rule");
 	end
 
 	rule "Durable role"
@@ -130,6 +143,7 @@ end
 		then
 			double penalty = (1.5 - (double)$count) * 0.05;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Durable", null));
+			System.out.println("role rule");
 	end
 
 	rule "Jungler role"
@@ -141,6 +155,7 @@ end
 		then
 			double penalty = (0.5 - (double)$count) * 0.025;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Jungler", null));
+			System.out.println("role rule");
 	end
 
 	rule "Carry role"
@@ -152,6 +167,7 @@ end
 		then
 			double penalty = (2.0 - (double)$count) * 0.05;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Carry", null));
+			System.out.println("role rule");
 	end
 
 	rule "Initiator role"
@@ -163,6 +179,7 @@ end
 		then
 			double penalty = (1.5 - (double)$count) * 0.05;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Initiator", null));
+			System.out.println("role rule");
 	end
 
 	rule "Support role"
@@ -174,6 +191,7 @@ end
 		then
 			double penalty = (2.0 - (double)$count) * 0.05;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Support", null));
+			System.out.println("role rule");
 	end
 
 	rule "Escape role"
@@ -185,6 +203,7 @@ end
 		then
 			double penalty = (1.0 - (double)$count) * 0.025;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Escape", null));
+			System.out.println("role rule");
 	end
 
 	rule "Nuker role"
@@ -196,24 +215,28 @@ end
 		then
 			double penalty = (1.0 - (double)$count) * 0.05;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Nuker", null));
+			System.out.println("role rule");
 	end
 
 
 
-	rule "Enemy hero picked"
+	rule "Enemy hero picked, update disadvantage"
 		agenda-group "hero-statistics"
 		when
-			$picked : EnemyHeroPickedFact()
+			EnemyHeroPickedFact($pickedId: heroId)
+			$recommendation: HeroRecommendationFact(hero.heroId != $pickedId)
 		then
-			heroRecommendationList.removeHeroRecommendationByHeroId($picked.getHeroId());
-			heroRecommendationList.changeScoresByHeroDisadvantage($picked.getHeroId(), 1.5);
+			double disadvantage = $recommendation.getHero().getDisadvantages().get($pickedId);
+			$recommendation.setScore($recommendation.getScore() +  disadvantage * 1.5);
 	end
 	rule "Enemy hero picked is expected to show in my lane"
 		agenda-group "hero-statistics"
 		when
-			$picked : EnemyHeroPickedFact(goingToFaceInLane == true)
+			EnemyHeroPickedFact($pickedId: heroId, goingToFaceInLane == true)
+			$recommendation: HeroRecommendationFact(hero.heroId != $pickedId)
 		then
-			heroRecommendationList.changeScoresByHeroDisadvantage($picked.getHeroId(), 3.0);
+			double disadvantage = $recommendation.getHero().getDisadvantages().get($pickedId);
+			$recommendation.setScore($recommendation.getScore() +  disadvantage * 3.0);
 	end
 	rule "Hero preferred"
 		agenda-group "preferences"

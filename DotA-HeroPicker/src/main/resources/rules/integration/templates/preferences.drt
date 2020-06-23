@@ -9,21 +9,24 @@ enemyLaneHeroDisadvantage
 
 template "Role rules"
 
-	rule "Enemy hero picked"
+	rule "Enemy hero picked, update disadvantage"
 		agenda-group "hero-statistics"
 		when
-			$picked : EnemyHeroPickedFact()
+			EnemyHeroPickedFact($pickedId: heroId)
+			$recommendation: HeroRecommendationFact(hero.heroId != $pickedId)
 		then
-			heroRecommendationList.removeHeroRecommendationByHeroId($picked.getHeroId());
-			heroRecommendationList.changeScoresByHeroDisadvantage($picked.getHeroId(), @{enemyHeroDisadvantage});
+			double disadvantage = $recommendation.getHero().getDisadvantages().get($pickedId);
+			$recommendation.setScore($recommendation.getScore() +  disadvantage * @{enemyHeroDisadvantage});
 	end
 
 	rule "Enemy hero picked is expected to show in my lane"
 		agenda-group "hero-statistics"
 		when
-			$picked : EnemyHeroPickedFact(goingToFaceInLane == true)
+			EnemyHeroPickedFact($pickedId: heroId, goingToFaceInLane == true)
+			$recommendation: HeroRecommendationFact(hero.heroId != $pickedId)
 		then
-			heroRecommendationList.changeScoresByHeroDisadvantage($picked.getHeroId(), @{enemyLaneHeroDisadvantage});
+			double disadvantage = $recommendation.getHero().getDisadvantages().get($pickedId);
+			$recommendation.setScore($recommendation.getScore() +  disadvantage * @{enemyLaneHeroDisadvantage});
 	end
 
 	rule "Hero preferred"

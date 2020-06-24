@@ -19,8 +19,7 @@ import com.heropicker.dto.MessageDto;
 import com.heropicker.facts.Fact;
 import com.heropicker.facts.heroes.AllyHeroPickedFact;
 import com.heropicker.facts.heroes.EnemyHeroPickedFact;
-import com.heropicker.model.heroes.HeroRecommendation;
-import com.heropicker.model.heroes.HeroRecommendationList;
+import com.heropicker.facts.heroes.HeroRecommendationFact;
 import com.heropicker.service.PickService;
 
 
@@ -33,9 +32,9 @@ public class PickController {
 	private PickService pickService;
 	
 	@PostMapping()
-	public ResponseEntity<ArrayList<HeroRecommendation>> recommend(@RequestBody FactsDto info) {
+	public ResponseEntity<ArrayList<HeroRecommendationFact>> recommend(@RequestBody FactsDto info) {
 		List<Fact> facts = info.toFacts();
-    	ArrayList<HeroRecommendation> retVal = pickService.recommend(facts).getSortedRecommendations();
-        return new ResponseEntity<ArrayList<HeroRecommendation>>(retVal, HttpStatus.OK);
+    	ArrayList<HeroRecommendationFact> retVal = pickService.recommend(facts);
+        return new ResponseEntity<ArrayList<HeroRecommendationFact>>(retVal, HttpStatus.OK);
 	}
 }

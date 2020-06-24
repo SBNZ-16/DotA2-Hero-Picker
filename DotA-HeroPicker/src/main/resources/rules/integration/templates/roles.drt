@@ -12,18 +12,21 @@ template "Role rules"
 		salience -1
 		when
 			exists(AllyHeroPickedFact())
-			roleOverflow("@{role}", $count;)
+	    	roleOverflow("@{role}", $count;)
 		then
 			double penalty = (@{heroesPerRole} - (double)$count) * @{scoreLossPercentage};
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "@{role}", null));
-			System.out.println("role rule");
 	end
-
+	
 end template
 
 query roleOverflow(String $role, Long $count)
-	List() from accumulate (HeroRecommendationFact(hero.roles contains $role)
-	$count := Number() from accumulate (AllyHeroPickedFact($allyHeroId : heroId) 
-										HeroRecommendationFact(hero.heroId == $allyHeroId, 
-															   hero.roles contains $role, $hero: hero), count($hero))
+	$allHeroIdsWithRole: List() from accumulate (Hero(roles contains $role, $id: heroId) from heroDatabase.heroes,
+        collectList($id)
+	)
+	$count := Number() from accumulate(AllyHeroPickedFact($allHeroIdsWithRole contains heroId, $id: heroId),
+		count($id)
+	)
 end
+
+

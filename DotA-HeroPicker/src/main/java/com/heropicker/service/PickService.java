@@ -13,7 +13,6 @@ import com.heropicker.facts.Fact;
 import com.heropicker.facts.heroes.HeroRecommendationFact;
 import com.heropicker.io.HeroLoader;
 import com.heropicker.model.heroes.HeroDatabase;
-import com.heropicker.model.heroes.HeroRecommendationList;
 import com.heropicker.model.heroes.PickedAllyHeroes;
 
 @Service
@@ -25,18 +24,14 @@ public class PickService {
 	@Autowired
 	private HeroDatabase heroDatabase;
 
-	public HeroRecommendationList recommend(List<Fact> facts) {
-
-		HeroRecommendationList heroRecommendationList = new HeroRecommendationList(heroDatabase);
-		PickedAllyHeroes pickedAllyHeroes = new PickedAllyHeroes(heroDatabase);
+	public ArrayList<HeroRecommendationFact> recommend(List<Fact> facts) {
 		ArrayList<HeroRecommendationFact> sortedRecommendations = new ArrayList<HeroRecommendationFact>();
 
 		KieSession kSession = kieContainer.newKieSession("hero-ksession");
 
 		kSession.setGlobal("sortedRecommendations", sortedRecommendations);
-//		kSession.setGlobal("heroDatabase", heroDatabase);
-//		kSession.setGlobal("heroRecommendationList", heroRecommendationList);
-//		kSession.setGlobal("pickedAllyHeroes", pickedAllyHeroes);
+		kSession.setGlobal("heroDatabase", heroDatabase);
+
 
 		for (Fact heroPickedFact : facts) {
 			kSession.insert(heroPickedFact);
@@ -60,10 +55,16 @@ public class PickService {
 
 		kSession.getAgenda().getAgendaGroup("scale").setFocus();
 		kSession.fireAllRules();
+		
+		System.out.println("ejo");
+		
+		for (int i = 0; i < 10; i++) {
+			HeroRecommendationFact recommendation = sortedRecommendations.get(i);
+			
+			System.out.println(i + ". " + recommendation.getHero().getHeroName() + " " + recommendation.getScore());
+		}
 
-		heroRecommendationList.displayReccomendations(10, sortedRecommendations);
-
-		return heroRecommendationList;
+		return sortedRecommendations;
 	}
 
 	public KieContainer getKieContainer() {

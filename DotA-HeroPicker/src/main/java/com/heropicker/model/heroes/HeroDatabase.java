@@ -9,10 +9,8 @@ import com.heropicker.facts.heroes.HeroRecommendationFact;
 public class HeroDatabase {
 
 	private ArrayList<Hero> heroes;
-	private Map<String, Hero> heroesMap;
 
 	public HeroDatabase() {
-		this.heroesMap = new HashMap<String, Hero>();
 		this.heroes = new ArrayList<Hero>();
 	}
 
@@ -28,10 +26,6 @@ public class HeroDatabase {
 		return heroes;
 	}
 
-	public Hero getById(String heroId) {
-		return heroesMap.get(heroId);
-	}
-
 	public Hero getByName(String heroName) {
 		for (Hero hero : this.heroes) {
 			if (hero.getHeroName().equals(heroName)) {
@@ -40,9 +34,4 @@ public class HeroDatabase {
 		}
 		return null; // wont happen
 	}
-
-	public Map<String, Hero> getHeroesMap() {
-		return heroesMap;
-	}
-
 }

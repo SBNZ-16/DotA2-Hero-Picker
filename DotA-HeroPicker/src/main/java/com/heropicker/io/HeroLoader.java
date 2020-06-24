@@ -28,7 +28,7 @@ public class HeroLoader {
 		for (ArrayList<String> heroJSON : mappingList) {
 			Hero hero = new Hero(heroJSON.get(0), heroJSON.get(1));
 			retVal.getHeroes().add(hero);
-			retVal.getHeroesMap().put(hero.getHeroId(), hero);
+//			retVal.getHeroesMap().put(hero.getHeroId(), hero);
 			nameToId.put(hero.getHeroName(), hero.getHeroId());
 		}
 		

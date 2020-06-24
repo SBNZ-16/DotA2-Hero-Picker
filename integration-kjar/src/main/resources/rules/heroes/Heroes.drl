@@ -12,9 +12,13 @@ import com.heropicker.facts.heroes.MinScoreFact;
 import com.heropicker.facts.heroes.HeroRecommendationFact;
 import com.heropicker.model.heroes.LaneStats;
 import com.heropicker.model.heroes.Hero;
+import com.heropicker.model.heroes.HeroDatabase;
+
 import java.util.ArrayList;
+import java.util.List;
 
 global ArrayList<HerorecommendationFact> sortedRecommendations;
+global HeroDatabase heroDatabase;
  
 rule "Ally hero picked"
 	agenda-group "hero-statistics"
@@ -50,7 +54,6 @@ salience ($score*100)
 		$heroRecommendation : HeroRecommendationFact($score : score)
 	then
 		sortedRecommendations.add($heroRecommendation);
-		System.out.println($score);
 end
 
 rule "Find min and max score"
@@ -73,8 +76,8 @@ rule "Scaling rule"
 		$heroRecommendation : HeroRecommendationFact($score : score)
 	then
 		double scoreRange = $maxScore - $minScore;
-		$heroRecommendation
-				.setScore(($heroRecommendation.getScore() - $minScore) / scoreRange * 100);
+		double newScore = ($heroRecommendation.getScore() - $minScore) / scoreRange * 100;
+		modify($heroRecommendation) { setScore(newScore); }
 end
 
 rule "Update score by heroId"
@@ -105,9 +108,12 @@ rule "Update score by lane"
 end
 
 query roleOverflow(String $role, Long $count)
-	$count := Number() from accumulate (AllyHeroPickedFact($allyHeroId : heroId) 
-										HeroRecommendationFact(hero.heroId == $allyHeroId, 
-															   hero.roles contains $role, $hero: hero), count($hero))
+	$allHeroIdsWithRole: List() from accumulate (Hero(roles contains $role, $id: heroId) from heroDatabase.heroes,
+        collectList($id)
+	)
+	$count := Number() from accumulate(AllyHeroPickedFact($allHeroIdsWithRole contains heroId, $id: heroId),
+		count($id)
+	)
 end
 
 	rule "Pusher role"
@@ -115,11 +121,10 @@ end
 		salience -1
 		when
 			exists(AllyHeroPickedFact())
-			roleOverflow("Pusher", $count;)
+	    	roleOverflow("Pusher", $count;)
 		then
 			double penalty = (1.5 - (double)$count) * 0.05;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Pusher", null));
-			System.out.println("role rule");
 	end
 
 	rule "Disabler role"
@@ -127,11 +132,10 @@ end
 		salience -1
 		when
 			exists(AllyHeroPickedFact())
-			roleOverflow("Disabler", $count;)
+	    	roleOverflow("Disabler", $count;)
 		then
 			double penalty = (2.0 - (double)$count) * 0.025;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Disabler", null));
-			System.out.println("role rule");
 	end
 
 	rule "Durable role"
@@ -139,11 +143,10 @@ end
 		salience -1
 		when
 			exists(AllyHeroPickedFact())
-			roleOverflow("Durable", $count;)
+	    	roleOverflow("Durable", $count;)
 		then
 			double penalty = (1.5 - (double)$count) * 0.05;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Durable", null));
-			System.out.println("role rule");
 	end
 
 	rule "Jungler role"
@@ -151,11 +154,10 @@ end
 		salience -1
 		when
 			exists(AllyHeroPickedFact())
-			roleOverflow("Jungler", $count;)
+	    	roleOverflow("Jungler", $count;)
 		then
 			double penalty = (0.5 - (double)$count) * 0.025;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Jungler", null));
-			System.out.println("role rule");
 	end
 
 	rule "Carry role"
@@ -163,11 +165,10 @@ end
 		salience -1
 		when
 			exists(AllyHeroPickedFact())
-			roleOverflow("Carry", $count;)
+	    	roleOverflow("Carry", $count;)
 		then
 			double penalty = (2.0 - (double)$count) * 0.05;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Carry", null));
-			System.out.println("role rule");
 	end
 
 	rule "Initiator role"
@@ -175,11 +176,10 @@ end
 		salience -1
 		when
 			exists(AllyHeroPickedFact())
-			roleOverflow("Initiator", $count;)
+	    	roleOverflow("Initiator", $count;)
 		then
 			double penalty = (1.5 - (double)$count) * 0.05;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Initiator", null));
-			System.out.println("role rule");
 	end
 
 	rule "Support role"
@@ -187,11 +187,10 @@ end
 		salience -1
 		when
 			exists(AllyHeroPickedFact())
-			roleOverflow("Support", $count;)
+	    	roleOverflow("Support", $count;)
 		then
 			double penalty = (2.0 - (double)$count) * 0.05;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Support", null));
-			System.out.println("role rule");
 	end
 
 	rule "Escape role"
@@ -199,11 +198,10 @@ end
 		salience -1
 		when
 			exists(AllyHeroPickedFact())
-			roleOverflow("Escape", $count;)
+	    	roleOverflow("Escape", $count;)
 		then
 			double penalty = (1.0 - (double)$count) * 0.025;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Escape", null));
-			System.out.println("role rule");
 	end
 
 	rule "Nuker role"
@@ -211,11 +209,10 @@ end
 		salience -1
 		when
 			exists(AllyHeroPickedFact())
-			roleOverflow("Nuker", $count;)
+	    	roleOverflow("Nuker", $count;)
 		then
 			double penalty = (1.0 - (double)$count) * 0.05;
 			insert(new UpdateScoresFact(penalty + 1, 0, null, "Nuker", null));
-			System.out.println("role rule");
 	end
 
 

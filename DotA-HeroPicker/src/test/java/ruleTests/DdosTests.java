@@ -15,7 +15,8 @@ import org.kie.api.runtime.KieSession;
 import com.heropicker.facts.ddos.IpAccessFact;
 
 
-// set to trigger a DDOS attack if there are 3 requests from the same Ip address within one second
+// set to trigger a DDOS attack if there are 3 requests from the same IP address within one second
+// or 6 requests from requests from the different IP address within one second
 public class DdosTests {
 	
 	
@@ -34,7 +35,7 @@ public class DdosTests {
 		return kSession;
 	}
 	
-	// all requests come from same Ip address, but there is enough time between them
+	// all requests come from same IP address, but there is enough time between them
 	@Test
 	public void noDdosAttackEnoughTimeDifferenceTest() {
 		
@@ -52,10 +53,11 @@ public class DdosTests {
 		System.out.flush();
 		
 		String prints = ps.toString();
+		Assertions.assertEquals(0, StringUtils.countMatches(prints, "DDOS from different IPs"));
 		Assertions.assertEquals(0, StringUtils.countMatches(prints, "DDOS from same IP spotted"));
 	}
 	
-	// there is enough requests to trigger an ddos attack, but they come from seperate Ip address, so it does not happen
+	// there is enough requests to trigger an ddos attack from same IP, but they come from seperate IP address, so it does not happen
 	@Test
 	public void twoSeperateIpsNoDdos() {
 		ByteArrayOutputStream ps = redirectOutputStream();
@@ -72,10 +74,11 @@ public class DdosTests {
 		System.out.flush();
 		
 		String prints = ps.toString();
+		Assertions.assertEquals(0, StringUtils.countMatches(prints, "DDOS from different IPs"));
 		Assertions.assertEquals(0, StringUtils.countMatches(prints, "DDOS from same IP spotted"));
 	}
 	
-	// there is enough requests from the same Ip address to trigger a ddos attack
+	// there is enough requests from the same IP address to trigger a ddos attack
 	@Test
 	public void ddosAttackTest() {
 		ByteArrayOutputStream ps = redirectOutputStream();
@@ -92,10 +95,12 @@ public class DdosTests {
 		System.out.flush();
 		
 		String prints = ps.toString();
+		Assertions.assertEquals(0, StringUtils.countMatches(prints, "DDOS from different IPs"));
 		Assertions.assertEquals(3, StringUtils.countMatches(prints, "DDOS from same IP spotted"));
 	}
 	
-	// there is enough requests to trigger an ddos attack, but they come from seperate Ip address, so it does not happen
+	// there is enough requests from different IPs to trigger different IPs DDOS attack, 
+	// and in this case this attacks has priority over same IP DDOS attack
 	@Test
 	public void threeSameIpRestDifferent() {
 		ByteArrayOutputStream ps = redirectOutputStream();
@@ -117,7 +122,7 @@ public class DdosTests {
 		Assertions.assertEquals(0, StringUtils.countMatches(prints, "DDOS from same IP spotted"));
 	}
 
-	// there is enough requests to trigger an ddos attack, but they come from seperate Ip address, so it does not happen
+	// Same IP DDOS attack activates after third request, then different IPs DDOS attack activates four times
 	@Test
 	public void fourSameIpRestDifferent() {
 		ByteArrayOutputStream ps = redirectOutputStream();

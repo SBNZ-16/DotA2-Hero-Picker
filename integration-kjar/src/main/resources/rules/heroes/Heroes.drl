@@ -90,6 +90,7 @@ salience ($score*100)
 end
 
 rule "Update score by heroId"
+	agenda-group "update"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
 		$heroRecommendation : HeroRecommendationFact(hero.heroId==$heroId) @Watch(!*)
@@ -98,6 +99,7 @@ rule "Update score by heroId"
 end
 
 rule "Update score by role"
+	agenda-group "update"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
 		$heroRecommendation : HeroRecommendationFact(hero.roles contains $role) @Watch(!*)
@@ -106,6 +108,7 @@ rule "Update score by role"
 end
 
 rule "Update score by lane"
+	agenda-group "update"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
 		$heroRecommendation : HeroRecommendationFact($hero : hero) @Watch(!*)

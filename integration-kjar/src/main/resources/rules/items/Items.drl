@@ -16,16 +16,15 @@ end
 
 
 rule "Remove cost of bought item from wanted item, if it is contained by wanted item"
-salience 0
+salience $price
 when
 	$have: BoughtItemFact(used == false, $name: name, $price: price)
 	isContainedIn($name, wantedItem, $itemHierarchyObj;)
 then
-		System.out.println($price);
-		drools.getKnowledgeRuntime().setGlobal("balance", balance - $price);
-		delete($itemHierarchyObj);
-		$have.setUsed(true);
-		update($have);
+	drools.getKnowledgeRuntime().setGlobal("balance", balance - $price);
+	delete($itemHierarchyObj);
+	$have.setUsed(true);
+	update($have);
 end
 
 

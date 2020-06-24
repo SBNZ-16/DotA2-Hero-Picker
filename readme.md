@@ -41,23 +41,23 @@ User prefers Slark AND currently recommended heroes are Slark and Lifestealer =>
 
 Currently recommended heroes are Invoker and Timbersaw AND Broodmother heavly counters Invoker => Recommend only Timbersaw
 
-# Podešavanje projekta
+# Pokretanje projekta
 
 Da bi sve funkcionalnosti projekta radile potrebno je podesiti application.properties prema trenutnom računaru.
 
-Ukoliko je poželjno da se pri svakoj izmeni parametara template-a, ili pri svakom dodavanju korisničkih pravila se automatski reinstalira kjar projekat, potrebno je postaviti varijablu config.mvn.autoTrigger na "true". Ukoliko je varijabla postavljena na bilo koju vrednost sem "true", kjar projekat se nece automatski instalirati pri izmenama, nego je potrebno ručno raditi mvn clean install nad njim.
-
-Ukoliko je config.mvn.autoTrigger postavljen na "true", potrebno je takođe podesiti i config.mvn.path. Ukoliko config.mvn.autoTrigger nije "true", path varijabla se ignoriše.
-
 Config.mvn.path varijablu je potrebno postaviti na home direktorijum instaliranog maven alata na računaru, npr. "F:/Program Files/apache-maven-3.6.2/"
 
-Takođe, u direktorijumu instaliranog maven alata na računaru je potrebno da se nalazi mvn.bat i mvnDebug.bat (u slučaju da se nalaze mvn.cmd i mvnDebug.cmd, potrebno ih je kopirati kao mvn.bat i mvnDebug.bat)
+Takođe, u bin direktorijumu instaliranog maven alata na računaru je potrebno da se nalazi mvn.bat i mvnDebug.bat (u slučaju da se nalaze mvn.cmd i mvnDebug.cmd, potrebno ih je kopirati i preimenovati kao mvn.bat i mvnDebug.bat)
 
 # Spisak pravila za preporuke heroja
 
-Sva pravila su podeljena u 3 agende, sa tim da su neka pravila u implicitnoj MAIN agendi.
+Sva pravila su podeljena u 5 agendi, sa tim da su neka pravila u implicitnoj MAIN agendi.
 
-U okviru drl fajla se nalazi globalna varijabla heroRecommendationList, koja u sebi sadrži sve heroje sa postavljenim početnim score-ovima za preporuku. Početna vrednost score-a za heroja je njegov overall winrate. Pravila svojim okidanjem menjaju score-ove za određene heroje, i time utiču na ukupnu preporuku. U zavisnosti od svog ponašanja, pravilo može da ukloni heroja iz liste za preporuku, da izmeni score jednom heroju, ili da izmeni score grupi heroja. Nakon okidanja svih pravila, lista heroja se sortira po score-u, i kao takva vraća korisniku.
+Za svakog heroja u Dota 2 igrici se unosi po jedan HeroRecommendationFact objekat u radnu memoriju. Ovaj objekat u sebi sadrzi informacije o heroju i njegov score, odnosno rangiranost. Početna vrednost score-a za heroja je njegov overall winrate.
+
+Pravila iz prve 3 agende ("hero-statistics", "team-composition" i "preferences") uticu na kranji rezultat preporuke tako što menjaju score-ove HeroRecommendationFact objekata, ili tako što ih uklanjaju iz radne memorije. 
+
+Pravila iz poslednje 2 agende ("scale" i "sort") potom skaliraju score-ove činjenicama HeroRecommandationFact koje su preostale u memoriji, i sortiraju ih po rangiranosti.
 
 Za neka pravila je podržana parametrizacija pomoću drools templating mehanizma. Pravila koja su obuhvaćena template mehanizmom imaju to navedeno u svom opisu. Sve parametre template-a korisnik može menjati pomoću korisničkog interfejsa. Ovoj funkcionalnosti se može pristupiti klikom na settings ikonicu u donjem desnom uglu glavnog prikaza aplikacije.
 
@@ -105,7 +105,9 @@ Svako pravilo je generisano na osnovu tri parametra:
 
 Sva pravila ove agende se okidaju tačno jednom (ukoliko postoji bar jedan izabran prijateljski heroj).
 
-Parametre heroesPerRole i scoreLossPercentage se mogu menjatu u korisničkom interfejsu za svaku ulogu ponaosob.
+Ukoliko ne postoji nijedan izabran prijateljski heroj okidanje ovih pravila nema smisla.
+
+Parametre heroesPerRole i scoreLossPercentage se mogu menjatu u korisničkom interfejsu za svako pravilo ponaosob.
 
 ### Query roleOverflow
 
@@ -115,11 +117,11 @@ Ovaj query se nalazi zajedno sa pomenutim pravilima u roles.drt fajlu.
 
 Ulazni parametar je $role, što je string uloge za koju se radi upit.
 
-Izlazni parametar je $count, što je broj heroja koji ispunjavaju ulogu $role.
+Izlazni parametar je $count, što je broj heroja u prijateljskom timu koji ispunjavaju ulogu $role.
 
 ## Agenda "preferences"
 
-Poslednja agenda koja se izvršava i koja uvodi faktor korisnikovih preferenci. Trenutni score-ovi se skaliraju u zavisnosti od korisnikovih preferiranih heroja, uloga (role) i pozicija za igru (lane). Kao i u prethodnoj agendi, pravila ne menjaju score-ove direktno, već generišu UpdateScoresFact činjenicu, koja opisuje grupu heroja čiji score je potrebno izmeniti. Ovo znači da pravila ove agende ne menjaju score-ove direktno, već se sama promena score-ova  dogodi kasnije, nakon što se izvrši forward chaining sa UpdateScoresFact činjenicom.
+Treca agenda koja se izvršava i koja uvodi faktor korisnikovih preferenci. Trenutni score-ovi se skaliraju u zavisnosti od korisnikovih preferiranih heroja, uloga (role) i pozicija za igru (lane). Kao i u prethodnoj agendi, pravila ne menjaju score-ove direktno, već generišu UpdateScoresFact činjenicu, koja opisuje grupu heroja čiji score je potrebno izmeniti. Ovo znači da pravila ove agende ne menjaju score-ove direktno, već se sama promena score-ova  dogodi kasnije, nakon što se izvrši forward chaining sa UpdateScoresFact činjenicom.
 
 Pravila ove agende se nalaze u preferences.drt fajlu. Težine ovih pravila se mogu menjati kroz korisnički interfejs.
 
@@ -140,6 +142,29 @@ Težina koja određuje u kolikoj meri će se promeniti score heroja je određena
 Ovo pravilo na osnovu LanePreferredFact činjenice menja score za heroje koji se se mogu igrati na odabranom lane-u. Samu izmenu score-a ne radi direktno već pomoću UpdateScoresFact činjenice.
 
 Težina koja određuje u kolikoj meri će se promeniti score heroja je određena template parametrom preferredLaneFactor.
+
+## Agenda "scale"
+
+Četvrta agenda po redu je "scale" agenda. U njoj se vrsi skaliranje trenutnih score-ova u memoriji na brojeve koji su smisleniji za rangiranje.
+
+Promena scoro-ova se ne vrši direktno nad HeroRecommendationFact objekatima, već se prave prave ResultFact objekti sa skaliranim score-om, koji su pogodniji za prenos preko mreže do frontend-a.
+
+ResultFact objekti sadrže striktno manje informacija od HeroRecommendationFact objekata. U njivove atribute spadaju: score (skaliran), heroName i heroId.
+
+### Pravilo "Find min and max score"
+
+Ovo pravilo pronalazi maksimalni i minimalni score za sve heroje u radnoj memoriji. Ovo radi pomoću predefinisanih accumulate funkcija.
+
+Rezultat pravila su MinScoreFact i MaxScoreFact činjenice. Pravilo se okida tačno jednom.
+
+### Pravilo "Scaling rule"
+
+Ovo pravilo od svake HeroRecommendationFact činjenice napravi tačno jednu ResultFact činjenicu sa skaliranim rezultatom. 
+
+Skaliranje se radi pomoću MinScoreFact i MaxScoreFact.
+
+
+
 
 ## Implicitna MAIN agenda
 

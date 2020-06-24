@@ -51,11 +51,22 @@ Takođe, u bin direktorijumu instaliranog maven alata na računaru je potrebno d
 
 # Spisak pravila za preporuke heroja
 
-Sva pravila su podeljena u 5 agendi, sa tim da su neka pravila u implicitnoj MAIN agendi.
+Sva pravila su podeljena u 6 agendi.
 
-Za svakog heroja u Dota 2 igrici se unosi po jedan HeroRecommendationFact objekat u radnu memoriju. Ovaj objekat u sebi sadrzi informacije o heroju i njegov score, odnosno rangiranost. Početna vrednost score-a za heroja je njegov overall winrate.
+Za svakog heroja u Dota 2 igrici se unosi po jedna HeroRecommendationFact činjenica u radnu memoriju. Ova činjenica u sebi sadrzi informacije o heroju i njegov score, odnosno rangiranost. Početna vrednost score-a za heroja je njegov overall winrate.
 
-Pravila iz prve 3 agende ("hero-statistics", "team-composition" i "preferences") uticu na kranji rezultat preporuke tako što menjaju score-ove HeroRecommendationFact objekata, ili tako što ih uklanjaju iz radne memorije. 
+Redosled izvrsavanja agendi je:
+1. "hero-statistics"
+2. "team-composition"
+3. "update"
+4. "preferences"
+5. "update"
+6. "scale"
+7. "sort"
+
+Pravila iz "hero-statistics", "team-composition" i "preferences" agendi uticu na kranji rezultat preporuke tako što menjaju score-ove HeroRecommendationFact objekata, ili tako što ih uklanjaju iz radne memorije.
+
+Pravila iz "team-composition" i "preferences" agendi ne menjaju score-ove direktno, već pomoću forward chain-ovanja. Ova pravila stvaraju nove činjenice, na osnovu kojih pravila iz "update" agende menjaju score-ove. Zbog ovoga se agenda "update" okida dva puta, posle "team-composition" i posle "preferences" agendi.
 
 Pravila iz poslednje 2 agende ("scale" i "sort") potom skaliraju score-ove činjenicama HeroRecommandationFact koje su preostale u memoriji, i sortiraju ih po rangiranosti.
 
@@ -121,7 +132,7 @@ Izlazni parametar je $count, što je broj heroja u prijateljskom timu koji ispun
 
 ## Agenda "preferences"
 
-Treca agenda koja se izvršava i koja uvodi faktor korisnikovih preferenci. Trenutni score-ovi se skaliraju u zavisnosti od korisnikovih preferiranih heroja, uloga (role) i pozicija za igru (lane). Kao i u prethodnoj agendi, pravila ne menjaju score-ove direktno, već generišu UpdateScoresFact činjenicu, koja opisuje grupu heroja čiji score je potrebno izmeniti. Ovo znači da pravila ove agende ne menjaju score-ove direktno, već se sama promena score-ova  dogodi kasnije, nakon što se izvrši forward chaining sa UpdateScoresFact činjenicom.
+Ova agenda uvodi faktor korisnikovih preferenci. Trenutni score-ovi se menjaju u zavisnosti od korisnikovih preferiranih heroja, uloga (role) i pozicija za igru (lane). Kao i u prethodnoj agendi, pravila ne menjaju score-ove direktno, već generišu UpdateScoresFact činjenicu, koja opisuje grupu heroja čiji score je potrebno izmeniti. Ovo znači da pravila ove agende ne menjaju score-ove direktno, već se sama promena score-ova  dogodi kasnije, nakon što se izvrši forward chaining sa UpdateScoresFact činjenicom.
 
 Pravila ove agende se nalaze u preferences.drt fajlu. Težine ovih pravila se mogu menjati kroz korisnički interfejs.
 
@@ -145,9 +156,9 @@ Težina koja određuje u kolikoj meri će se promeniti score heroja je određena
 
 ## Agenda "scale"
 
-Četvrta agenda po redu je "scale" agenda. U njoj se vrsi skaliranje trenutnih score-ova u memoriji na brojeve koji su smisleniji za rangiranje.
+Četvrta agenda po redu je "scale" agenda. U njoj se vrši skaliranje trenutnih score-ova u memoriji na brojeve koji su smisleniji za rangiranje.
 
-Promena scoro-ova se ne vrši direktno nad HeroRecommendationFact objekatima, već se prave prave ResultFact objekti sa skaliranim score-om, koji su pogodniji za prenos preko mreže do frontend-a.
+Promena score-ova se ne vrši direktno nad HeroRecommendationFact objekatima, već se prave prave ResultFact objekti sa skaliranim score-om, koji su pogodniji za prenos preko mreže do frontend-a.
 
 ResultFact objekti sadrže striktno manje informacija od HeroRecommendationFact objekata. U njivove atribute spadaju: score (skaliran), heroName i heroId.
 
@@ -159,14 +170,19 @@ Rezultat pravila su MinScoreFact i MaxScoreFact činjenice. Pravilo se okida ta�
 
 ### Pravilo "Scaling rule"
 
-Ovo pravilo od svake HeroRecommendationFact činjenice napravi tačno jednu ResultFact činjenicu sa skaliranim rezultatom. 
+Ovo pravilo od svake HeroRecommendationFact činjenice napravi tačno jednu ResultFact činjenicu sa skaliranim score-om. 
 
 Skaliranje se radi pomoću MinScoreFact i MaxScoreFact.
 
+## Agenda "sort"
 
+Ova agenda se sastoji od samo jednog pravila. Svrha pravila i agende je sortiranje ResultFact činjenica po score-u.
 
+### Pravilo "Sorting rule"
 
-## Implicitna MAIN agenda
+Ovo pravilo omogućava sortiranje činjenica u listu pomoću dinamičkog salience-a. Vrednost salience-a za okidanje pravila je zapravo rangiranost heroja. Zbog ovoga će se pravilo okinuti po jednom za svaki pronađen score u memoriji u opadajućem redosledu. Sortiranje se postiže prostim dodavanjem činjenice koja je na redu u rezultujuću listu.
+
+## Agenda "update"
 
 Ovde se nalaze pravila koja reaguju na UpdateScoresFact činjenicu i vrše potrebno skaliranje i linearno povećanje/smanjenje score-ova odgovarajućih heroja. Heroji čiji score je potrebno izmeniti se mogu birati pomoću identifikatora heroja (heroId), njihove uloge (role) ili pozicije u kojoj se najčešće igraju (lane).
 
@@ -196,15 +212,9 @@ Ulazne činjenice za ovaj sistem su posedovani item-i i željeni item.
 
 Pravila se nalaze u Items.drl fajlu.
 
-### Pravilo "Subtract cost of wanted item from current balance, and set wanted item global string"
+Globalne varijable balance i wantedItem se postavljaju pre okidanja ostalih pravila.
 
-Ovo je prvo pravilo koje se izvrši, i ono se izvršava tačno jednom.
-
-Ono ima za cilj da postavi dve globalne varijable, balance i wantedItem.
-
-Balance je količina novca potrebna da se ciljni item kupi, koja je u početku jednaka samoj ceni ciljnog item-a.
-
-WantedItem je string naziv ciljnog item-a.
+Pri početku balance se postavlja na cenu željenog item-a, dok se wantedItem postavlja na naziv željenog item-a. 
 
 ### Query "isContainedIn"
 
@@ -216,6 +226,8 @@ Pored određivanja da li je jedan item sadržan u drugom, ovaj query takođe vra
 
 Ovo pravilo se aktivira po jednom za svaki kupljeni item koji se može koristiti za izgradnju ciljnog.
 
+Salience ovog pravila je dinamički određen. Njegova vrednost je jednaka ceni posedovanog item-a za koji se izvršava. Ovo je urađeno da bi se obezbedilo pravilno izvršavanje algoritma. Algoritam radi tačno samo ukoliko se prvo uračunavaju cene skupljih item-a, pa tek onda jeftinijih.
+
 Da bi odredilo da li se jedan item gradi pomoću drugog koristi prethodno pomenuti "isContainedIn" query.
 
 Kada se pravilo aktivira, cena ciljnog item-a se smanji za cenu posedovanog. Takođe se izbaci taj kupljeni item iz stabla, da se ne bi mogla više puta oduzimala njegova cena od cene ciljnog.
@@ -226,7 +238,7 @@ Sva pravila se nalaze u implicitnoj MAIN agendi.
 
 Ovaj skup pravila ima za cilj da detektuje DDOS napad. Ovo se postiže pomoću CEP mehanizma.
 
-Posmatraju se IP adrese dolazećih zahteva. Ukoliko se u izvsenom vremenskom periodu primi previše zahteva sa iste IP adrese, prijavljuje se DDOS napad.
+Posmatraju se IP adrese dolazećih zahteva.
 
 Dužina vremenskog perioda i broj zahteva u vremenskom periodu potrebni za detektovanje napada se mogu menjati u application.properties fajlu pomoću ddos.timeFrame i ddos.maxRequests varijabli.
 
@@ -245,3 +257,29 @@ Ovaj window služi za pronalazak svih IpAccessFact činjenica koje su se pojavil
 Ovo pravilo se aktivira kada najnovija činjenica, zajedno sa prethodnim prekoračuje dozvoljen broj zahteva sa iste IP adrese u definisanom vremenskom periodu. Da bi pronašlo najnoviju činjenicu koristi "LatestIpAccessFact" window, dok za pronalazak svih činjenica u vremenskom periodu koristi "TimeWindow".
 
 Ukoliko se uoči DDOS napad, ispiše se odgovarajuća poruka u konzoli servera.
+
+### Pravilo "Too many requests"
+
+Ovo pravilo se aktivira kada najnovija činjenica, zajedno sa prethodnim prekoračuje dozvoljen broj zahteva sa bilo koje IP adrese u definisanom vremenskom periodu. Da bi pronašlo najnoviju činjenicu koristi "LatestIpAccessFact" window, dok za pronalazak svih činjenica u vremenskom periodu koristi "TimeWindow".
+
+Ukoliko se uoči DDOS napad, ispiše se odgovarajuća poruka u konzoli servera.
+
+### Razrešavanje konflikta između DDOS napada
+
+U određenim situacijama dolazeći zahtevi se mogu uklopiti i u pravilo "Too many requests by a single ip address" i u pravilo "Too many requests". Korišćena je dinamička dodela salience-a, kao i analysed flag na IpAccessFact činjenici da se odredi koje od ova dva pravila će se izvršiti. Ukoliko se jedno pravilo izvrši, drugo neće.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

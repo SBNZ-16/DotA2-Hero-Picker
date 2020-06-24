@@ -41,7 +41,9 @@ public class PickService {
 
 		kSession.getAgenda().getAgendaGroup("sort").setFocus();
 		kSession.getAgenda().getAgendaGroup("scale").setFocus();
+		kSession.getAgenda().getAgendaGroup("update").setFocus();
 		kSession.getAgenda().getAgendaGroup("preferences").setFocus();
+		kSession.getAgenda().getAgendaGroup("update").setFocus();
 		kSession.getAgenda().getAgendaGroup("team-composition").setFocus();
 		kSession.getAgenda().getAgendaGroup("hero-statistics").setFocus();
 		kSession.fireAllRules();
@@ -52,7 +54,7 @@ public class PickService {
 		ArrayList<ResultFact> sortedRecommendations = resultCollections.getResult();
 		for (int i = 0; i < 10; i++) {
 			ResultFact result = sortedRecommendations.get(i);
-			System.out.println(i + ". " + result.getHeroId() + " " + result.getScore());
+			System.out.println(i + 1 + ". " + result.getHeroId() + " " + result.getScore());
 		}
 		return sortedRecommendations;
 	}

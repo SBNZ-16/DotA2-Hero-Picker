@@ -10,6 +10,7 @@ import com.heropicker.facts.heroes.LanePreferredFact;
 import com.heropicker.facts.heroes.MaxScoreFact;
 import com.heropicker.facts.heroes.MinScoreFact;
 import com.heropicker.facts.heroes.HeroRecommendationFact;
+import com.heropicker.facts.heroes.ResultFact;
 import com.heropicker.model.heroes.LaneStats;
 import com.heropicker.model.heroes.Hero;
 import com.heropicker.model.heroes.HeroDatabase;
@@ -17,7 +18,6 @@ import com.heropicker.model.heroes.HeroDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-global ArrayList<HerorecommendationFact> sortedRecommendations;
 global HeroDatabase heroDatabase;
  
 rule "Ally hero picked"
@@ -51,15 +51,20 @@ rule "Sorting rule"
 salience ($score*100)
 	agenda-group "sort"
 	when
-		$heroRecommendation : HeroRecommendationFact($score : score)
+		$heroRecommendation : HeroRecommendationFact($score : score) @Watch(score)
+		$resultFact : ResultFact()
 	then
-		sortedRecommendations.add($heroRecommendation);
+		System.out.println($heroRecommendation.getScore());
+		$resultFact.getResult().add($heroRecommendation);
+		update($resultFact);
+		System.out.println($resultFact.getResult().size());
 end
 
 rule "Find min and max score"
-salience 1
 	agenda-group "scale"
 	when
+		not MaxScoreFact()
+		not MinScoreFact()
 		accumulate(HeroRecommendationFact($score : score),
 				$maxScore: max($score),
 				$minScore: min($score))
@@ -73,37 +78,42 @@ rule "Scaling rule"
 	when
 		MaxScoreFact($maxScore: maxScore)
 		MinScoreFact($minScore: minScore)
-		$heroRecommendation : HeroRecommendationFact($score : score)
+		$heroRecommendation : HeroRecommendationFact($score : score, scaled == false)
 	then
+		System.out.println($heroRecommendation.getScore());
 		double scoreRange = $maxScore - $minScore;
 		double newScore = ($heroRecommendation.getScore() - $minScore) / scoreRange * 100;
-		modify($heroRecommendation) { setScore(newScore); }
+		modify($heroRecommendation) {setScaled(true), setScore(newScore);}
 end
 
 rule "Update score by heroId"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
-		$heroRecommendation : HeroRecommendationFact(hero.heroId==$heroId)
+		$heroRecommendation : HeroRecommendationFact(hero.heroId==$heroId) @Watch(!*)
 	then
-		$heroRecommendation.updateScore($updateScore.getMultiplyScale(), $updateScore.getAddValue());
+		modify($heroRecommendation){updateScore($updateScore.getMultiplyScale(), $updateScore.getAddValue());}
 end
 
 rule "Update score by role"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
-		$heroRecommendation : HeroRecommendationFact(hero.roles contains $role)
+		$heroRecommendation : HeroRecommendationFact(hero.roles contains $role) @Watch(!*)
 	then
-		$heroRecommendation.updateScore($updateScore.getMultiplyScale(), $updateScore.getAddValue());
+		modify($heroRecommendation) {updateScore($updateScore.getMultiplyScale(), $updateScore.getAddValue());}
 end
 
 rule "Update score by lane"
 	when
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
-		$heroRecommendation : HeroRecommendationFact($hero : hero)
+		$heroRecommendation : HeroRecommendationFact($hero : hero) @Watch(!*)
 		$laneStats: LaneStats(name == $lane) from $hero.lanes
 	then
 		double laneEffectiveness = ($laneStats.getWinrate() * $laneStats.getPresence());
-		$heroRecommendation.updateScore((1+laneEffectiveness)*$updateScore.getMultiplyScale(),
-		 $updateScore.getAddValue());
+ 		modify($heroRecommendation) {updateScore((1+laneEffectiveness)*$updateScore.getMultiplyScale(),
+		 $updateScore.getAddValue());}
+end
+
+query "Get result"
+  $result: ResultFact()
 end
 

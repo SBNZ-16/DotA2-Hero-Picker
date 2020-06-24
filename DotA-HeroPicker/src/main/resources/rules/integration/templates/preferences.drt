@@ -17,6 +17,7 @@ template "Role rules"
 		then
 			double disadvantage = $recommendation.getHero().getDisadvantages().get($pickedId);
 			$recommendation.setScore($recommendation.getScore() +  disadvantage * @{enemyHeroDisadvantage});
+			update($recommendation);
 	end
 
 	rule "Enemy hero picked is expected to show in my lane"
@@ -27,6 +28,7 @@ template "Role rules"
 		then
 			double disadvantage = $recommendation.getHero().getDisadvantages().get($pickedId);
 			$recommendation.setScore($recommendation.getScore() +  disadvantage * @{enemyLaneHeroDisadvantage});
+			update($recommendation);
 	end
 
 	rule "Hero preferred"

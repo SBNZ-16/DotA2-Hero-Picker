@@ -10,6 +10,7 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
 import com.heropicker.facts.items.BoughtItemCollectionFact;
+import com.heropicker.facts.items.BoughtItemFact;
 import com.heropicker.facts.items.ItemHierarchyFact;
 import com.heropicker.facts.items.WantedItemFact;
 import com.heropicker.io.ItemLoader;
@@ -109,7 +110,7 @@ public class ItemCalculatorTests {
 
 		ArrayList<ItemHierarchyFact> hierarchyFacts = itemDatabase.createItemHierarchyFacts(wantedItem);
 		WantedItemFact wantedItemFact = itemDatabase.createWantedItemFact(wantedItem);
-		BoughtItemCollectionFact boughtItemCollectionFact = itemDatabase.prepareBoughtItemFacts(boughtItems);
+		ArrayList<BoughtItemFact> boughtItemFacts = itemDatabase.createBoughtItemFacts(boughtItems);
 
 		KieServices ks = KieServices.Factory.get();
 		KieContainer kContainer = ks.getKieClasspathContainer();
@@ -118,8 +119,15 @@ public class ItemCalculatorTests {
 		for (ItemHierarchyFact fact : hierarchyFacts) {
 			kSession.insert(fact);
 		}
-		kSession.insert(wantedItemFact);
-		kSession.insert(boughtItemCollectionFact);
+		
+		
+		//set globals
+		kSession.setGlobal("balance", new Integer(wantedItemFact.getPrice()));
+		kSession.setGlobal("wantedItem", wantedItemFact.getName());
+		
+		for (BoughtItemFact fact: boughtItemFacts) {
+			kSession.insert(fact);
+		}
 
 		kSession.fireAllRules();
 

@@ -86,7 +86,6 @@ salience ($score*100)
 		$resultFact : ResultFact($score : score)
 		$resultCollectionFact : ResultCollectionFact()
 	then
-		System.out.println($resultFact.getScore());
 		$resultCollectionFact.getResult().add($resultFact);
 end
 

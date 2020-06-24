@@ -44,19 +44,12 @@ public class ItemDatabase {
 		return retVal;
 	}
 	
-	public BoughtItemCollectionFact prepareBoughtItemFacts(ArrayList<String> boughtItems) {		
+	public ArrayList<BoughtItemFact> createBoughtItemFacts(ArrayList<String> boughtItems) {		
 		ArrayList<BoughtItemFact> facts = new ArrayList<BoughtItemFact>();
 		for (String name: boughtItems) {
 			facts.add(createBoughtItemFact(name));
 		}
-		
-		facts.sort(new Comparator<BoughtItemFact>() {
-			@Override
-			public int compare(BoughtItemFact arg0, BoughtItemFact arg1) {
-				return Integer.compare(arg0.getPrice(), arg1.getPrice());
-			}
-		});
-		return new BoughtItemCollectionFact(facts);
+		return facts;
 	}
 	
 	public WantedItemFact createWantedItemFact(String name) {

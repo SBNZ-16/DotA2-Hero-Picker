@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.heropicker.facts.items.BoughtItemCollectionFact;
+import com.heropicker.facts.items.BoughtItemFact;
 import com.heropicker.facts.items.ItemHierarchyFact;
 import com.heropicker.facts.items.WantedItemFact;
 import com.heropicker.model.items.ItemDatabase;
@@ -27,16 +28,22 @@ public class ItemService {
 		
 		ArrayList<ItemHierarchyFact> hierarchyFacts = itemDatabase.createItemHierarchyFacts(wantedItem);
 		WantedItemFact wantedItemFact = itemDatabase.createWantedItemFact(wantedItem);
-		BoughtItemCollectionFact boughtItemCollectionFact = itemDatabase.prepareBoughtItemFacts(boughtItems);
+		ArrayList<BoughtItemFact> boughtItemFacts = itemDatabase.createBoughtItemFacts(boughtItems);
 		
 		KieSession kSession = kieContainer.newKieSession("item-ksession");
 		
 		for (ItemHierarchyFact fact: hierarchyFacts) {
 			kSession.insert(fact);
 		}
-		kSession.insert(wantedItemFact);
-		kSession.insert(boughtItemCollectionFact);
 		
+		for (BoughtItemFact fact: boughtItemFacts) {
+			kSession.insert(fact);
+		}
+		
+		//set globals
+		kSession.setGlobal("balance", new Integer(wantedItemFact.getPrice()));
+		kSession.setGlobal("wantedItem", wantedItemFact.getName());
+				
 		kSession.fireAllRules();
 			
 		Integer balance = (Integer)kSession.getGlobal("balance");

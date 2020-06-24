@@ -15,27 +15,17 @@ query isContainedIn( String child, String parent, ItemHierarchyFact retVal)
 end
 
 
-rule "Subtract cost of wanted item from current balance, and set wanted item global string"
-salience 1
-	when
-		$want: WantedItemFact($name: name, $price: price)
-	then
-		drools.getKnowledgeRuntime().setGlobal("balance", $price);
-		drools.getKnowledgeRuntime().setGlobal("wantedItem", $name);
-end
-
 rule "Remove cost of bought item from wanted item, if it is contained by wanted item"
 salience 0
-	when
-		BoughtItemCollectionFact($boughtItemFacts: boughtItemFacts)
-		$have: BoughtItemFact($name: name, $price: price) from $boughtItemFacts
-		isContainedIn($name, wantedItem, $itemHierarchyObj;)
-	then
-		if (!$have.isUsed()) {
-			drools.getKnowledgeRuntime().setGlobal("balance", balance - $price);
-			delete($itemHierarchyObj);
-			$have.setUsed(true);
-		}
+when
+	$have: BoughtItemFact(used == false, $name: name, $price: price)
+	isContainedIn($name, wantedItem, $itemHierarchyObj;)
+then
+		System.out.println($price);
+		drools.getKnowledgeRuntime().setGlobal("balance", balance - $price);
+		delete($itemHierarchyObj);
+		$have.setUsed(true);
+		update($have);
 end
 
 

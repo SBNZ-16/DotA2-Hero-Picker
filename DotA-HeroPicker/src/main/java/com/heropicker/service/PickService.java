@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.heropicker.facts.Fact;
 import com.heropicker.facts.heroes.HeroRecommendationFact;
+import com.heropicker.facts.heroes.ResultCollectionFact;
 import com.heropicker.facts.heroes.ResultFact;
 import com.heropicker.model.heroes.HeroDatabase;
 
@@ -24,13 +25,11 @@ public class PickService {
 	@Autowired
 	private HeroDatabase heroDatabase;
 
-	public ArrayList<HeroRecommendationFact> recommend(List<Fact> facts) {
-		ArrayList<HeroRecommendationFact> sortedRecommendations = new ArrayList<HeroRecommendationFact>();
-
+	public ArrayList<ResultFact> recommend(List<Fact> facts) {
 		KieSession kSession = kieContainer.newKieSession("hero-ksession");
 
 		kSession.setGlobal("heroDatabase", heroDatabase);
-		kSession.insert(new ResultFact());
+		kSession.insert(new ResultCollectionFact());
 
 		for (Fact heroPickedFact : facts) {
 			kSession.insert(heroPickedFact);
@@ -49,12 +48,11 @@ public class PickService {
 
 		QueryResults results = kSession.getQueryResults("Get result");
 
-		ResultFact resultFact = (ResultFact) results.iterator().next().get("$result");
-		sortedRecommendations = resultFact.getResult();
+		ResultCollectionFact resultCollections = (ResultCollectionFact) results.iterator().next().get("$result");
+		ArrayList<ResultFact> sortedRecommendations = resultCollections.getResult();
 		for (int i = 0; i < 10; i++) {
-			HeroRecommendationFact recommendation = sortedRecommendations.get(i);
-
-			System.out.println(i + ". " + recommendation.getHero().getHeroName() + " " + recommendation.getScore());
+			ResultFact result = sortedRecommendations.get(i);
+			System.out.println(i + ". " + result.getHeroId() + " " + result.getScore());
 		}
 		return sortedRecommendations;
 	}

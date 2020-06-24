@@ -45,9 +45,8 @@ namespace DotaPickerFront
                 Image heroIcon = new Image();
                 heroIcon.Margin = new Thickness(5, 5, 5, 5);
 
-                Dictionary<string, object> heroDict = (Dictionary<string, object>)_results[i]["hero"];
-                string heroId = (string)heroDict["heroId"];
-                string heroName = (string)heroDict["heroName"];
+                string heroId = (string)_results[i]["heroId"];
+                string heroName = (string)_results[i]["heroName"];
 
                 heroIcon.Source = _mainWindow.images[heroId];
    

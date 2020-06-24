@@ -10,6 +10,7 @@ import com.heropicker.facts.heroes.LanePreferredFact;
 import com.heropicker.facts.heroes.MaxScoreFact;
 import com.heropicker.facts.heroes.MinScoreFact;
 import com.heropicker.facts.heroes.HeroRecommendationFact;
+import com.heropicker.facts.heroes.ResultCollectionFact;
 import com.heropicker.facts.heroes.ResultFact;
 import com.heropicker.model.heroes.LaneStats;
 import com.heropicker.model.heroes.Hero;
@@ -47,18 +48,7 @@ rule "Hero banned"
 		delete($recommendation);
 end
 
-rule "Sorting rule"
-salience ($score*100)
-	agenda-group "sort"
-	when
-		$heroRecommendation : HeroRecommendationFact($score : score) @Watch(score)
-		$resultFact : ResultFact()
-	then
-		System.out.println($heroRecommendation.getScore());
-		$resultFact.getResult().add($heroRecommendation);
-		update($resultFact);
-		System.out.println($resultFact.getResult().size());
-end
+
 
 rule "Find min and max score"
 	agenda-group "scale"
@@ -66,8 +56,9 @@ rule "Find min and max score"
 		not MaxScoreFact()
 		not MinScoreFact()
 		accumulate(HeroRecommendationFact($score : score),
-				$maxScore: max($score),
-				$minScore: min($score))
+			$maxScore: max($score),
+			$minScore: min($score)
+		)
 	then
 		insert(new MaxScoreFact($maxScore.doubleValue()));
 		insert(new MinScoreFact($minScore.doubleValue()));
@@ -80,10 +71,23 @@ rule "Scaling rule"
 		MinScoreFact($minScore: minScore)
 		$heroRecommendation : HeroRecommendationFact($score : score, scaled == false)
 	then
-		System.out.println($heroRecommendation.getScore());
 		double scoreRange = $maxScore - $minScore;
 		double newScore = ($heroRecommendation.getScore() - $minScore) / scoreRange * 100;
-		modify($heroRecommendation) {setScaled(true), setScore(newScore);}
+		ResultFact resultFact = new ResultFact(newScore,
+											   $heroRecommendation.getHero().getHeroId(),
+											   $heroRecommendation.getHero().getHeroName());
+		insert(resultFact);
+end
+
+rule "Sorting rule"
+salience ($score*100)
+	agenda-group "sort"
+	when
+		$resultFact : ResultFact($score : score)
+		$resultCollectionFact : ResultCollectionFact()
+	then
+		System.out.println($resultFact.getScore());
+		$resultCollectionFact.getResult().add($resultFact);
 end
 
 rule "Update score by heroId"
@@ -114,6 +118,6 @@ rule "Update score by lane"
 end
 
 query "Get result"
-  $result: ResultFact()
+  $result: ResultCollectionFact()
 end
 

@@ -52,7 +52,7 @@ public class DdosTests {
 		System.out.flush();
 		
 		String prints = ps.toString();
-		Assertions.assertEquals(0, StringUtils.countMatches(prints, "DDOS spotted"));
+		Assertions.assertEquals(0, StringUtils.countMatches(prints, "DDOS from same IP spotted"));
 	}
 	
 	// there is enough requests to trigger an ddos attack, but they come from seperate Ip address, so it does not happen
@@ -72,7 +72,7 @@ public class DdosTests {
 		System.out.flush();
 		
 		String prints = ps.toString();
-		Assertions.assertEquals(0, StringUtils.countMatches(prints, "DDOS spotted"));
+		Assertions.assertEquals(0, StringUtils.countMatches(prints, "DDOS from same IP spotted"));
 	}
 	
 	// there is enough requests from the same Ip address to trigger a ddos attack
@@ -92,7 +92,51 @@ public class DdosTests {
 		System.out.flush();
 		
 		String prints = ps.toString();
-		Assertions.assertEquals(3, StringUtils.countMatches(prints, "DDOS spotted"));
+		Assertions.assertEquals(3, StringUtils.countMatches(prints, "DDOS from same IP spotted"));
+	}
+	
+	// there is enough requests to trigger an ddos attack, but they come from seperate Ip address, so it does not happen
+	@Test
+	public void threeSameIpRestDifferent() {
+		ByteArrayOutputStream ps = redirectOutputStream();
+		KieSession kSession = getKieSession();
+		
+		SessionPseudoClock clock = kSession.getSessionClock();
+		String[] ips = new String[]{"1","1","2","3","4","5","1"};
+		
+		for (int i = 0; i < 7; i++) {
+			IpAccessFact fact = new IpAccessFact(ips[i]);
+			kSession.insert(fact);
+			kSession.fireAllRules();
+			clock.advanceTime(100, TimeUnit.MILLISECONDS);
+		}
+		System.out.flush();
+		
+		String prints = ps.toString();
+		Assertions.assertEquals(2, StringUtils.countMatches(prints, "DDOS from different IPs"));
+		Assertions.assertEquals(0, StringUtils.countMatches(prints, "DDOS from same IP spotted"));
 	}
 
+	// there is enough requests to trigger an ddos attack, but they come from seperate Ip address, so it does not happen
+	@Test
+	public void fourSameIpRestDifferent() {
+		ByteArrayOutputStream ps = redirectOutputStream();
+		KieSession kSession = getKieSession();
+		
+		SessionPseudoClock clock = kSession.getSessionClock();
+		String[] ips = new String[]{"1","1","1","2","3","4","5","6","1"};
+		
+		for (int i = 0; i < 9; i++) {
+			IpAccessFact fact = new IpAccessFact(ips[i]);
+			kSession.insert(fact);
+			kSession.fireAllRules();
+			clock.advanceTime(50, TimeUnit.MILLISECONDS);
+		}
+		System.out.flush();
+		
+		String prints = ps.toString();
+		Assertions.assertEquals(4, StringUtils.countMatches(prints, "DDOS from different IPs"));
+		Assertions.assertEquals(1, StringUtils.countMatches(prints, "DDOS from same IP spotted"));
+
+	}
 }

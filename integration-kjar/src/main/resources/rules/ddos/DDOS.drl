@@ -13,8 +13,9 @@ declare window TimeWindow
 end
 
 rule "Too many requests by a single ip address"
+salience ($total*2)
     when
-        $ip1: IpAccessFact($ipAddress: ipAddress) from window LatestIpAccessFact
+        $ip1: IpAccessFact($ipAddress: ipAddress, analysed == false) from window LatestIpAccessFact
         $total: Number(intValue >= 3) from accumulate(
             $ip2: IpAccessFact(
                 ipAddress.equals($ipAddress)
@@ -22,7 +23,21 @@ rule "Too many requests by a single ip address"
             count($ip2)
         )
     then
-		System.out.println("DDOS spotted");
+		System.out.println("DDOS from same IP spotted");
+		modify($ip1) {setAnalysed(true);}
+end
+
+rule "Too many requests"
+salience ($total)
+    when
+		$ip1: IpAccessFact($ipAddress: ipAddress, analysed == false) from window LatestIpAccessFact
+        $total: Number(intValue >= 3*2) from accumulate(
+            $ip2: IpAccessFact() from window TimeWindow,
+            count($ip2)
+        )
+    then
+		System.out.println("DDOS from different IPs");
+		modify($ip1) {setAnalysed(true);}
 end
 
 

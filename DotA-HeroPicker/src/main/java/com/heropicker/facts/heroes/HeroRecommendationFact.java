@@ -10,7 +10,6 @@ public class HeroRecommendationFact extends Fact {
 
 	private Hero hero;
 	private double score;
-	private boolean scaled = false;
 	
 	public HeroRecommendationFact() {
 
@@ -41,14 +40,5 @@ public class HeroRecommendationFact extends Fact {
 	public void setScore(double score) {
 		this.score = score;
 	}
-
-	public boolean isScaled() {
-		return scaled;
-	}
-
-	public void setScaled(boolean scaled) {
-		this.scaled = scaled;
-	}
-	
 
 }

@@ -69,7 +69,7 @@ rule "Scaling rule"
 	when
 		MaxScoreFact($maxScore: maxScore)
 		MinScoreFact($minScore: minScore)
-		$heroRecommendation : HeroRecommendationFact($score : score, scaled == false)
+		$heroRecommendation : HeroRecommendationFact($score : score)
 	then
 		double scoreRange = $maxScore - $minScore;
 		double newScore = ($heroRecommendation.getScore() - $minScore) / scoreRange * 100;

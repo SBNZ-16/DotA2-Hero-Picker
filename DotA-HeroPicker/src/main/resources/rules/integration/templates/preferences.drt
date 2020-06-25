@@ -16,7 +16,7 @@ template "Role rules"
 			$recommendation: HeroRecommendationFact(hero.heroId != $pickedId)
 		then
 			double disadvantage = $recommendation.getHero().getDisadvantages().get($pickedId);
-			$recommendation.setScore($recommendation.getScore() +  disadvantage * @{enemyHeroDisadvantage});
+			$recommendation.setScore($recommendation.getScore() -  disadvantage * @{enemyHeroDisadvantage});
 			update($recommendation);
 	end
 
@@ -27,7 +27,7 @@ template "Role rules"
 			$recommendation: HeroRecommendationFact(hero.heroId != $pickedId)
 		then
 			double disadvantage = $recommendation.getHero().getDisadvantages().get($pickedId);
-			$recommendation.setScore($recommendation.getScore() +  disadvantage * @{enemyLaneHeroDisadvantage});
+			$recommendation.setScore($recommendation.getScore() -  disadvantage * @{enemyLaneHeroDisadvantage});
 			update($recommendation);
 	end
 

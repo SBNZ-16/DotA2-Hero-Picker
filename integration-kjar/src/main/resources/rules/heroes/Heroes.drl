@@ -240,7 +240,7 @@ end
 			$recommendation: HeroRecommendationFact(hero.heroId != $pickedId)
 		then
 			double disadvantage = $recommendation.getHero().getDisadvantages().get($pickedId);
-			$recommendation.setScore($recommendation.getScore() +  disadvantage * 1.5);
+			$recommendation.setScore($recommendation.getScore() -  disadvantage * 1.5);
 			update($recommendation);
 	end
 	rule "Enemy hero picked is expected to show in my lane"
@@ -250,7 +250,7 @@ end
 			$recommendation: HeroRecommendationFact(hero.heroId != $pickedId)
 		then
 			double disadvantage = $recommendation.getHero().getDisadvantages().get($pickedId);
-			$recommendation.setScore($recommendation.getScore() +  disadvantage * 3.0);
+			$recommendation.setScore($recommendation.getScore() -  disadvantage * 3.0);
 			update($recommendation);
 	end
 	rule "Hero preferred"

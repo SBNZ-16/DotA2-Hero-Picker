@@ -139,7 +139,7 @@ public class HeroRecommendationTests {
 		facts.add(new EnemyHeroPickedFact("broodmother", false));
 
 		heroRecommendationList = getResults(facts);
-		Assertions.assertEquals(2, getHeroRank(heroRecommendationList, "zeus"));
+		Assertions.assertEquals(103, getHeroRank(heroRecommendationList, "zeus"));
 	}
 
 	@Test

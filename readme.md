@@ -43,6 +43,8 @@ Currently recommended heroes are Invoker and Timbersaw AND Broodmother heavly co
 
 # Pokretanje projekta
 
+Pre prvog pokretanja projekta potrebno je jednom ručno instalirati kjar projekat. Da bi se ovo uradilo potrebno je iznavigirati konzolom do root direktorijuma kjar projekta i pokrenuti komandu "mvn clean install".
+
 Da bi sve funkcionalnosti projekta radile potrebno je podesiti application.properties prema trenutnom računaru.
 
 Config.mvn.path varijablu je potrebno postaviti na home direktorijum instaliranog maven alata na računaru, npr. "F:/Program Files/apache-maven-3.6.2/"

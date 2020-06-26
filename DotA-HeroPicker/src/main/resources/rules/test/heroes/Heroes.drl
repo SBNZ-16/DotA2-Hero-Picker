@@ -104,9 +104,7 @@ rule "Update score by role"
 		$updateScore : UpdateScoresFact($heroId : heroId, $role : role, $lane : lane)
 		$heroRecommendation : HeroRecommendationFact(hero.roles contains $role) @Watch(!*)
 	then
-		System.out.print($heroRecommendation.getHero().getHeroId() + " " + $heroRecommendation.getScore());
 		modify($heroRecommendation) {updateScore($updateScore.getMultiplyScale(), $updateScore.getAddValue());}
-		System.out.println( " " + $heroRecommendation.getScore() + " " + $updateScore.getMultiplyScale() + " " + $role);
 end
 
 rule "Update score by lane"
@@ -141,7 +139,6 @@ rule "Pusher role"
 		exists(AllyHeroPickedFact())
     	roleOverflow("Pusher", $count;)
 	then
-		System.out.println("PUSHER: " + $count);
 		double penalty = (1.5 - (double)$count) * 0.05;
 		insert(new UpdateScoresFact(penalty + 1, 0, null, "Pusher", null));
 end
